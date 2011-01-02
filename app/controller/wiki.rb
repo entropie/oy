@@ -35,6 +35,9 @@ class WikiController < OYController
   end
 
   def edit(*fragments)
+    @wiki = repos.find_by_fragments(*fragments)
+    @title = @wiki.path
+
   end
 
   def compare(*fragments)

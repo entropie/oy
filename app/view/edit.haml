@@ -1,1 +1,9 @@
-%h1 edit
+#oy-topnav
+  %a{:href => @wiki.link} Back
+#oy-editform
+  %form{:action => WikiController.r(:update)}
+    %fieldset
+      %legend= @wiki.identifier
+      %textarea{:name => :body, :class => :body}= @wiki.raw_data
+      .submit
+        %input{:type => :submit, :value => :Edit}

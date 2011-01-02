@@ -10,10 +10,26 @@ module OY
 
   class Wiki
 
+    attr_reader :blob, :commit, :path
+    
     def initialize(blob, commit, path)
       @blob, @commit, @path = blob, commit, path
     end
 
+    def identifier
+      @blob.basename.split(".").first.capitalize
+    end
+    
+    def link(what = nil)
+      case what
+      when :edit
+        # FIXME:
+        "/edit/#{@path.split(".").first}"
+      else
+        "/#{@path.split(".").first}"
+      end
+    end
+    
     def with_template(data)
       case extension
       when "textile"
@@ -33,6 +49,10 @@ module OY
     
     def data
       with_template(@blob.data)
+    end
+
+    def raw_data
+      @blob.data
     end
 
     def author
