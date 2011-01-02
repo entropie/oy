@@ -1,0 +1,7 @@
+#oy-editform
+  %form{:action => WikiController.r(:update)}
+    %fieldset
+      %legend= @identifier
+      %textarea{:name => :body, :class => :body}= @raw_data
+      .submit
+        %input{:type => :submit, :value => :Edit}

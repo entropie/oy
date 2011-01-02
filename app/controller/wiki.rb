@@ -27,17 +27,22 @@ class WikiController < OYController
     if public_methods.include?(key)
       call(key.to_sym, *arguments)
     else
-      @wiki = repos.find_by_fragments(*fragments)
+      begin
+        @wiki = repos.find_by_fragments(*fragments)
+      rescue NotFound
+        redirect WikiController.r(:create, *fragments)
+      end
     end
   end
   
   def create(*fragments)
+    @identifier = fragments.join("/")
+    p fragments
   end
 
   def edit(*fragments)
     @wiki = repos.find_by_fragments(*fragments)
     @title = @wiki.path
-
   end
 
   def compare(*fragments)
