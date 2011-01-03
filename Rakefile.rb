@@ -15,17 +15,19 @@ include OY
 
 task :test do
 
+  t = "h1. Test Index\n\n\nasd\n\n\ndsadsa\n\n\nsadsa\n\n\n\ndsakldsald"
 
-  page = repos.find_by_fragments("index")
+  page = repos.find_by_fragments("test", "index")
+  p page.data
 
-  p page.sha
-  p page.link(:version)
-  h=page.history.first
-  p h.link(:version)
-  h=h.history.first
-  p h.link(:version)
-  h=h.history.first
-  p h.link(:version)
+  # p page.sha
+  # p page.link(:version)
+  # h=page.history.first
+  # p h.link(:version)
+  # h=h.history.first
+  # p h.link(:version)
+  # h=h.history.first
+  # p h.link(:version)
 
   
   # p page.sha

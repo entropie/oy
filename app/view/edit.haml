@@ -1,3 +1,3 @@
 #oy-topnav
   %a{:href => @wiki.link} Back
-  = render_file "view/form.haml", :identifier => @wiki.identifier, :raw_data => @wiki.raw_data
+  = render_file "view/form.haml", :identifier => @wiki.identifier, :raw_data => @wiki.raw_data, :path => @wiki.path

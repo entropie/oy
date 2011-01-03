@@ -12,13 +12,6 @@ class WikiController < OYController
     RedCloth.new(data).to_html
   end
 
-  def mk_attributes(blob)
-    {
-      :name => blob.name
-    }
-  end
-
-  
   def index(*fragments)
     key, *arguments = fragments
     "#{key}:  #{arguments.join(",")}"
@@ -44,7 +37,17 @@ class WikiController < OYController
 
   def edit(*fragments)
     @wiki = repos.find_by_fragments(*fragments)
+    pp @wiki
     @title = @wiki.path
+    p request.params
+    #exit
+  end
+
+  def update
+    path = request[:path] or raise "no path given"
+    p path
+    repos.edit(@wiki, path)
+    exit
   end
 
   def compare(*fragments)

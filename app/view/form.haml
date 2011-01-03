@@ -1,7 +1,11 @@
 #oy-editform
-  %form{:action => WikiController.r(:update)}
+  %form{:action => WikiController.r(:update, :path => @path), :method => :post}
     %fieldset
       %legend= @identifier
-      %textarea{:name => :body, :class => :body}= @raw_data
-      .submit
+      .oy-path= @path
+      .oy-textbox
+        %textarea{:name => :body, :class => :body}= @raw_data
+      .oy-messagebox
+        %input{:type => :text, :value => "", :name => :message}
+      .oy-submit
         %input{:type => :submit, :value => :Edit}
