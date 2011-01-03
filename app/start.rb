@@ -23,8 +23,15 @@ class Innate::Session
 end
 (controller + libs).each{|lib| require lib}
 
+
+if `hostname`.strip == "io"
+  Ramaze.start(:host => "kommunism.us",
+               :port => 8200)
+else
   Ramaze.start(:host => "localhost",
                :port => 8200)
+
+end
 
 
 
