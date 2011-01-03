@@ -10,10 +10,16 @@ module OY
 
   class Wiki
 
-    attr_reader :blob, :commit, :path
+    attr_reader :blob, :commit, :path, :repos
+
+    attr_reader :date, :author, :sha
     
     def initialize(blob, commit, path)
       @blob, @commit, @path = blob, commit, path
+    end
+
+    def repos
+      OY.repos
     end
 
     def identifier
@@ -21,13 +27,50 @@ module OY
     end
     
     def link(what = nil)
+      ident = @path.split(".").first
       case what
-      when :edit
+      when :edit 
         # FIXME:
-        "/edit/#{@path.split(".").first}"
+        "/edit/#{ident}"
+      when :version
+        "/#{ident}?sha=#{history.first.sha}"
       else
-        "/#{@path.split(".").first}"
+        ""
       end
+    end
+
+    # get complete history for +path+ Returns array of Wiki instances
+    def history(rsha = nil)
+      access = GitAccess.new
+      seen = false
+      @history = repos.git.log("master", path).
+        map{|commit|
+        access.tree(commit.sha).select {|b|
+          b.path == path
+        }.map { |b|
+          if commit.sha == self.commit.sha
+            seen = true
+            nil
+          elsif seen
+            blob = b.blob(repos.git)
+            Wiki.new(blob, commit, b.path)
+          end
+        }.compact
+      }.flatten
+
+      if rsha
+        return history.select{|his| his.sha == rsha}.first
+      end
+
+      @history
+    end
+
+    def has_parent?
+      not history.empty?
+    end
+
+    def parent
+      has_parent? and history.first
     end
     
     def with_template(data)
@@ -37,6 +80,10 @@ module OY
       else
         data
       end
+    end
+
+    def sha
+      @commit.sha
     end
 
     def id
@@ -56,7 +103,7 @@ module OY
     end
 
     def author
-      @commit.author.to_s
+      @commit.author.name
     end
 
     def date
@@ -84,14 +131,16 @@ module OY
     end
     
     def find_by_fragments(*fragments)
+      access = GitAccess.new
       file = nil
-      commit = @git.commits.first
-      pp fragments
       # FIXME:
       fragments[0] = "index" unless fragments[0]
       fragments[-1] = fragments[-1] += ".textile"
+
+      commit = git.log("master", fragments.join("/")).first
       
       tree = commit.tree("master")
+      
       fragments.each do |frag|
         sub = tree/frag
         case sub
@@ -106,13 +155,6 @@ module OY
       Wiki.new(file, commit, fragments.join("/"))
     end
 
-    # def method_missing(m, *a, &b)
-    #   if repos.respond_to?(m)
-    #     repos.send(m, *a, &b)
-    #   else
-    #     super
-    #   end
-    # end
   end
   
 end

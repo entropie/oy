@@ -29,6 +29,9 @@ class WikiController < OYController
     else
       begin
         @wiki = repos.find_by_fragments(*fragments)
+        if sha = request[:sha]
+          @wiki = @wiki.history(sha)
+        end
       rescue NotFound
         redirect WikiController.r(:create, *fragments)
       end
@@ -37,7 +40,6 @@ class WikiController < OYController
   
   def create(*fragments)
     @identifier = fragments.join("/")
-    p fragments
   end
 
   def edit(*fragments)

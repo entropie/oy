@@ -1,7 +1,11 @@
 #oy-page
   #oy-about
     .author= @wiki.author
-    .rev= @wiki.id
+    .rev= @wiki.sha
+    .msg= @wiki.commit.message
+    - if @wiki.has_parent?
+      .back-in-time
+        %a{:href => @wiki.link(:version)} Back In Time
   #oy-topic
     %h1= @wiki.title
   #oy-body

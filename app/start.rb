@@ -7,7 +7,9 @@
 require "rubygems"
 
 require '../../ramaze/lib/ramaze'
+
 require "../lib/oy"
+
 require "model/git"
 
 

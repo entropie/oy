@@ -13,23 +13,33 @@ ReposPath = File.expand_path("~/Source/oytest")
 
 module OY
   
-  Source = File.expand_path(__FILE__)
+  Source = File.dirname(File.dirname(File.expand_path(__FILE__)))
+
+  $: << File.join(Source, "lib/oy")
+
+  require "blob_entry.rb"
+  require "git_access.rb"
 
   Version = [0, 0, 1]
 
   def path=(str)
     @path = str
   end
-  
-  def path
-    ReposPath || path
+  module_function :path=  
+    
+    def path
+      ReposPath || path
+    end
+    module_function :path  
+    
+    def repos
+      @repos ||= Repos.new(ReposPath)
+    end
+    module_function :repos
+
+    
   end
-  
-  def repos
-    @repos ||= Repos.new(ReposPath)
-  end
-  
-end
+
 
 =begin
 Local Variables:
