@@ -18,7 +18,11 @@ task :test do
   t = "h1. Test Index\n\n\nasd\n\n\ndsadsa\n\n\nsadsa\n\n\n\ndsakldsald"
 
   page = repos.find_by_fragments("test", "index")
-  p page.data
+  page.update() do |pg|
+    pg.message = "lalamessage"
+    pg.author = "Michael"
+    pg.data = t
+  end
 
   # p page.sha
   # p page.link(:version)

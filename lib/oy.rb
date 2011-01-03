@@ -5,6 +5,7 @@
 
 require "rubygems"
 require "grit"
+require "ostruct"
 
 require "pp"
 

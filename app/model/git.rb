@@ -82,6 +82,10 @@ module OY
       end
     end
 
+    def update
+      
+    end
+    
     def sha
       @commit.sha
     end
