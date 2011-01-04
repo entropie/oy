@@ -23,6 +23,12 @@ module OY
       @blob, @commit, @path = blob, commit, path
     end
 
+    def vprefix
+      r = File.dirname(path)
+      r = if r == "." then "" else "#{r}/" end
+      "/#{r}"
+    end
+    
     def repos
       OY.repos
     end

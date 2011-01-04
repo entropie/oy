@@ -1,13 +1,13 @@
 #oy-editform
-  = @action
-  = @path
   %form{:action => WikiController.r(@action, :path => @path), :method => :post}
     %fieldset
-      %legend= @identifier
-      .oy-path= @path
+      %legend= @identifier.capitalize
       .oy-textbox
+        You're about to edit
+        %em= @path
         %textarea{:name => :data, :class => :body}= @raw_data
       .oy-messagebox
+        %span Commit Message (optional)
         %input{:type => :text, :value => "", :name => :message}
       .oy-submit
         %input{:type => :submit, :value => :Edit}

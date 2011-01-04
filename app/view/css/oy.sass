@@ -1,3 +1,6 @@
+!clr_ulight_bg = #FFFDF5
+!clr_light_bg = #DAE0E3
+
 body
   :color #222
 
@@ -43,9 +46,16 @@ fieldset
     :border 1px solid silver
   .oy-submit
     :text-align right
-#oy-topnav
+  .oy-messagebox
+    :margin-top 20px
+    input
+      :border 1px solid silver
+      :padding 10px
+      :width 98%
   
-    
+#oy-topnav
+  :text-align right
+
 #oy-page
   #oy-topic
     :font-size 3em
@@ -111,8 +121,22 @@ a.oy-link
     :margin 0px
     :padding 0px
     :width 50%
-    :float right    
+    :float right
+    :list-style-type none
+    :margin-right -1px
+    :border-right 1px solid silver
     &:nth-child(1)
       :clear both
+      :border none
+      li
+        :padding-left 20px
     li
-      :padding-left 20px
+      :padding-left 0px
+      &:hover
+        :background-color = !clr_ulight_bg
+        *
+          :color #001 !important
+  .oy-prfx
+    :color silver
+    :float right
+    :padding-right 15px

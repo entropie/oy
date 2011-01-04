@@ -20,17 +20,10 @@
     %script{:type => "text/javascript", :src => "/js/oy.js"}=""
     
   %body
+    #fork
+      = render_file "view/_fork.html"
     #head
-      %ul
-        %li
-          %a{:href => WikiController.r} Oy!
-        %li
-          %a{:href => SpecialController.r(:all)} All Pages!
-        %li
-          %form{:action => "/create", :method => :post}
-            Create
-            %input{:class => "oy-create-input", :value => "", :name => :path}
-      
+      = render_file "view/_head.haml"
     #wrap
       = @content
     #footer
