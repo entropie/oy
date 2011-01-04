@@ -1,5 +1,7 @@
 #oy-editform
-  %form{:action => WikiController.r(:update, :path => @identifier), :method => :post}
+  = @action
+  = @path
+  %form{:action => WikiController.r(@action, :path => @path), :method => :post}
     %fieldset
       %legend= @identifier
       .oy-path= @path

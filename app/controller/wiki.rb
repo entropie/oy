@@ -38,6 +38,7 @@ class WikiController < OYController
   def edit(*fragments)
     @wiki = repos.find_by_fragments(*fragments)
     @title = @wiki.path
+    @action = :update
   end
 
   def update
@@ -52,6 +53,25 @@ class WikiController < OYController
     end
 
     redirect "/#{path}"
+  end
+
+  def new
+    path = request[:path]
+    path = path[1..-1]
+    wiki = Wiki.create_bare("#{path}.textile")
+    
+    wiki.create do |pg|
+      pg.message = request[:message]
+      pg.data    = request[:data]
+    end
+    redirect "#{path}"
+  end
+  
+  def create(*fragments)
+    path = if fragments.empty? then request[:path] else "/#{fragments.join("/")}" end
+    @action = :new
+    @path = path
+    @identifier = File.basename(@path)
   end
 
   def compare(*fragments)

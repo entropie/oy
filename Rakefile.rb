@@ -17,13 +17,21 @@ task :test do
 
   t = "h1. Test Index\n\n\nasd\n\n\ndsadsa\n\n\nsadsa\n\n\n\ndsakldsald"
 
-  page = repos.find_by_fragments("test", "index")
-  page.update() do |pg|
-    pg.message = "lalamessage"
-    pg.author = "Michael"
-    pg.data = t
-  end
+  # page = repos.find_by_fragments("index")
+  # page.update do |pg|
+  #   pg.message = "lalamessagea  a"
+  #   pg.author = "Michael"
+  #   pg.data = t << "234 ssdaas 1111 112\nsakdjsakd sasas" << t
+  # end
 
+  bwiki = Wiki.create_bare("test/f00.textile")
+  wiki = bwiki.create do |pg|
+    pg.message = "init las"
+    pg.data    = "asd"
+  end
+  #p wiki.data
+
+  
   # p page.sha
   # p page.link(:version)
   # h=page.history.first

@@ -6,6 +6,9 @@
 class NotFound < Exception
 end
 
+class AlreadyExist < Exception
+end
+
 module OY
 
   class Wiki
@@ -82,20 +85,106 @@ module OY
       end
     end
 
+    def create(&block)
+      update(&block)
+    end
+
+    def normalize_commit(commit)
+      commit
+    end
+
+    def page_name(path)
+      if segs = path.split("/")
+        segs.first.downcase
+      else
+        path.downcase
+      end.split(".").first
+    end
+
+    def page_filename(path)
+      path
+    end
+    
+    def update_working_dir(index, dir, name)
+      unless repos.git.bare
+        puts ">>> #{:uwd}: #{dir}"
+        Dir.chdir(::File.join(repos.path, '..')) do
+          repos.git.git.checkout({}, 'HEAD', '--', path)
+        end
+      end
+    end
+    
+    
+    def commit_index(options = {})
+      normalize_commit(options)
+      parents = [options.parent || repos.git.commit('master')]
+      parents.flatten!
+      parents.compact!
+      index = OY.repos.git.index
+      if tree = options.tree
+        index.read_tree(tree)
+      elsif parent = parents[0]
+        index.read_tree(parent.tree.id)
+      end
+      yield index if block_given?
+
+      actor = Grit::Actor.new("michael", "foo@bar.baz")
+      index.commit(options.message, parents, actor)
+    end
+    
+    
     def update
       opts = OpenStruct.new
-      ga = GitAccess.new
       yield opts if block_given?
 
-      index = repos.git.index
-      Repos.write(path){|fp| fp << opts.data}
-      actor = Grit::Actor.new("michael", "foo@bar.baz")
+      dir = ::File.dirname(path)
+      dir = "" if dir == "."
+
+      index = nil
+      sha = commit_index(opts) do |idx|
+        index = idx
+        index.add(path, opts.data)
+      end
       
-      index = repos.git.index
-      index.read_tree("HEAD")
-      index.add(path, opts.data)
-      index.commit(opts.message, [repos.git.commits.first], actor, nil, 'master')
+      Repos.write(path){|fp| fp << opts.data}
+
+      update_working_dir(index, dir, page_name(path))
+      sha
     end
+
+    def exist?
+      @blob && @commit
+    end
+    
+    def create
+      opts = OpenStruct.new
+      yield opts if block_given?
+
+      Repos.write(path){|fp| fp << opts.data}
+
+      dir = ::File.dirname(path)
+      dir = "" if dir == "."
+
+      index = nil
+      sha = commit_index(opts) do |idx|
+        index = idx
+        index.add(path, opts.data)
+      end
+      fragments = path.split("/").reject{|p| p.empty?}
+      puts "-"*43
+      p fragments
+      update_working_dir(index, '', page_name(path))
+      repos.find_by_fragments(*fragments)
+    end
+
+    def self.create_bare(path)
+      ret = OY.repos.find_by_fragments(path)
+    rescue NotFound
+      wiki = Wiki.new(nil, nil, path)
+    else
+      raise AlreadyExist, "already in tree '#{path}'"
+    end
+  
     
     def sha
       @commit.sha
@@ -145,6 +234,7 @@ module OY
     end
 
     def self.write(path)
+      puts "\n---#{path}\n\n"
       File.open(Repos.expand_path(path), 'w+') do |fp|
         yield fp
       end
@@ -154,16 +244,19 @@ module OY
       @path = path
       @git = Grit::Repo.new(path)
     end
-    
+
     def find_by_fragments(*fragments)
       access = GitAccess.new
       file = nil
       # FIXME:
       fragments[0] = "index" unless fragments[0]
-      fragments[-1] = fragments[-1] += ".textile"
+      fragments[-1] = fragments[-1] += ".textile" unless fragments[-1] =~ /\.textile$/
 
-      commit = git.log("master", fragments.join("/")).first
+      p fragments
       
+      commit = git.log("master", fragments.join("/")).first
+
+      raise NotFound, "not found" unless commit
       tree = commit.tree("master")
       
       fragments.each do |frag|
