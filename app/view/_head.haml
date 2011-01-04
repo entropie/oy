@@ -1,0 +1,9 @@
+%ul
+  %li
+    %a{:href => WikiController.r} Oy!
+  %li
+    %a{:href => SpecialController.r(:all)} All Pages!
+  %li
+    %form{:action => "/create", :method => :post}
+      Create
+      %input{:class => "oy-create-input", :value => "", :name => :path}
