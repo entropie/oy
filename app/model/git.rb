@@ -23,7 +23,7 @@ module OY
     end
 
     def identifier
-      @blob.basename.split(".").first.capitalize
+      @blob.basename.split(".").first.downcase
     end
     
     def link(what = nil)
@@ -83,7 +83,18 @@ module OY
     end
 
     def update
+      opts = OpenStruct.new
+      ga = GitAccess.new
+      yield opts if block_given?
+
+      index = repos.git.index
+      Repos.write(path){|fp| fp << opts.data}
+      actor = Grit::Actor.new("michael", "foo@bar.baz")
       
+      index = repos.git.index
+      index.read_tree("HEAD")
+      index.add(path, opts.data)
+      index.commit(opts.message, [repos.git.commits.first], actor, nil, 'master')
     end
     
     def sha
@@ -128,6 +139,16 @@ module OY
 
     attr_reader    :path
     attr_reader    :git
+
+    def self.expand_path(npath)
+      File.join(OY.path, npath)
+    end
+
+    def self.write(path)
+      File.open(Repos.expand_path(path), 'w+') do |fp|
+        yield fp
+      end
+    end
     
     def initialize(path)
       @path = path

@@ -37,17 +37,21 @@ class WikiController < OYController
 
   def edit(*fragments)
     @wiki = repos.find_by_fragments(*fragments)
-    pp @wiki
     @title = @wiki.path
-    p request.params
-    #exit
   end
 
   def update
     path = request[:path] or raise "no path given"
-    p path
-    repos.edit(@wiki, path)
-    exit
+
+    redirect "/#{path}" unless request.post?
+    
+    wiki = repos.find_by_fragments(*path.split("/"))
+    wiki.update do |pg|
+      pg.message = request[:message] || ""
+      pg.data    = request[:data]
+    end
+
+    redirect "/#{path}"
   end
 
   def compare(*fragments)

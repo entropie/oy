@@ -37,7 +37,6 @@ module OY
       @repos ||= Repos.new(ReposPath)
     end
     module_function :repos
-
     
   end
 
