@@ -15,7 +15,7 @@ require "model/git"
 
 require "redcloth"
 
-controller = %w"oy css wiki".map{ |lib|
+controller = %w"oy special css wiki".map{ |lib|
   File.join("controller", lib)
 }
 libs = []

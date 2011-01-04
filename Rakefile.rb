@@ -24,7 +24,7 @@ task :test do
   #   pg.data = t << "234 ssdaas 1111 112\nsakdjsakd sasas" << t
   # end
 
-  bwiki = Wiki.create_bare("test/f00.textile")
+  bwiki = Wiki.create_bare("test/a/b/c/f00.textile")
   wiki = bwiki.create do |pg|
     pg.message = "init las"
     pg.data    = "asd"

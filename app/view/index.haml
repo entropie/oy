@@ -1,19 +1,18 @@
 #oy-page
   #oy-about
-    .author= @wiki.author
-    .rev= @wiki.sha
-    .msg= @wiki.commit.message
-    - if @wiki.has_parent?
-      .back-in-time
-        %a{:href => @wiki.link(:version)} Back In Time
+    .oy-msg= @wiki.commit.message
   #oy-topic
     %h1= @wiki.title
   #oy-body
     = @wiki.data
   #oy-sub
     %ul
+      - if @wiki.has_parent?
+        %li.back-in-time
+          %a{:href => @wiki.link(:version)} Back In Time
       %li.edit
         %a{:href => @wiki.link(:edit)} Edit
       %li.ledit
         Last edited:
-        = @wiki.date
+        %a{:href => WikiController.r(@wiki.permalink), :class => "oy-perma"}= @wiki.date
+      %li.author= @wiki.author

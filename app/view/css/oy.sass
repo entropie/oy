@@ -15,6 +15,12 @@ a
   :margin-left 8%
   :margin-right 8%
   :padding 30px
+  :padding-left 0px
+  ul
+    :list-style-type none
+    li
+      :float left
+      :margin-left 30px
 
 #footer
   :background-color grey
@@ -69,10 +75,44 @@ fieldset
         :text-align right
         :float right
         :margin-left 10px
+        :font-size 0.7em
+        &.author
+          :color grey
+          &:after
+            :color silver
+            :content " — "
         &.edit
-          :font-size 0.7em
+          :color black
+          a
+            :color black
         &.ledit
-          :font-size 0.7em
           :color silver
+          :margin-left 5px
+          a
+            :color silver
     :margin-top 30px
     :border-top 1px solid silver
+
+a.oy-link
+  &.x
+    :color navy
+  &.o
+    :color grey
+
+.oy-sha
+  :color silver
+  :font-size 0.7em
+.oy-msg
+  :color grey
+  :font-size 0.8em
+
+#oy-all
+  ul
+    :margin 0px
+    :padding 0px
+    :width 50%
+    :float right    
+    &:nth-child(1)
+      :clear both
+    li
+      :padding-left 20px

@@ -16,6 +16,8 @@ module OY
     attr_reader :blob, :commit, :path, :repos
 
     attr_reader :date, :author, :sha
+
+    attr_accessor :parent
     
     def initialize(blob, commit, path)
       @blob, @commit, @path = blob, commit, path
@@ -28,17 +30,23 @@ module OY
     def identifier
       @blob.basename.split(".").first.downcase
     end
+
+    def permalink
+      link(:perma)
+    end
     
     def link(what = nil)
       ident = @path.split(".").first
       case what
+      when :perma
+        "#{ident}?sha=#{sha}"
       when :edit 
         # FIXME:
         "/edit/#{ident}"
       when :version
         "/#{ident}?sha=#{history.first.sha}"
       else
-        ""
+        "#{ident}"
       end
     end
 
@@ -75,11 +83,27 @@ module OY
     def parent
       has_parent? and history.first
     end
+
+
+    def parse_result(result)
+      r = result.gsub(/\[{2}([a-zA-Z\/]*?)( [a-zA-Z\/]*?)?\]{2}/){|match|
+        url = $1.downcase
+        cls = begin
+                repos.find_by_fragments(url) and "x"
+              rescue NotFound
+                "o"
+              end
+        "<a href='/#{url}' class='oy-link #{cls}'>#{($2 || $1).strip}</a>"
+      }
+      r
+    end
+
     
     def with_template(data)
+      result = parse_result(data)
       case extension
       when "textile"
-        RedCloth.new(data).to_html
+        RedCloth.new(result).to_html
       else
         data
       end
@@ -171,8 +195,6 @@ module OY
         index.add(path, opts.data)
       end
       fragments = path.split("/").reject{|p| p.empty?}
-      puts "-"*43
-      p fragments
       update_working_dir(index, '', page_name(path))
       repos.find_by_fragments(*fragments)
     end
@@ -234,8 +256,9 @@ module OY
     end
 
     def self.write(path)
-      puts "\n---#{path}\n\n"
-      File.open(Repos.expand_path(path), 'w+') do |fp|
+      path = Repos.expand_path(path)
+      FileUtils.mkdir_p(File.dirname(path))
+      File.open(path, 'w+') do |fp|
         yield fp
       end
     end
@@ -252,8 +275,6 @@ module OY
       fragments[0] = "index" unless fragments[0]
       fragments[-1] = fragments[-1] += ".textile" unless fragments[-1] =~ /\.textile$/
 
-      p fragments
-      
       commit = git.log("master", fragments.join("/")).first
 
       raise NotFound, "not found" unless commit
