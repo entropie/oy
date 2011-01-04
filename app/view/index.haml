@@ -1,6 +1,7 @@
 #oy-page
   #oy-about
-    .oy-msg= "<em>Commit Description</em>: #{@wiki.commit.message}"
+    - msg = @wiki.commit.message
+    .oy-msg= "<em>Commit Description</em>: #{msg.empty? ? '&lt;empty&gt;' : msg}"
   #oy-topic
     %h1= @wiki.title
   #oy-body
