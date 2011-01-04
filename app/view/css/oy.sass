@@ -2,7 +2,12 @@
 !clr_light_bg = #DAE0E3
 
 !clr_blink = #305454
-  
+!clr_rlight_black = #403D3E
+!clr_rlight_blue = #0487D9
+
+!clr_head_bg = #6E1400
+!clr_link_on_dark = #F2F2F2
+!clr_blue_link = #C2A908  
 body
   :color #222
 
@@ -17,15 +22,39 @@ a
   :margin-right 10%
 
 #head
-  :margin-left 8%
-  :margin-right 8%
+  :margin-left 0
+  :background-color = !clr_head_bg
+  :margin-right 0
   :padding 30px
+  :padding-top 10px
   :padding-left 0px
+  :-webkit-box-shadow 5px 5px 7px #aaaaaa
+  :-moz-box-shadow 5px 5px 7px #aaaaaa
+  :box-shadow 5px 5px 7px #aaaaaa
   ul
+    :margin-bottom 15px
     :list-style-type none
     li
       :float left
       :margin-left 30px
+      :color silver
+      :font-size 1.5em
+      a
+        :color = !clr_link_on_dark
+        &:hover
+          span
+            :color red
+        span
+          :color silver
+          
+    input
+      :font-size 0.8em
+      :padding 5px
+      :color #fff
+      :border 1px solid silver
+      :border-color = !clr_head_bg - 20
+      :border-radius 5px
+      :background-color = !clr_head_bg + 20
 
 #footer
   :background-color grey
@@ -60,17 +89,18 @@ fieldset
 
 #oy-page
   #oy-topic
-    :font-size 3em
+    :text-shadow 1px 1px grey
+    :font-size 2em
+    :color = !clr_rlight_blue
+    //:color silver
     :border-bottom 1px solid silver
     :letter-spacing 7px
     :margin-bottom 20px
-    :padding-bottom 30px
+    :padding-bottom 10px
   #oy-about
     :margin-top 20px
     :float right
     :font-size 0.9em
-    :border-bottom 1px dashed
-    :border-bottom-color silver
     :padding 5px
     &:hover
       .oy-msg
@@ -80,13 +110,14 @@ fieldset
       :font-size 2em
       :margin-bottom 10px
     p
-      :margin-bottom 30px
+      :margin-bottom 10px
       :padding-left 10px
       // :background-color #F5F5F5
       :padding 10px
     ul
       :padding-left 15px
       :margin-bottom 20px
+      :color = !clr_rlight_black
     li
       :margin-bottom 5px
       // :background-color #F7F7F7
@@ -137,6 +168,7 @@ a.oy-link
 .oy-msg
   :color grey
   :font-size 0.8em
+  :margin-top -5px
 
 #oy-all
   ul

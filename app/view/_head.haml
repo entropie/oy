@@ -1,8 +1,8 @@
 %ul
   %li
-    %a{:href => WikiController.r} Oy!
+    %a{:href => WikiController.r}= "Oy<span>!</span>"
   %li
-    %a{:href => SpecialController.r(:all)} All Pages!
+    %a{:href => SpecialController.r(:all)}= "All Pages<span>!</span>"
   %li
     %form{:action => "/create", :method => :post}
       Create
