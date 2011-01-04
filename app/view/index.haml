@@ -1,6 +1,6 @@
 #oy-page
   #oy-about
-    .oy-msg= @wiki.commit.message
+    .oy-msg= "<em>Commit Description</em>: #{@wiki.commit.message}"
   #oy-topic
     %h1= @wiki.title
   #oy-body
@@ -9,10 +9,10 @@
     %ul
       - if @wiki.has_parent?
         %li.back-in-time
-          %a{:href => @wiki.link(:version)} Back In Time
+          %a{:href => @wiki.link(:version), :title => "Goto Previous Version"} Back In Time
       %li.edit
-        %a{:href => @wiki.link(:edit)} Edit
+        %a{:title => "Edit Page", :href => @wiki.link(:edit)} Edit
       %li.ledit
         Last edited:
-        %a{:href => WikiController.r(@wiki.permalink), :class => "oy-perma"}= @wiki.date
-      %li.author= @wiki.author
+        %a{:title => "Last Edit / Permalink to this Version", :href => WikiController.r(@wiki.permalink), :class => "oy-perma"}= @wiki.date
+      %li.author{:title => "Author of this Version"}= @wiki.author

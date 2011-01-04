@@ -1,6 +1,8 @@
 !clr_ulight_bg = #FFFDF5
 !clr_light_bg = #DAE0E3
 
+!clr_blink = #305454
+  
 body
   :color #222
 
@@ -64,11 +66,15 @@ fieldset
     :margin-bottom 20px
     :padding-bottom 30px
   #oy-about
-    :margin-top 0px
+    :margin-top 20px
     :float right
     :font-size 0.9em
-    :background-color #ffe
+    :border-bottom 1px dashed
+    :border-bottom-color silver
     :padding 5px
+    &:hover
+      .oy-msg
+        :color #364045
   #oy-body
     h1
       :font-size 2em
@@ -76,8 +82,17 @@ fieldset
     p
       :margin-bottom 30px
       :padding-left 10px
-      :background-color #F5F5F5
+      // :background-color #F5F5F5
       :padding 10px
+    ul
+      :padding-left 15px
+      :margin-bottom 20px
+    li
+      :margin-bottom 5px
+      // :background-color #F7F7F7
+      :padding 5px
+
+        
   #oy-sub
     ul
       :list-style-type none
@@ -85,21 +100,27 @@ fieldset
         :text-align right
         :float right
         :margin-left 10px
-        :font-size 0.7em
+        :font-size 0.8em
+        &:hover
+          a
+            :color = !clr_blink !important
         &.author
-          :color grey
+          :color #364045
+          :font-weight bold
           &:after
             :color silver
             :content " — "
         &.edit
-          :color black
           a
-            :color black
+            :color grey
+        &.back-in-time
+          a
+            :color grey
         &.ledit
           :color silver
           :margin-left 5px
           a
-            :color silver
+            :color grey
     :margin-top 30px
     :border-top 1px solid silver
 
@@ -112,6 +133,7 @@ a.oy-link
 .oy-sha
   :color silver
   :font-size 0.7em
+  :display none
 .oy-msg
   :color grey
   :font-size 0.8em

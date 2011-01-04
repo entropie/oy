@@ -5,6 +5,8 @@
       .oy-textbox
         You're about to edit
         %em= @path
+        &mdash; Formatting help? 
+        = "<small>(<a href='http://redcloth.org/hobix.com/textile/quick.html' target='_blank'>Its Textile!</a>)</small>"
         %textarea{:name => :data, :class => :body}= @raw_data
       .oy-messagebox
         %span Commit Message (optional)

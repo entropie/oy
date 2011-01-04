@@ -11,13 +11,14 @@ require "pp"
 
 ReposPath = File.expand_path("~/Source/oytest") 
 
-
 module OY
   
   Source = File.dirname(File.dirname(File.expand_path(__FILE__)))
 
   $: << File.join(Source, "lib/oy")
+  $: << File.join(Source, "app")
 
+  require "model/git"
   require "blob_entry.rb"
   require "git_access.rb"
 

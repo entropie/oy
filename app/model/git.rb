@@ -92,7 +92,7 @@ module OY
 
 
     def parse_result(result)
-      r = result.gsub(/\[{2}([a-zA-Z\/]*?)( [a-zA-Z\/]*?)?\]{2}/){|match|
+      r = result.gsub(/\[{2}([a-zA-Z0-9\/]*?)( [a-zA-Z0-9\/]*?)?\]{2}/){|match|
         url = $1.downcase
         cls = begin
                 repos.find_by_fragments(url) and "x"
@@ -158,7 +158,8 @@ module OY
       end
       yield index if block_given?
 
-      actor = Grit::Actor.new("michael", "foo@bar.baz")
+      
+      actor = options.actor || Grit::Actor.new("michael", "foo@bar.baz")
       index.commit(options.message, parents, actor)
     end
     

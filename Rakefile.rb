@@ -7,7 +7,6 @@
 require 'rubygems'
 require '../ramaze/lib/ramaze'
 require "lib/oy"
-require "app/model/git"
 require "redcloth"
 
 include OY
