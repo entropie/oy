@@ -52,19 +52,29 @@ class WikiController < OYController
 
   def new
     path = request[:path] or raise "no path given"
-    path = path[1..-1] if path[1..-1] == "/"
+    path = path[1..-1] if path[0..0] == "/"
     wiki = Wiki.create_bare("#{path}.textile")
-    
+
     wiki.create do |pg|
       pg.message = request[:message]
       pg.data    = request[:data]
     end
     redirect "#{path}"
+  rescue AlreadyExist
+    redirect request[:path]
   end
   
   def create(*fragments)
     path = if fragments.empty? then request[:path] else "/#{fragments.join("/")}" end
     redirect WikiController.r if path.to_s.empty?
+
+    begin
+      wiki = repos.find_by_fragments(*path.split("/"))
+    rescue NotFound
+    else
+      redirect wiki.path
+    end
+    
     @action = :new
     @path = path
     @identifier = File.basename(@path)

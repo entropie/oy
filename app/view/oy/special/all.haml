@@ -2,7 +2,7 @@
   %h1#oy-topic All Pages
   #oy-all
     - i = 0
-    - @contents.partition{|oby| (i+=1) % 2 == 0}.each do |row|
+    - @contents.partition{|oby| (i+=1) % 2 == 1}.each do |row|
       %ul
         - row.each do |w|
           %li
