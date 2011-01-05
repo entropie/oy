@@ -20,6 +20,9 @@ class SpecialController < OYController
     }.sort_by{|c| c.date}.reverse
   end
 
+  def upload
+  end
+
 end
 
 
