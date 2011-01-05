@@ -23,6 +23,10 @@ class SpecialController < OYController
   def upload
   end
 
+  def media(*fragments)
+    @img = File.join("/media/", *fragments)
+  end
+  
 end
 
 

@@ -7,3 +7,5 @@
     %form{:action => "/create", :method => :post}
       Create
       %input{:class => "oy-create-input", :value => "", :name => :path}
+  %li
+    %a{:href => SpecialController.r(:upload)}= "Upload<span>!</span>"

@@ -213,7 +213,7 @@ module OY
     else
       raise AlreadyExist, "already in tree '#{path}'"
     end
-  
+    
     
     def sha
       @commit.sha
@@ -252,6 +252,52 @@ module OY
     end
     
   end
+
+
+  class Media < Wiki
+
+
+    MediaPath = File.join(OY.repos.path, "media")
+    FileUtils.mkdir_p(MediaPath)
+
+    def Media.create_bare(path)
+      Media.new(nil, nil, "media/#{path}")
+    end
+
+    def self.upload_file(name, extname, tempfile, filename, type)
+      filec = File.open(tempfile.path, 'rb').read
+      fname = "#{name}#{extname}"
+      
+      Dir.chdir(MediaPath) do
+        FileUtils.copy(tempfile.path, fname)
+      end
+      bmedia = OY::Media.create_bare(fname)
+      media  = bmedia.create do |pg|
+        pg.message = "update"
+        pg.data = filec
+      end
+    end
+    
+    def create
+      opts = OpenStruct.new
+      yield opts if block_given?
+
+      Repos.write(path){|fp| fp << opts.data}
+
+      dir = ::File.dirname(path)
+      dir = "" if dir == "."
+
+      index = nil
+      sha = commit_index(opts) do |idx|
+        index = idx
+        index.add(path, opts.data)
+      end
+      fragments = path.split("/").reject{|p| p.empty?}
+      update_working_dir(index, '', page_name(path))
+    end
+
+  end
+
   
   class Repos
 
