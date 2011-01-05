@@ -24,7 +24,8 @@ class SpecialController < OYController
   end
 
   def media(*fragments)
-    @img = File.join("/media/", *fragments)
+    @img = File.join("/media/img/", *fragments)
+    p @img
   end
   
 end

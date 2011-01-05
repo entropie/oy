@@ -18,28 +18,27 @@ module OY
   $: << File.join(Source, "lib/oy")
   $: << File.join(Source, "app")
 
-  require "model/git"
-  require "blob_entry.rb"
-  require "git_access.rb"
-
   Version = [0, 0, 1]
 
   def path=(str)
     @path = str
   end
-  module_function :path=  
+  module_function "path="
     
-    def path
-      ReposPath || path
-    end
-    module_function :path  
-    
-    def repos
-      @repos ||= Repos.new(ReposPath)
-    end
-    module_function :repos
-    
+  def path
+    ReposPath || path
   end
+  module_function :path  
+  
+  def repos
+      @repos ||= Repos.new(ReposPath)
+  end
+  module_function :repos
+
+  require "model/git"
+  require "blob_entry.rb"
+  require "git_access.rb"
+end
 
 
 =begin

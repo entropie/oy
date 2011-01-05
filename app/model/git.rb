@@ -256,8 +256,7 @@ module OY
 
   class Media < Wiki
 
-
-    MediaPath = File.join(OY.repos.path, "media")
+    MediaPath = File.join(OY.path, "media")
     FileUtils.mkdir_p(MediaPath)
 
     def Media.create_bare(path)
@@ -268,7 +267,8 @@ module OY
       filec = File.open(tempfile.path, 'rb').read
       fname = "#{name}#{extname}"
       
-      Dir.chdir(MediaPath) do
+      Dir.chdir(Media::MediaPath) do
+        FileUtils.mkdir_p(File.dirname(fname))
         FileUtils.copy(tempfile.path, fname)
       end
       bmedia = OY::Media.create_bare(fname)
