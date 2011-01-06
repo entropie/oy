@@ -8,4 +8,6 @@
       Create
       %input{:class => "oy-create-input", :value => "", :name => :path}
   %li
+    %a{:href => SpecialController.r(:media)}= "Media<span>!</span>"
+  %li
     %a{:href => SpecialController.r(:upload)}= "Upload<span>!</span>"

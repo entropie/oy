@@ -7,6 +7,10 @@ class WikiController < OYController
   map :/
 
   include OY
+
+  def img(fragments)
+    redirect MediaController.r(:img, *fragments)
+  end
   
   def index(*fragments)
     key, *arguments = fragments

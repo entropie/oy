@@ -20,14 +20,19 @@ class SpecialController < OYController
     }.sort_by{|c| c.date}.reverse
   end
 
-  def upload
+  def media(*fragments)
+    unless fragments.empty?
+      @img = File.join("/media/", *fragments)
+      @size = File.size(File.join(repos.path, "media", *fragments[1..-1]))
+    else
+      Dir.chdir(repos.path) do
+        @images = Dir["media/**"]
+        @images.reject!{|i| File.directory?(i)}
+        @images.map!{|i| "/media/#{i.split('/')[1..-1].join('/')}"}
+      end
+    end
   end
 
-  def media(*fragments)
-    @img = File.join("/media/img/", *fragments)
-    p @img
-  end
-  
 end
 
 

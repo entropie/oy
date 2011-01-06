@@ -9,6 +9,7 @@ class MediaController < OYController
   engine :None
   set_layout_except 'layout' => [:img]
 
+
   def img(*fragments)
     if request[:p]
       redirect SpecialController.r(:media, :img, *fragments)
@@ -19,10 +20,8 @@ class MediaController < OYController
       response["Content-Type"] = "image/jpeg"
       File.open(file_path, 'rb').read
     end
-    
   end
   
-
   def upload
     if request.post?
       name = request[:name]
