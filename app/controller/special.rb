@@ -28,7 +28,7 @@ class SpecialController < OYController
       Dir.chdir(repos.path) do
         @images = Dir["media/**"]
         @images.reject!{|i| File.directory?(i)}
-        @images.map!{|i| "/media/#{i.split('/')[1..-1].join('/')}"}
+        @images.map!{|i| "/media/img/#{i.split('/')[1..-1].join('/')}"}
       end
     end
   end
