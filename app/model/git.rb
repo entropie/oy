@@ -45,14 +45,16 @@ module OY
       ident = @path.split(".").first
       case what
       when :perma
-        "#{ident}?sha=#{sha}"
+        "/#{ident}?sha=#{sha}"
       when :edit 
         # FIXME:
         "/edit/#{ident}"
       when :version
         "/#{ident}?sha=#{history.first.sha}"
+      when :history
+        "/history/#{ident}"
       else
-        "#{ident}"
+        "/#{ident}"
       end
     end
 

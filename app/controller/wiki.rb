@@ -34,6 +34,11 @@ class WikiController < OYController
       end
     end
   end
+
+  def history(*fragments)
+    @wiki = repos.find_by_fragments(*fragments)
+    @wikis = @wiki.history
+  end
   
   def edit(*fragments)
     @wiki = repos.find_by_fragments(*fragments)

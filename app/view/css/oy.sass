@@ -57,8 +57,13 @@ a
       :background-color = !clr_head_bg + 20
 
 #footer
-  :background-color grey
-  :display none
+  :clear both
+  :margin-top 100px
+  :background-color= !clr_rlight_black
+  :color = silver
+  :padding 30px
+  :padding-left 10%
+  :padding-right 10%
 
 fieldset
   :border 2px solid silver
@@ -86,6 +91,31 @@ fieldset
   
 #oy-topnav
   :text-align right
+
+#oy-history
+  h1
+    :font-size 2em
+    :margin-bottom 10px
+  ul
+    :list-style-type none
+    li
+      :padding 10px
+      &:hover
+        :background-color = !clr_ulight_bg
+      &.active
+        :background-color = !clr_light_bg
+  .oy-msg
+    :font-size 1.5em
+  .oy-sha
+    :float right
+    :font-size 14px
+    :display block
+    :font-family monospace
+  .oy-author
+    :font-size 14px    
+    :padding-right 10px
+    :float right
+    :color = !clr_rlight_black
 
 #oy-media-ls
   ul
@@ -154,6 +184,9 @@ fieldset
             :color silver
             :content " — "
         &.edit
+          a
+            :color grey
+        &.history
           a
             :color grey
         &.back-in-time

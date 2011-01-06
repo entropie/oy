@@ -1,0 +1,20 @@
+#oy-history
+  %h1 History
+  %ul
+    %li.active
+      - wiki = @wiki
+      .oy-sha
+        %a{:href => wiki.link(:perma)}= wiki.sha
+      .oy-author= wiki.author
+      .oy-msg
+        %a{:href => wiki.link(:perma)}= wiki.message
+      
+    - @wikis.each do |wiki|
+      %li
+        .oy-sha
+          %a{:href => wiki.link(:perma)}= wiki.sha
+        .oy-author= wiki.author
+        .oy-msg
+          %a{:href => wiki.link(:perma)}= wiki.message
+            
+  
