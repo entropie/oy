@@ -246,7 +246,11 @@ module OY
     end
 
     def message
-      @commit.message
+      ret = @commit.message
+      if ret.strip.empty?
+        return "&lt;no message&gt;"
+      end
+      ret
     end
 
     def title
