@@ -4,7 +4,7 @@
     %li.active
       - wiki = @wiki
       .oy-sha
-        %a{:href => wiki.link(:perma)}= wiki.sha
+        %a{:href => wiki.link(:perma)}= wiki.ref
       .oy-author= wiki.author
       .oy-msg
         %a{:href => wiki.link(:perma)}= wiki.message
@@ -12,7 +12,7 @@
     - @wikis.each do |wiki|
       %li
         .oy-sha
-          %a{:href => wiki.link(:perma)}= wiki.sha
+          %a{:href => wiki.link(:perma)}= wiki.ref
         .oy-author= wiki.author
         .oy-msg
           %a{:href => wiki.link(:perma)}= wiki.message
