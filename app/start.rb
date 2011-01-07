@@ -12,7 +12,6 @@ require "../lib/oy"
 
 require "model/git"
 
-
 require "redcloth"
 
 controller = %w"oy special media css wiki".map{ |lib|
