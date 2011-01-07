@@ -26,15 +26,17 @@ end
 (controller + libs).each{|lib| require lib}
 
 
-if `hostname`.strip == "io"
-  Ramaze.start(:host => "kommunism.us",
-               :port => 8200)
-else
-  Ramaze.start(:host => "localhost",
-               :port => 8200)
+if __FILE__ == $0
 
+  if `hostname`.strip == "io"
+    Ramaze.start(:host => "kommunism.us",
+                 :port => 8200)
+  else
+    Ramaze.start(:host => "localhost",
+                 :port => 8200)
+
+  end
 end
-
 
 
 
