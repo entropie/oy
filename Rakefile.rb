@@ -25,11 +25,16 @@ task :test do
   page = repos.find_by_path("media/MoarTits.jpg")
 
   p page.path
-  # bwiki = Wiki.create_bare("test/a/b/c/f00.textile")
-  # wiki = bwiki.create do |pg|
-  #   pg.message = "init las"
-  #   pg.data    = "asd"
-  # end
+  begin
+    bwiki = Wiki.create_bare("test/a/b/c/../f00.textile")
+    wiki = bwiki.create do |pg|
+      pg.message = "init las"
+      pg.data    = "asd"
+    end
+  rescue OY::IllegalAccess
+    p 2
+  end
+  
   #p wiki.data
   
 end
