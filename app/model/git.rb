@@ -59,7 +59,7 @@ module OY
     end
 
     # get complete history for +path+ Returns array of Wiki instances
-    def history(rsha = nil)
+    def history(rsha = nil, klass = Wiki)
       access = GitAccess.new
       seen = false
       @history = repos.git.log("master", path).
@@ -72,7 +72,7 @@ module OY
             nil
           elsif seen
             blob = b.blob(repos.git)
-            Wiki.new(blob, commit, b.path)
+            klass.new(blob, commit, b.path)
           end
         }.compact
       }.flatten
@@ -207,7 +207,7 @@ module OY
       update_working_dir(index, '', page_name(path))
       repos.find_by_fragments(*fragments)
     end
-
+4
     def self.create_bare(path)
       ret = OY.repos.find_by_fragments(path)
     rescue NotFound
@@ -236,7 +236,7 @@ module OY
     def data
       with_template(@blob.data)
     end
-
+4
     def raw_data
       @blob.data
     end
@@ -259,6 +259,10 @@ module OY
 
     def title
       @blob.basename.split(".").first.capitalize
+    end
+
+    def size
+      File.size(File.join(repos.path, path))
     end
     
   end
@@ -306,6 +310,26 @@ module OY
       update_working_dir(index, '', page_name(path))
     end
 
+    def media_identifier
+      path.split("/")[1..-1].join("/")
+    end
+    
+    def media_url(with_sha = false)
+      add = with_sha ? "?sha=#{sha}" : ''
+      frags = path.split("/")[1..-1]
+      "/media/img/#{frags.join("/")}#{add}"
+    end
+
+    def permalink(with_sha = false)
+      add = with_sha ? "?sha=#{sha}" : ''
+      frags = path.split("/")[1..-1]
+      "/oy/special/media/#{frags.join("/")}#{add}"
+    end
+
+    def history(rsha = nil)
+      super(rsha, self.class)
+    end
+    
   end
 
   
@@ -331,8 +355,31 @@ module OY
       @git = Grit::Repo.new(path)
     end
 
+    def find_by_path(path)
+      file = nil
+
+      commit = git.log("master", path).first
+
+      raise NotFound, "not found" unless commit
+      tree = commit.tree("master")
+      
+      path.split("/").each do |frag|
+        sub = tree/frag
+        case sub
+        when Grit::Tree
+          tree = sub
+        when Grit::Blob
+          file = tree/frag
+        else
+          raise NotFound, "not found"
+        end
+      end
+
+      klass = if path =~ /\.textile$/ then Wiki else Media end
+      klass.new(file, commit, path)
+    end
+    
     def find_by_fragments(*fragments)
-      access = GitAccess.new
       file = nil
       # FIXME:
       fragments[0] = "index" unless fragments[0]

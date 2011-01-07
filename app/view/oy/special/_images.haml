@@ -1,7 +1,7 @@
-%h1 Media
 #oy-media-ls
+  %h1 Media
   %ul
     - @images.each do |img|
-      %li
-        %a{:href => img}
-          %img{:src => img}
+      %li.float
+        %a{:href => "#{img.permalink}"}
+          %img{:src => "#{img.media_url}"}

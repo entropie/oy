@@ -22,13 +22,21 @@ class SpecialController < OYController
 
   def media(*fragments)
     unless fragments.empty?
-      @img = File.join("/media/", *fragments)
-      @size = File.size(File.join(repos.path, "media", *fragments[1..-1]))
+      imgpath = File.join("media/", *fragments)
+      @img = repos.find_by_path(imgpath)
+
+      if sha = request[:sha]
+        @perma_link_value = sha
+        @img = @img.history(sha)
+      end
+      @size = @img.size
     else
       Dir.chdir(repos.path) do
         @images = Dir["media/**"]
         @images.reject!{|i| File.directory?(i)}
-        @images.map!{|i| "/media/img/#{i.split('/')[1..-1].join('/')}"}
+        @images.map!{|i|
+          repos.find_by_path(i)
+        }
       end
     end
   end

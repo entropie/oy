@@ -144,17 +144,40 @@ fieldset
     :color = !clr_rlight_black
 
 #oy-media-ls
+  .oy-backlink
+    :text-align right
+    :float right
+    a
+      :color = !clr_rlight_blue
+  img
+    :max-width 800px
+  hr
+    :border 1px solid silver
   ul
     :list-style-type none
     li
-      :float left
+      &.float
+        :float left
+        :width 150px
+        :height 150px
       img
-        :max-width 40%
-        :max-height 200px
+        :max-width 150px
+        :max-height 150px
+  .oy-msg
+    :text-align right
   h1
+    :color = !clr_rlight_blue
     :font-size 2em
     :margin-bottom 10px
+  h2
+    :color = !clr_rlight_blue
+    :font-size 1.5em
+    :margin-bottom 10px
 
+    
+#fork
+  :display none
+    
 #oy-page
   #oy-topic
     :text-shadow 1px 1px grey
@@ -238,6 +261,9 @@ a.oy-link
   :color grey
   :font-size 0.8em
   :margin-top -5px
+.oy-date
+  :color grey
+  :font-size 0.8em
 
 #oy-all
   ul

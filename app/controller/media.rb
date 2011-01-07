@@ -7,6 +7,8 @@ class MediaController < OYController
   map "/media"
 
   engine :None
+  include OY
+  
   set_layout_except 'layout' => [:img]
 
 
@@ -18,7 +20,12 @@ class MediaController < OYController
       content_type ||= Rack::Mime.mime_type(::File.extname(file_path))
       response['Content-Length'] = ::File.size(file_path).to_s
       response["Content-Type"] = "image/jpeg"
-      File.open(file_path, 'rb').read
+
+      @img = repos.find_by_path("media/#{fragments.join("/")}")
+      if sha = request[:sha]
+        @img = @img.history(sha)
+      end
+      @img.data
     end
   end
   
@@ -33,7 +40,7 @@ class MediaController < OYController
 
       OY::Media::upload_file(name, @extname, tempfile, filename, @type)
 
-      redirect "/media/img/#{name}#{@extname}"
+      redirect "/media/#{name}#{@extname}"
     end
   end
 

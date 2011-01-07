@@ -22,12 +22,14 @@ task :test do
   #   pg.author = "Michael"
   #   pg.data = t << "234 ssdaas 1111 112\nsakdjsakd sasas" << t
   # end
+  page = repos.find_by_path("media/MoarTits.jpg")
 
-  bwiki = Wiki.create_bare("test/a/b/c/f00.textile")
-  wiki = bwiki.create do |pg|
-    pg.message = "init las"
-    pg.data    = "asd"
-  end
+  p page.path
+  # bwiki = Wiki.create_bare("test/a/b/c/f00.textile")
+  # wiki = bwiki.create do |pg|
+  #   pg.message = "init las"
+  #   pg.data    = "asd"
+  # end
   #p wiki.data
 
   
