@@ -15,8 +15,8 @@
       Identifier
       %input{:type => :text, :class => :img_ident, :value => @img.media_identifier}
   %hr    
-    %h2 History
     - if @img.has_parent?
+      %h2 History
       %ul
         - @img.history.each do |himg|
           %li.no-force
