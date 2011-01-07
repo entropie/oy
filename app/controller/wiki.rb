@@ -57,7 +57,7 @@ class WikiController < OYController
       pg.message = request[:message] || ""
       pg.data    = request[:data]
     end
-    redirect WikiController.r("/#{path}")
+    redirect WikiController.r(path)
   end
 
   def new
@@ -70,7 +70,7 @@ class WikiController < OYController
       pg.data    = request[:data]
     end
 
-    redirect WikiController.r("#{path}")
+    redirect WikiController.r(path)
   rescue AlreadyExist
     redirect WikiController.r(request[:path])
   end

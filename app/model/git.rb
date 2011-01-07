@@ -3,13 +3,17 @@
 # Author:  Michael 'entropie' Trommer <mictro@gmail.com>
 #
 
-class NotFound < Exception
-end
-
-class AlreadyExist < Exception
-end
-
 module OY
+
+
+  class NotFound < Exception
+  end
+
+  class AlreadyExist < Exception
+  end
+
+  class IllegalAccess < Exception
+  end
 
   class Wiki
 
@@ -160,8 +164,7 @@ module OY
       end
       yield index if block_given?
 
-      
-      actor = options.actor || Grit::Actor.new("michael", "foo@bar.baz")
+      actor = options.actor || OY::Actor
       index.commit(options.message, parents, actor)
     end
     
@@ -169,6 +172,9 @@ module OY
     def update
       opts = OpenStruct.new
       yield opts if block_given?
+
+      Repos.expand_path(path)
+      Repos.write(path){|fp| fp << opts.data}
 
       dir = ::File.dirname(path)
       dir = "" if dir == "."
@@ -178,8 +184,6 @@ module OY
         index = idx
         index.add(path, opts.data)
       end
-      
-      Repos.write(path){|fp| fp << opts.data}
 
       update_working_dir(index, dir, page_name(path))
       sha
@@ -193,6 +197,7 @@ module OY
       opts = OpenStruct.new
       yield opts if block_given?
 
+      Repos.expand_path(path)
       Repos.write(path){|fp| fp << opts.data}
 
       dir = ::File.dirname(path)
@@ -207,7 +212,7 @@ module OY
       update_working_dir(index, '', page_name(path))
       repos.find_by_fragments(*fragments)
     end
-4
+    4
     def self.create_bare(path)
       ret = OY.repos.find_by_fragments(path)
     rescue NotFound
@@ -236,7 +241,7 @@ module OY
     def data
       with_template(@blob.data)
     end
-4
+    4
     def raw_data
       @blob.data
     end
@@ -282,6 +287,7 @@ module OY
       fname = "#{name}#{extname}"
       
       Dir.chdir(Media::MediaPath) do
+        check = Repos.expand_path(fname)
         FileUtils.mkdir_p(File.dirname(fname))
         FileUtils.copy(tempfile.path, fname)
       end
@@ -296,6 +302,7 @@ module OY
       opts = OpenStruct.new
       yield opts if block_given?
 
+      Repos.expand_path(path)
       Repos.write(path){|fp| fp << opts.data}
 
       dir = ::File.dirname(path)
@@ -339,6 +346,7 @@ module OY
     attr_reader    :git
 
     def self.expand_path(npath)
+      raise IllegalAccess, "illegal path" if npath.to_s.include?("..")
       File.join(OY.path, npath)
     end
 
