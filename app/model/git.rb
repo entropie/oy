@@ -221,6 +221,10 @@ module OY
       @commit.sha
     end
 
+    def ref
+      @commit.sha[0..7]
+    end
+
     def id
       @commit.id
     end

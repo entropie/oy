@@ -8,18 +8,51 @@
 !clr_head_bg = #6E1400
 !clr_link_on_dark = #F2F2F2
 !clr_blue_link = #C2A908  
+
+
+html
+  :height 100%
+
 body
   :color #222
-
+  :height 100%
+  :font-family tahoma, 'Times New Roman', Georgia, serif
+  
 a
   :color #00f
   :text-decoration none
   
 #wrap
-  :margin-top 30px
-  :margin-bottom 30px  
+  :min-height 100%
+  :height auto !important
+  :height 100%
+  :margin 0 auto -250px
+
+#oy-wrap
   :margin-left 10%
   :margin-right 10%
+
+#footer
+  :background-color #120509
+  :height 250px
+  :position relative
+  p
+    :padding-left 10%
+    :padding-right 10%
+    :padding-top 20px
+    :color = !clr_blue_link
+
+#oy-ab
+  :position absolute
+  :right 10%
+  :bottom 20px
+  :color = !clr_blue_link
+  
+.push
+  :height 250px
+  :clear both
+  :padding-bottom 30px
+
 
 #head
   :margin-left 0
@@ -31,6 +64,7 @@ a
   :-webkit-box-shadow 5px 5px 7px #aaaaaa
   :-moz-box-shadow 5px 5px 7px #aaaaaa
   :box-shadow 5px 5px 7px #aaaaaa
+  :margin-bottom 30px
   ul
     :margin-bottom 15px
     :list-style-type none
@@ -56,15 +90,7 @@ a
       :border-radius 5px
       :background-color = !clr_head_bg + 20
 
-#footer
-  :clear both
-  :margin-top 100px
-  :background-color= !clr_rlight_black
-  :color = silver
-  :padding 30px
-  :padding-left 10%
-  :padding-right 10%
-
+    
 fieldset
   :border 2px solid silver
   :padding 20px
@@ -134,7 +160,6 @@ fieldset
     :text-shadow 1px 1px grey
     :font-size 2em
     :color = !clr_rlight_blue
-    //:color silver
     :border-bottom 1px solid silver
     :letter-spacing 7px
     :margin-bottom 20px
@@ -154,19 +179,18 @@ fieldset
     p
       :margin-bottom 10px
       :padding-left 10px
-      // :background-color #F5F5F5
       :padding 10px
     ul
       :padding-left 15px
       :margin-bottom 20px
       :color = !clr_rlight_black
     li
-      :margin-bottom 5px
-      // :background-color #F7F7F7
+      :margin-bottom 1px
       :padding 5px
-
-        
+    img
+      :border none
   #oy-sub
+    :clear both
     ul
       :list-style-type none
       li

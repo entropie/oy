@@ -1,9 +1,10 @@
 !!! XML
 !!! Strict
-%html
+%html{:xmlns => "http://www.w3.org/1999/xhtml"}
   %head
 
-    %title OY!
+    %title
+      = @title.nil? ? "Oy!" : "#{@title} &mdash; Oy!"
     %meta{'http-equiv' => "Content-Type",  :content => "text/html; charset=utf-8"}/
     %meta{'http-equiv' => "Cache-Control", :content => "NO-CACHE"}/
 
@@ -20,11 +21,16 @@
     %script{:type => "text/javascript", :src => "/js/oy.js"}=""
     
   %body
-    #fork
-      = render_file "view/_fork.html"
-    #head
-      = render_file "view/_head.haml"
     #wrap
-      = @content
+      #fork
+        = render_file "view/_fork.html"
+      #head
+        = render_file "view/_head.haml"
+
+      #oy-wrap
+        = @content
+        .push
     #footer
-      lalalal
+      %p
+      #oy-ab
+        Oy!
