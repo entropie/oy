@@ -40,7 +40,7 @@ class MediaController < OYController
 
       OY::Media::upload_file(name, @extname, tempfile, filename, @type)
 
-      redirect "/media/#{name}#{@extname}"
+      redirect SpecialController.r(:media, "#{name}#{@extname}")
     end
   end
 
