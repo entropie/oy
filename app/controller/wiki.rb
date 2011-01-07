@@ -97,7 +97,7 @@ class WikiController < OYController
       wiki = repos.find_by_fragments(*fragments)
     rescue NotFound
     else
-      @data = lines(wiki.diff(v1, v2).first.diff)
+      @data = lines(wiki.diff(v2, v1).first.diff)
     end
   end
 
