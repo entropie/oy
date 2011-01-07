@@ -44,9 +44,13 @@ module OY
     def permalink
       link(:perma)
     end
+
+    def ident
+      ident = @path.split(".").first
+    end
     
     def link(what = nil)
-      ident = @path.split(".").first
+
       case what
       when :perma
         "/#{ident}?sha=#{sha}"
@@ -57,9 +61,15 @@ module OY
         "/#{ident}?sha=#{history.first.sha}"
       when :history
         "/history/#{ident}"
+      when :compare
+        "/compare/#{sha}/#{history.first.sha}/#{ident}"
       else
         "/#{ident}"
       end
+    end
+
+    def diff(v1, v2)
+      repos.git.diff(v1, v2, path)
     end
 
     # get complete history for +path+ Returns array of Wiki instances

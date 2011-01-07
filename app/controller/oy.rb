@@ -8,6 +8,13 @@ class OYController < Ramaze::Controller
   engine :Haml
   
   set_layout_except 'layout'
+
+
+  private
+
+  def time_to_s(t)
+    t.strftime("%d-%b-%y")
+  end
 end
 
 

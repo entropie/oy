@@ -7,15 +7,18 @@
   #oy-body
     = @wiki.data
   #oy-sub
-    %ul
-      - if @wiki.has_parent?
-        %li.back-in-time
-          %a{:href => @wiki.link(:version), :title => "Goto Previous Version"} Back In Time
-        %li.history
-          %a{:title => "History", :href => @wiki.link(:history)} History
-      %li.edit
-        %a{:title => "Edit Page", :href => @wiki.link(:edit)} Edit
+    %ul.left
       %li.ledit
         Last edited:
-        %a{:title => "Last Edit / Permalink to this Version", :href => WikiController.r(@wiki.permalink), :class => "oy-perma"}= @wiki.date
+        %a{:title => "Last Edit / Permalink to this Version", :href => WikiController.r(@wiki.permalink), :class => "oy-perma"}= time_to_s(@wiki.date)
       %li.author{:title => "Author of this Version"}= @wiki.author
+    %ul.right
+      - if @wiki.has_parent?
+        %li.history.awesome.silver
+          %a{:title => "History", :href => @wiki.link(:history)} History
+        %li.back-in-time.awesome.silver
+          %a{:href => @wiki.link(:version), :title => "Goto Previous Version"} Back In Time
+        %li.compare.awesome.silver
+          %a{:title => "Compare with last Version", :href => @wiki.link(:compare)} Compare
+      %li.edit.awesome.silver
+        %a{:title => "Edit Page", :href => @wiki.link(:edit)} Edit

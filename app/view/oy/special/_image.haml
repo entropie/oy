@@ -10,17 +10,14 @@
     Commit Message:
     %em
       =@img.message
-  %hr
-    %p
-      Identifier
-      %input{:type => :text, :class => :img_ident, :value => @img.media_identifier}
-  %hr    
-    - if @img.has_parent?
-      %h2 History
-      %ul
-        - @img.history.each do |himg|
-          %li.no-force
-            .oy-date= himg.date
-            .lala
-              %a{:href => himg.permalink(true)}= himg.ref
+  .oy-replace
+    = render_file "view/oy/special/upload.haml", :value => @img.media_identifier.split(".").first, :title => "Replace"
+  - if @img.has_parent?
+    %h2 History
+    %ul
+      - @img.history.each do |himg|
+        %li.no-force
+          .oy-date= himg.date
+          .lala
+            %a{:href => himg.permalink(true)}= himg.ref
 

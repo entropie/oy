@@ -1,0 +1,12 @@
+#oy-page
+  %h1#oy-topic Compare
+  %table.compare
+    - @data.each do |data|
+      %tr.line
+        %td.line-nr= data[:ldln]
+        %td.line-nr= data[:rdln]
+        %td
+          %pre
+            %div{:class => data[:class]}=data[:line]
+      
+
