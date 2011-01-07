@@ -11,7 +11,6 @@ class MediaController < OYController
   
   set_layout_except 'layout' => [:img]
 
-
   def img(*fragments)
     if request[:p]
       redirect SpecialController.r(:media, :img, *fragments)

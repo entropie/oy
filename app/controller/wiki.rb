@@ -50,14 +50,14 @@ class WikiController < OYController
   def update
     path = request[:path] or raise "no path given"
 
-    redirect "/#{path}" unless request.post?
+    redirect WikiController.r("/#{path}") unless request.post?
     
     wiki = repos.find_by_fragments(*path.split("/"))
     wiki.update do |pg|
       pg.message = request[:message] || ""
       pg.data    = request[:data]
     end
-    redirect "/#{path}"
+    redirect WikiController.r("/#{path}")
   end
 
   def new
@@ -69,9 +69,10 @@ class WikiController < OYController
       pg.message = request[:message]
       pg.data    = request[:data]
     end
-    redirect "#{path}"
+
+    redirect WikiController.r("#{path}")
   rescue AlreadyExist
-    redirect request[:path]
+    redirect WikiController.r(request[:path])
   end
   
   def create(*fragments)
@@ -82,7 +83,7 @@ class WikiController < OYController
       wiki = repos.find_by_fragments(*path.split("/"))
     rescue NotFound
     else
-      redirect wiki.path
+      redirect WikiController.r(wiki.path)
     end
     
     @action = :new
