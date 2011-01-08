@@ -33,8 +33,13 @@ module OY
   end
   module_function :path  
   
-  def repos
-    @repos ||= Repos.new(ReposPath)
+  def repos(with_git = true)
+    if with_git
+      @repos = Repos.new(ReposPath)
+    else
+      @repos = VirtualRepos.new(ReposPath)
+    end
+
   end
   module_function :repos
 
@@ -42,6 +47,8 @@ module OY
   require "blob_entry.rb"
   require "git_access.rb"
 
+  require "repos"
+  require "exceptions.rb"
   require "markup"
 end
 

@@ -16,12 +16,18 @@ class WikiController < OYController
     key, *arguments = fragments
 
     methods = public_methods
+
     if methods.include?(key)
       call(key.to_sym, *arguments)
     else
       begin
-        @wiki = repos.find_by_fragments(*fragments)
+
+        @wiki = repos(false).find_by_fragments(*fragments)
+
         if sha = request[:sha]
+          # use git repos
+          @wiki = repos.find_by_fragments(*fragments)
+
           unless @wiki.sha == sha
             parent = @wiki
             @wiki = @wiki.history(sha)
@@ -29,6 +35,7 @@ class WikiController < OYController
           end
         end
         @title = @wiki.title
+
       rescue NotFound
         redirect WikiController.r(:create, *fragments)
       end

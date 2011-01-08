@@ -23,8 +23,9 @@ class MediaController < OYController
       response['Content-Length'] = ::File.size(file_path).to_s
       response["Content-Type"] = "image/jpeg"
 
-      @img = repos.find_by_path("media/#{fragments.join("/")}")
+      @img = repos(false).find_by_path("media/#{fragments.join("/")}")
       if sha = request[:sha]
+        @img = repos.find_by_path("media/#{fragments.join("/")}")
         @img = @img.history(sha)
       end
       @img.data

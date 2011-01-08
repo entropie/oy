@@ -41,9 +41,17 @@ end
 
 
 task :markup do
-  pp OY::Markup::Markups[:compare]
-  # page = repos.find_by_fragments("index")
-  # p page.data
+  # page = repos(false).find_by_fragments("index")
+
+  # p page
+  # p page.to_commit
+
+
+  page1 = repos(false).find_by_path("media/MoarTits.jpg")
+  page2 = repos(false).find_by_fragments("media", "MoarTits.jpg")
+  p page1.data == page2.data
+
+  
 end
 
 

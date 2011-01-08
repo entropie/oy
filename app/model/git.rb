@@ -6,14 +6,12 @@
 module OY
 
 
-  class NotFound < Exception
+  module AccessViaGit
   end
 
-  class AlreadyExist < Exception
+  module AccessViaFs
   end
-
-  class IllegalAccess < Exception
-  end
+  
 
   class Wiki
 
@@ -141,7 +139,6 @@ module OY
         end
       end
     end
-    
     
     def commit_index(options = {})
       normalize_commit(options)
@@ -335,81 +332,34 @@ module OY
     
   end
 
-  
-  class Repos
-
-    attr_reader    :path
-    attr_reader    :git
-
-    def self.expand_path(npath)
-      raise IllegalAccess, "illegal path" if npath.to_s.include?("..")
-      File.join(OY.path, npath)
+  class Physical < Wiki
+    def title
+      File.basename(path).split(".").first.capitalize
     end
 
-    def self.write(path)
-      path = Repos.expand_path(path)
-      FileUtils.mkdir_p(File.dirname(path))
-      File.open(path, 'w+') do |fp|
-        yield fp
-      end
+    def data
+      @data ||= File.open(Repos.expand_path(path), 'rb').read
+      with_markup
+    end
+
+    def is_media?
+      File.dirname(path) == "media"
     end
     
-    def initialize(path)
-      @path = path
-      @git = Grit::Repo.new(path)
+    def with_markup(force_extension = nil)
+      ret = @data
+      return ret if is_media?
+      ["*", (force_extension || extension)].inject(ret){|memo, mup|
+        Markup.choose_for(mup).new(memo).to_html
+      }
     end
 
-    def find_by_path(path)
-      file = nil
-
-      commit = git.log("master", path).first
-
-      raise NotFound, "not found" unless commit
-      tree = commit.tree("master")
-      
-      path.split("/").each do |frag|
-        sub = tree/frag
-        case sub
-        when Grit::Tree
-          tree = sub
-        when Grit::Blob
-          file = tree/frag
-        else
-          raise NotFound, "not found"
-        end
-      end
-
-      klass = if path =~ /\.textile$/ then Wiki else Media end
-      klass.new(file, commit, path)
+    def extension
+      File.basename(path).split(".").last
     end
     
-    def find_by_fragments(*fragments)
-      file = nil
-      # FIXME:
-      fragments[0] = "index" unless fragments[0]
-      fragments[-1] = fragments[-1] += ".textile" unless fragments[-1] =~ /\.textile$/
-
-      commit = git.log("master", fragments.join("/")).first
-
-      raise NotFound, "not found" unless commit
-      tree = commit.tree("master")
-      
-      fragments.each do |frag|
-        sub = tree/frag
-        case sub
-        when Grit::Tree
-          tree = sub
-        when Grit::Blob
-          file = tree/frag
-        else
-          raise NotFound, "not found"
-        end
-      end
-      Wiki.new(file, commit, fragments.join("/"))
-    end
-
   end
-  
+ 
 end
 
 
