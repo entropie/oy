@@ -34,7 +34,7 @@ module OY
   module_function :path  
   
   def repos
-      @repos ||= Repos.new(ReposPath)
+    @repos ||= Repos.new(ReposPath)
   end
   module_function :repos
 
