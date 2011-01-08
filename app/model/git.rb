@@ -84,6 +84,7 @@ module OY
         return history.select{|his| his.sha == rsha}.first
       end
 
+      access.refresh
       @history
     end
 
@@ -119,14 +120,15 @@ module OY
       end.split(".").first
     end
 
-    def page_filename(path)
-      path
+    def page_filename(path = nil)
+      path || self.path
     end
     
     def update_working_dir(index, dir, name)
       unless repos.git.bare
-        puts ">>> #{:uwd}: #{dir}"
-        Dir.chdir(::File.join(repos.path, '..')) do
+        tdir = ::File.join(repos.path, '..')
+        puts ">>> #{:uwd}: #{tdir} : #{path}"
+        Dir.chdir(tdir) do
           repos.git.git.checkout({}, 'HEAD', '--', path)
         end
       end
@@ -171,7 +173,7 @@ module OY
     end
 
     def exist?
-      @blob && @commit
+      @blob && @commit && true
     end
     
     def create

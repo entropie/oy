@@ -6,6 +6,7 @@
 require "rubygems"
 require "grit"
 require "ostruct"
+require "redcloth"
 
 require "pp"
 
@@ -29,15 +30,15 @@ module OY
   module_function "path="
     
   def path
-    ReposPath || path
+    @path || ReposPath
   end
   module_function :path  
   
   def repos(with_git = true)
     if with_git
-      @repos = Repos.new(ReposPath)
+      @repos = Repos.new(OY.path)
     else
-      @repos = VirtualRepos.new(ReposPath)
+      @repos = VirtualRepos.new(OY.path)
     end
 
   end

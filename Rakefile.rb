@@ -55,6 +55,25 @@ task :markup do
 end
 
 
+task :run_spec do
+  gem "rspec"
+  require "spec/spec"
+end
+
+task :create_spec_env do
+  sh   "mkdir -p spec/testrepos && cd spec/testrepos && git init"
+  ruby "-r spec/helper.rb spec/mk_specwiki.rb"
+end
+
+task :clean do
+  File.exist?("spec/testrepos") and sh "rm -r spec/testrepos"
+end
+
+task :spec => [:clean, :create_spec_env, :run_spec] do
+end
+
+
+
 =begin
 Local Variables:
   mode:ruby
