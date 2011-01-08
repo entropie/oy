@@ -50,7 +50,6 @@ module OY
     end
     
     def link(what = nil)
-
       case what
       when :perma
         "/#{ident}?sha=#{sha}"
@@ -106,7 +105,7 @@ module OY
       has_parent? and history.first
     end
 
-    # first applys Markup::Global then the corresponding Markup for the extension
+    # first applies Markup::Global then the corresponding Markup for the extension
     def with_markup(force_extension = nil)
       ret = @blob.data
       ["*", (force_extension || extension)].inject(ret){|memo, mup|
@@ -269,7 +268,7 @@ module OY
   class Media < Wiki
 
     MediaPath = File.join(OY.path, "media")
-    FileUtils.mkdir_p(MediaPath)
+    FileUtils.mkdir_p(MediaPath) unless File.exist?(MediaPath)
 
     def with_markup
       @blob.data
