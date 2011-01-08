@@ -40,6 +40,13 @@ task :test do
 end
 
 
+task :markup do
+  pp OY::Markup::Markups[:compare]
+  # page = repos.find_by_fragments("index")
+  # p page.data
+end
+
+
 =begin
 Local Variables:
   mode:ruby

@@ -20,6 +20,7 @@ module OY
   $: << File.join(Source, "lib/oy")
   $: << File.join(Source, "app")
 
+
   Version = [0, 0, 1]
 
   def path=(str)
@@ -40,6 +41,8 @@ module OY
   require "model/git"
   require "blob_entry.rb"
   require "git_access.rb"
+
+  require "markup"
 end
 
 

@@ -106,29 +106,12 @@ module OY
       has_parent? and history.first
     end
 
-
-    def parse_result(result)
-      r = result.gsub(/\[{2}([a-zA-Z0-9\/]*?)( [a-zA-Z0-9\/]*?)?\]{2}/){|match|
-        url = $1.downcase
-        cls = begin
-                repos.find_by_fragments(url) and "x"
-              rescue NotFound
-                "o"
-              end
-        "<a href='/#{url}' class='oy-link #{cls}'>#{($2 || $1).strip}</a>"
+    # first applys Markup::Global then the corresponding Markup for the extension
+    def with_markup(force_extension = nil)
+      ret = @blob.data
+      ["*", (force_extension || extension)].inject(ret){|memo, mup|
+        Markup.choose_for(mup).new(memo).to_html
       }
-      r
-    end
-
-    
-    def with_template(data)
-      result = parse_result(data)
-      case extension
-      when "textile"
-        RedCloth.new(result).to_html
-      else
-        data
-      end
     end
 
     def create(&block)
@@ -249,7 +232,7 @@ module OY
     end
     
     def data
-      with_template(@blob.data)
+      with_markup
     end
 
     def raw_data
@@ -287,6 +270,10 @@ module OY
 
     MediaPath = File.join(OY.path, "media")
     FileUtils.mkdir_p(MediaPath)
+
+    def with_markup
+      @blob.data
+    end
 
     def Media.create_bare(path)
       Media.new(nil, nil, "media/#{path}")
