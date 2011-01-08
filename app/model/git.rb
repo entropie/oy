@@ -251,7 +251,7 @@ module OY
     def data
       with_template(@blob.data)
     end
-    4
+
     def raw_data
       @blob.data
     end
