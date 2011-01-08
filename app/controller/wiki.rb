@@ -17,7 +17,7 @@ class WikiController < OYController
     "#{key}:  #{arguments.join(",")}"
 
     methods = public_methods
-    if public_methods.include?(key)
+    if methods.include?(key)
       call(key.to_sym, *arguments)
     else
       begin
