@@ -12,8 +12,8 @@ describe OY do
   end
 
   it "Should be possible to change the Repos.path" do
-    OY.path = File.join(OY::Source, "spec/testrepos")
-    OY.path.should == File.join(OY::Source, "spec/testrepos")
+    OY.path = "/tmp/testrepos"
+    OY.path.should == "/tmp/testrepos"
   end
   
   it "Should habe a default Actor" do

@@ -6,7 +6,7 @@
 require 'rubygems'
 require "spec/helper"
 
-OY.path = File.join(OY::Source, "spec/testrepos")
+#OY.path = File.join(OY::Source, "/tmp/testrepos")
 include OY
 
 def spec_create_wiki_page(path, data=nil, actor=nil, message=nil)

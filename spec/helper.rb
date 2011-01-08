@@ -6,7 +6,7 @@
 require "lib/oy"
 include OY
 
-OY.path = File.join(OY::Source, "spec/testrepos")
+OY.path = "/tmp/testrepos"
 
 =begin
 Local Variables:

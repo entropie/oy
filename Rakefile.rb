@@ -50,10 +50,7 @@ task :markup do
   page1 = repos(false).find_by_path("media/MoarTits.jpg")
   page2 = repos(false).find_by_fragments("media", "MoarTits.jpg")
   p page1.data == page2.data
-
-  
 end
-
 
 task :run_spec do
   gem "rspec"
@@ -61,12 +58,12 @@ task :run_spec do
 end
 
 task :create_spec_env do
-  sh   "mkdir -p spec/testrepos && cd spec/testrepos && git init"
+  sh   "mkdir -p /tmp/testrepos && cd /tmp/testrepos && git init"
   ruby "-r spec/helper.rb spec/mk_specwiki.rb"
 end
 
 task :clean do
-  File.exist?("spec/testrepos") and sh "rm -r spec/testrepos"
+  File.exist?("/tmp/testrepos") and sh "rm -r /tmp/testrepos"
 end
 
 task :spec => [:clean, :create_spec_env, :run_spec] do
