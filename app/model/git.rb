@@ -222,7 +222,7 @@ module OY
       update_working_dir(index, '', page_name(path))
       repos.find_by_fragments(*fragments)
     end
-    4
+
     def self.create_bare(path)
       ret = OY.repos.find_by_fragments(path)
     rescue NotFound
