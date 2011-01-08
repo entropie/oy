@@ -5,14 +5,6 @@
 
 module OY
 
-
-  module AccessViaGit
-  end
-
-  module AccessViaFs
-  end
-  
-
   class Wiki
 
     attr_reader :blob, :commit, :path, :repos
