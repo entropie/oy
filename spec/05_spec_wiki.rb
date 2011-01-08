@@ -136,7 +136,7 @@ describe OY::Wiki do
 
   it "Should apply a markup on #data" do
     page = repos.find_by_fragments("index")
-    page.data.should == "<h2>index</h2>\n<p>lalala</p>"
+    page.data.should =~ /^<h2>index<\/h2>/
   end
 
   it "Should respond tp #page_name" do
