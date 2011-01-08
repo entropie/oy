@@ -73,6 +73,36 @@ describe OY::Wiki do
     page.permalink.should == "/#{page.ident}?sha=#{page.sha}"
   end
 
+  it "Should have a link(:perma)" do
+    page = repos.find_by_fragments("index")
+    page.link(:perma).should == "/#{page.ident}?sha=#{page.sha}"
+  end
+
+  it "Should have a link(:edit)" do
+    page = repos.find_by_fragments("index")
+    page.link(:edit).should == "/edit/index"
+  end
+
+  it "Should have a link(:version)" do
+    page = repos.find_by_fragments("index")
+    page.link(:version).should == "/#{page.ident}?sha=#{page.parent.sha}"
+  end
+
+  it "Should have a link(:history)" do
+    page = repos.find_by_fragments("index")
+    page.link(:history).should == "/history/#{page.ident}"
+  end
+
+  it "Should have a link(:compare)" do
+    page = repos.find_by_fragments("index")
+    page.link(:compare).should == "/compare/#{page.sha}/#{page.history.first.sha}/#{page.ident}"
+  end
+
+  it "Should have a link" do
+    page = repos.find_by_fragments("index")
+    page.link.should == "/#{page.ident}"
+  end
+  
   it "Should have a #parent" do
     page = repos.find_by_fragments("index")
     page.parent.class.should == Wiki
