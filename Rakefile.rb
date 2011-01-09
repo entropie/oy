@@ -29,6 +29,8 @@ end
 task :spec => [:clean, :create_spec_env, :run_spec_wo] do
 end
 
+task :dry  => [:clean, :create_spec_env]
+
 require "rspec"
 RSpec::Core::RakeTask.new(:run_spec) do |t|
   t.pattern = Dir.glob('spec/**/*_spec_*.rb')
