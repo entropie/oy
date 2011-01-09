@@ -16,13 +16,18 @@ class OYController < Ramaze::Controller
   def create_prefix(arr = false, npath = nil)
     fragments = (npath or request.path).split("/")[1..-1]
     fragments ||= []
+
+    fragments.reject!{|f| f == "."}
     
     if fragments.empty? or fragments.first == "oy"
       return arr ? fragments : ''
     elsif IgnoreList.include?(fragments.first)
       fragments.shift
     end
-    arr ? fragments : "#{File.dirname(File.join(*fragments))}/"
+    if arr then fragments else
+      ret = "#{File.dirname(File.join(*fragments))}/"
+      return '' if ret == "./"
+    end
   end
 
   def page_prefix
