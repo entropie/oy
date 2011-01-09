@@ -18,6 +18,7 @@ describe OY::VirtualRepos do
       page.send(meth.to_sym).should == page.to_commit.send(meth.to_sym)
     end
   end
+
   it "Should have the right extension" do
     page = repos(false).find_by_path("media/ass.jpg")
     page.extension == "jpg"
