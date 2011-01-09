@@ -266,18 +266,25 @@ module OY
     end
 
     def Media.create_bare(path)
+      npath = Repos.expand_path("media")
+      FileUtils.mkdir_p(npath)
       Media.new(nil, nil, "media/#{path}")
     end
 
+    def self.copy_uploaded_file(src, to)
+      Dir.chdir(Media::MediaPath) do
+        check = Repos.expand_path(to)
+        FileUtils.mkdir_p(File.dirname(to))
+        FileUtils.copy(src, to)
+      end
+    end
+    
     def self.upload_file(name, extname, tempfile, filename, type)
       filec = File.open(tempfile.path, 'rb').read
       fname = "#{name}#{extname}"
+
+      copy_uploaded_file(tempfile.path, fname)
       
-      Dir.chdir(Media::MediaPath) do
-        check = Repos.expand_path(fname)
-        FileUtils.mkdir_p(File.dirname(fname))
-        FileUtils.copy(tempfile.path, fname)
-      end
       bmedia = OY::Media.create_bare(fname)
       media  = bmedia.create do |pg|
         pg.message = "update"

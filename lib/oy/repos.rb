@@ -89,6 +89,14 @@ module OY
   class VirtualRepos < Repos
     attr_reader    :path
     attr_reader    :git
+
+    def exist?
+      true
+    end
+
+    def extension
+      path.split(".").last
+    end
     
     def commit
       to_commit.commit

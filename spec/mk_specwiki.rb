@@ -27,6 +27,34 @@ def spec_update_wiki_page(path, data=nil, actor=nil, message=nil)
   end
 end
 
+def spec_create_media_page(path, data=nil, actor=nil, message=nil)
+  bmedia = OY::Media.create_bare(path)
+
+  filec = nil
+  Dir.chdir("spec/spec_data") do
+    filec = File.read(path)
+  end
+
+  media  = bmedia.create do |pg|
+    pg.message = message || "init from spec"
+    pg.data = filec
+  end
+end
+
+def spec_update_media_page(path, npath, data=nil, actor=nil, message=nil)
+  bmedia = OY::Media.create_bare(path)
+
+  filec = nil
+  Dir.chdir("spec/spec_data") do
+    filec = File.read(npath)
+  end
+
+  media  = bmedia.create do |pg|
+    pg.message = message || "update from spec"
+    pg.data = filec
+  end
+end
+
 
 spec_create_wiki_page "index.textile"
 spec_update_wiki_page "index.textile"
@@ -39,6 +67,10 @@ spec_create_wiki_page "test/foo.textile"
 
 spec_create_wiki_page "bar/test.textile"
 
+
+spec_create_media_page "ass.jpg"
+spec_create_media_page "banner.gif"
+spec_update_media_page "banner.gif", "ass.jpg"
 
 
 =begin
