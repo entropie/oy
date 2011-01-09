@@ -12,6 +12,11 @@ include OY
 OY.path = "/tmp/testrepos"
 
 
+def r(*args)
+  nargs = args.empty? ? ["test", "spec"] : args
+  repos.find_by_fragments(*nargs)
+end
+
 
 =begin
 Local Variables:

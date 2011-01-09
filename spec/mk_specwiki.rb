@@ -4,7 +4,7 @@
 #
 
 require 'rubygems'
-require "spec/helper"
+require "spec/spec_helper"
 
 #OY.path = File.join(OY::Source, "/tmp/testrepos")
 include OY

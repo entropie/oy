@@ -3,7 +3,7 @@
 # Author:  Michael 'entropie' Trommer <mictro@gmail.com>
 #
 
-require "helper"
+require "spec_helper"
 
 describe OY::Media do
   it "Should #exist?" do
