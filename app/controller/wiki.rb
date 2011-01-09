@@ -30,8 +30,7 @@ class WikiController < OYController
         end
       end
       @wiki.parse_body
-      @title = @wiki.title
-
+      @title = @wiki.html_title
     end
   rescue NotFound
     redirect WikiController.r(:create, *fragments)
