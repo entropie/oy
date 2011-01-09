@@ -22,7 +22,12 @@ describe OY::VirtualRepos do
     page = repos(false).find_by_path("media/ass.jpg")
     page.extension == "jpg"
   end
-  
+
+  it "Should have a history" do
+    page = repos(false).find_by_path("media/banner.gif")
+    page.extension == "gif"
+  end
+
 end
 
 
