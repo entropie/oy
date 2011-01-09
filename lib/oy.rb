@@ -7,6 +7,7 @@ require "rubygems"
 require "grit"
 require "ostruct"
 require "redcloth"
+require "nokogiri"
 
 require "pp"
 

@@ -41,7 +41,8 @@ module OY
       include OY
       
       attr_reader :data
-
+      attr_reader :wiki
+      
       class << self
         attr_accessor :extension
       end
@@ -50,14 +51,16 @@ module OY
         Markups << obj
       end
       
-      def initialize(data)
+      def initialize(data, wiki)
+        @wiki = wiki
         @data = data
       end
     end
 
     require "markup/global"
     require "markup/redcloth"    
-    require "markup/compare"        
+    require "markup/compare"
+    require "markup/nokogiri"            
   end
   
 end

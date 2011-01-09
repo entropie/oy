@@ -29,6 +29,7 @@ class WikiController < OYController
           @wiki.parent = parent
         end
       end
+      @wiki.parse_body
       @title = @wiki.title
 
     end

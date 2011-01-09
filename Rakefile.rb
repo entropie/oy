@@ -14,6 +14,10 @@ require "rspec/core/rake_task"
 include OY
 
 task :test do
+  p page = repos.find_by_fragments("index")
+  a=page.data
+  p page
+  puts page.html_title
 end
 
 task :create_spec_env do

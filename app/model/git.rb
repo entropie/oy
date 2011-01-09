@@ -11,7 +11,7 @@ module OY
 
     attr_reader :date, :author, :sha
 
-    attr_accessor :parent
+    attr_accessor :parent, :html_title
 
     def is_media?
       false
@@ -103,8 +103,8 @@ module OY
     # first applies Markup::Global then the corresponding Markup for the extension
     def with_markup(force_extension = nil)
       ret = @blob.data
-      ["*", (force_extension || extension)].inject(ret){|memo, mup|
-        Markup.choose_for(mup).new(memo).to_html
+      ["*", (force_extension || extension), "xml"].inject(ret){|memo, mup|
+        Markup.choose_for(mup).new(memo, self).to_html
       }
     end
 
@@ -228,7 +228,11 @@ module OY
     end
     
     def data
-      with_markup
+      @with_markup ||= with_markup
+    end
+
+    def parse_body
+      data
     end
 
     def raw_data
@@ -253,6 +257,10 @@ module OY
 
     def title
       @blob.basename.split(".").first.capitalize
+    end
+
+    def html_title
+      @html_title || title
     end
 
     def size
