@@ -130,7 +130,7 @@ module OY
     
     def update_working_dir(index, dir, name)
       unless repos.git.bare
-        tdir = ::File.join(repos.path, '..')
+        tdir = ::File.join(repos.path)
         puts ">>> Update: #{tdir}/#{path}"
         Dir.chdir(tdir) do
           repos.git.git.checkout({}, 'HEAD', '--', path)
