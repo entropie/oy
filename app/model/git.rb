@@ -69,7 +69,7 @@ module OY
     def history(rsha = nil, klass = Wiki)
       access = GitAccess.new
       seen = false
-      @history = repos.git.log("master", path).
+      @history ||= repos.git.log("master", path).
         map{|commit|
         access.tree(commit.sha).select {|b|
           b.path == path
@@ -173,6 +173,7 @@ module OY
       end
 
       update_working_dir(index, dir, page_name(path))
+      @history = nil
       sha
     end
 
@@ -197,6 +198,7 @@ module OY
       end
       fragments = path.split("/").reject{|p| p.empty?}
       update_working_dir(index, '', page_name(path))
+      @history = nil
       repos.find_by_fragments(*fragments)
     end
 
@@ -316,6 +318,7 @@ module OY
         index.add(path, opts.data)
       end
       fragments = path.split("/").reject{|p| p.empty?}
+      @history = nil
       update_working_dir(index, '', page_name(path))
     end
 
