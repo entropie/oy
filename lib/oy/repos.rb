@@ -94,8 +94,16 @@ module OY
       true
     end
 
+    def is_media?
+      to_commit.is_media?
+    end
+    
     def extension
       path.split(".").last
+    end
+
+    def history(sha = nil)
+      to_commit.history(sha)
     end
     
     def commit
@@ -139,7 +147,7 @@ module OY
     end
     
     def to_commit
-      @git ||= OY.repos(true).find_by_fragments(*page.path.split("/"))
+      @git ||= OY.repos(true).find_by_path(page.path)
     end
 
     def find_by_path(path)

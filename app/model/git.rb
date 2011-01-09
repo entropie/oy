@@ -12,6 +12,10 @@ module OY
     attr_reader :date, :author, :sha
 
     attr_accessor :parent
+
+    def is_media?
+      false
+    end
     
     def initialize(blob, commit, path)
       @blob, @commit, @path = blob, commit, path
@@ -127,7 +131,7 @@ module OY
     def update_working_dir(index, dir, name)
       unless repos.git.bare
         tdir = ::File.join(repos.path, '..')
-        puts ">>> #{:uwd}: #{tdir} : #{path}"
+        puts ">>> Update: #{tdir}/#{path}"
         Dir.chdir(tdir) do
           repos.git.git.checkout({}, 'HEAD', '--', path)
         end
@@ -261,6 +265,10 @@ module OY
     MediaPath = File.join(OY.path, "media")
     FileUtils.mkdir_p(MediaPath) unless File.exist?(MediaPath)
 
+    def is_media?
+      true
+    end
+    
     def with_markup
       @blob.data
     end

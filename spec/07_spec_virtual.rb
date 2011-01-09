@@ -26,6 +26,18 @@ describe OY::VirtualRepos do
   it "Should have a history" do
     page = repos(false).find_by_path("media/banner.gif")
     page.extension == "gif"
+    page.has_parent?.should == true
+    page.history.size.should == 1
+  end
+
+  it "Should respond to #is_media?" do
+    page = repos.find_by_path("media/banner.gif")
+    page.is_media?.should == true
+  end
+
+  it "Should respond (physically) to #is_media?" do
+    page = repos(false).find_by_path("media/banner.gif")
+    page.is_media?.should == true
   end
 
 end
