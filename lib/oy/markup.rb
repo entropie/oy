@@ -51,7 +51,7 @@ module OY
         Markups << obj
       end
       
-      def initialize(data, wiki)
+      def initialize(data, wiki = nil)
         @wiki = wiki
         @data = data
       end

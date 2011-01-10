@@ -36,6 +36,7 @@ end
 task :clean do
   File.exist?("/tmp/testrepos") and sh "rm -r /tmp/testrepos"
   File.exist?("coverage") and sh "rm -r coverage"
+  File.exist?("app/public/doc") and sh "rm -r app/public/doc"  
 end
 
 task :spec => [:clean, :create_spec_env, :run_spec_wo] do
@@ -66,17 +67,25 @@ RSpec::Core::RakeTask.new(:run_spec_wo) do |t|
   t.rcov = false
 end
 
-require 'hanna/rdoctask'
-Rake::RDocTask.new(:write_rdoc) do |rdoc|
-  rdoc.rdoc_files.
-    include('**/*.rb')
+#require 'hanna/rdoctask'
 
-  rdoc.main = "README.rdoc" # page to start on
-  #rdoc.title = "will_paginate documentation"
-
-  rdoc.rdoc_dir = 'doc' # rdoc output folder
-  rdoc.options << '--webcvs=http://github.com/entropie/oy/tree/master/'
+task :write_rdoc do
+  str = "rdoc --all --inline-source --line-numbers -f html --template=hanna -o doc"
+  str << ' --webcvs=http://github.com/entropie/oy/tree/master/'
+  sh str
 end
+
+
+# Rake::RDocTask.new(:write_rdoc) do |rdoc|
+#   rdoc.rdoc_files.
+#     include('**/*.rb')
+
+#   rdoc.main = "README.rdoc" # page to start on
+#   #rdoc.title = "will_paginate documentation"
+
+#   rdoc.rdoc_dir = 'doc' # rdoc output folder
+#   rdoc.options << '--webcvs=http://github.com/entropie/oy/tree/master/'
+#end
 
 =begin
 Local Variables:
