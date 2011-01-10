@@ -95,7 +95,7 @@ module OY
       new_data = wiki.raw_data
       updated_wiki = update do |pg|
         pg.data    = new_data
-        pg.message = "Revert from #{wiki.sha}"
+        pg.message = "Revert from #{wiki.ref}"
       end
       updated_wiki
     end
