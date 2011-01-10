@@ -27,6 +27,7 @@ class OYController < Ramaze::Controller
     if arr then fragments else
       ret = "#{File.dirname(File.join(*fragments))}/"
       return '' if ret == "./"
+      ret
     end
   end
 
