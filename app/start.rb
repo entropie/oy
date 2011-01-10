@@ -20,8 +20,8 @@ controller = %w"oy special media css wiki api".map{ |lib|
 libs = []
 
 
-class Innate # :nodoc: All
-  module Session
+module Innate # :nodoc: All
+  class Session
     public :cookie
   end
 end
