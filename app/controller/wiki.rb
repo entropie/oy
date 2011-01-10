@@ -101,7 +101,15 @@ class WikiController < OYController
     end
   end
 
+  def revert(sha, *fragments)
+    @wiki = repos.find_by_fragments(*fragments)
+    @wiki.parse_body
+    @hist_page = @wiki.history(sha)
 
+    if request[:do_it] == "1"
+      redirect @wiki.revert_to(@hist_page).link
+    end
+  end
 end
 
 

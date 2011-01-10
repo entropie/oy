@@ -1,0 +1,7 @@
+#oy-revert
+  .info
+    Following is the version you want to revert to. The actual version will still be stored, you're not gonna break anything.
+  .do-it
+    %a.awesome.silver{:href => @hist_page.link(:revert_do)} Revert
+
+= render_file "view/index.haml", :wiki => @hist_page

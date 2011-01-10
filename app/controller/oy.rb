@@ -9,7 +9,7 @@ class OYController < Ramaze::Controller
   
   set_layout_except 'layout'
 
-  IgnoreList = %w'edit create history new compare oy img'
+  IgnoreList = %w'edit create history new compare oy img revert'
 
   private
 
@@ -22,6 +22,7 @@ class OYController < Ramaze::Controller
     if fragments.empty? or fragments.first == "oy"
       return arr ? fragments : ''
     elsif IgnoreList.include?(fragments.first)
+      return "" if fragments.first == "revert"
       fragments.shift
     end
     if arr then fragments else
@@ -32,7 +33,7 @@ class OYController < Ramaze::Controller
   end
 
   def page_prefix
-    create_prefix(true)[0..-2].map{|prfx| "#{prfx.capitalize} &gt;"}.join
+    create_prefix(true)[0..-2].map{|prfx| "#{prfx.capitalize} &gt; "}.join
   end
   
   def time_to_s(t)

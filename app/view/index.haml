@@ -20,5 +20,9 @@
           %a{:href => @wiki.link(:version), :title => "Goto Previous Version"} Back In Time
         %li.compare.awesome.silver
           %a{:title => "Compare with last Version", :href => @wiki.link(:compare)} Compare
+      - if request[:sha]
+        %li.compare.awesome.silver
+          %a{:title => "Revert to this version", :href => @wiki.link(:revert)} Revert
+          
       %li.edit.awesome.silver
         %a{:title => "Edit Page", :href => @wiki.link(:edit)} Edit

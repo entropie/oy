@@ -69,6 +69,10 @@ module OY
         "/history/#{ident}"
       when :compare
         "/compare/#{sha}/#{history.first.sha}/#{ident}"
+      when :revert
+        "/revert/#{sha}/#{ident}"
+      when :revert_do
+        "/revert/#{sha}/#{ident}?do_it=1"
       else
         "/#{ident}"
       end
@@ -78,6 +82,24 @@ module OY
       repos.git.diff(v1, v2, path)
     end
 
+    def revert_to(sha_or_wiki)
+      wiki =
+        if sha_or_wiki.kind_of?(String)
+          wiki.history(sha)
+        elsif sha_or_wiki.kind_of?(Wiki)
+          sha_or_wiki
+        else
+          raise "missing input"
+        end
+
+      new_data = wiki.raw_data
+      updated_wiki = update do |pg|
+        pg.data    = new_data
+        pg.message = "Revert from #{wiki.sha}"
+      end
+      updated_wiki
+    end
+    
     # get complete history for +path+ Returns array of Wiki instances
     def history(rsha = nil, klass = Wiki)
       access = GitAccess.new

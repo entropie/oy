@@ -11,6 +11,7 @@ class SpecialController < OYController
   def index
   end
 
+  # gets the full file listing for the entire repos
   def all
     full_page_titles = nil
     full_page_titles = true if request[:titles] == "1"
@@ -24,6 +25,7 @@ class SpecialController < OYController
     }.sort_by{|c| c.date}.reverse
   end
 
+  # gets all media files for the entire repos
   def media(*fragments)
     unless fragments.empty?
       imgpath = File.join("media/", *fragments)
