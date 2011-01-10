@@ -13,8 +13,8 @@ include OY
 
 tlog = Backbite.register[:polis]
 
-dirs = Dir['/Users/mit/Data/blog/spool/**.yaml'] +
-  Dir['/Users/mit/Data/blog/archive/*/*/**.yaml']
+dirs = Dir['/Users/mit/Data/polis/spool/**.yaml'] +
+  Dir['/Users/mit/Data/polis/archive/*/*/**.yaml']
 
 
 a=dirs.grep(/\.yaml/).map do |y|
@@ -31,46 +31,93 @@ end.uniq
 
 fooblog = []
 
+target = :image
+
 a.each do |name, cont|
   c = cont
   case name
-  when :blog
-    pagedata = "h1. %s\n\n%s" % [cont[:input_topic], cont[:input_body]]
-
-    authorcomp = cont[:plugin_author] || "Michael Trommer <mictro@gmail.com>"
-    name = authorcomp.split("<").first.strip
-    email = authorcomp[/<(.*)>/, 1]
-    actor = Grit::Actor.new(name, email)
-    
-    topic = cont[:input_topic]
-    topic = topic.gsub(/\W/, '')
-
-    bwiki = Wiki.create_bare("oldblog/#{topic.downcase}.textile")
-    wiki = bwiki.create do |pg|
-      pg.message = "initial for #{topic}"
-      pg.data    = pagedata
-      pg.actor   = actor
-    end
-    fooblog.push([bwiki, topic, cont[:plugin_date]])
-  when :ruby, :shell, :wise, :irc, :btw
-    next
+  when :image
+    #fooblog << {:date => c[:plugin_date], :text => c[:input_text]}
+    fooblog << c[:plugin_img]
+  when :nut
   else
     next
+    #  when :blog1
+    # pagedata = "h1. %s\n\n%s" % [cont[:input_topic], cont[:input_body]]
+
+    # authorcomp = cont[:plugin_author] || "Michael Trommer <mictro@gmail.com>"
+    # name = authorcomp.split("<").first.strip
+    # email = authorcomp[/<(.*)>/, 1]
+    # actor = Grit::Actor.new(name, email)
+    
+    # topic = cont[:input_topic]
+    # topic = topic.gsub(/\W/, '')
+
+    # bwiki = Wiki.create_bare("oldblog/#{topic.downcase}.textile")
+    # wiki = bwiki.create do |pg|
+    #   pg.message = "initial for #{topic}"
+    #   pg.data    = pagedata
+    #   pg.actor   = actor
+    # end
+    # fooblog.push([bwiki, topic, cont[:plugin_date]])
+    # when :ruby, :shell, :wise, :irc, :btw
+    #   next
+    # else
+    #   next
   end
+end
+
+case target
+when :image
+  require 'open-uri'
+  fooblog.reject!{|i| i !~ /^http/}
+
+  fooblog.map!{|i|
+    begin
+      i
+    rescue OpenURI::HTTPError, SocketError, URI::InvalidURIError
+      nil
+    end
+  }.compact
+  file = File.open("/tmp/img_list.txt", 'w+') do |fc|
+    fc.write(fooblog.join("\n"))
+  end
+
+  pagestr = "h1. Imported Images from polis.ackro.org\n\n"
   
-end
+  
+  #pp fooblog
+when :nut
+  nameSpace = "polis"
+  hash = Hash.new{|h,k| h[k] = []}
 
-pagedata = "h1. Index for import of blog.ackro.org\n\n"
-fooblog.each do |fblog, topic, date|
-  name = File.basename(fblog.path).split(".").first.capitalize
-  pagedata << "* [[%s %s]] <small><em>Origin Date:</em> %s</small>\n" % [fblog.path.split(".").first, topic, date]
-end
+  str = ''
+  lyear = nil
+  fooblog.sort_by{|c| c[:date]}.reverse.each do |b|
+    if not lyear or lyear != b[:date].year
+      lyear = b[:date].year
+      hash[lyear] << "\nh1. Index for <em>nut</em> #{b[:date].year}, from polis.ackro.org\n\n"
+    end
+    hash[lyear] << " * #{b[:text].gsub(/\n/, '')} <small>Origin Date: <span class='date'>#{b[:date]}</span></small>"
+  end
 
-bwiki = Wiki.create_bare("oldblog/index.textile")
-wiki = bwiki.create do |pg|
-  pg.message = "initial for index"
-  pg.data    = pagedata
-  pg.actor   = Grit::Actor.new("Michael Trommer", "mictro@gmail.com")
+
+  nut_index_page = File.join(nameSpace, "nut", "index.textile")
+  hash.sort_by{|year, conts| year}.reverse.each do |year, conts|
+    file = File.join(nameSpace, "nut", "index#{year}.textile")
+
+    page = begin
+             Wiki.create_bare(file)
+           rescue AlreadyExist
+             repos.find_by_fragments(*file.split("/"))
+           end
+    pagestr = conts.join("\n")
+    page.update do |pg|
+      pg.message = "Initial for nut section"
+      pg.actor   = Grit::Actor.new("Michael Trommer", "mictro@gmail.com")
+      pg.data    = pagestr
+    end
+  end
 end
 =begin
 Local Variables:
