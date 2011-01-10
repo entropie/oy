@@ -7,7 +7,7 @@
         - row.each do |w|
           %li
             %span.oy-prfx= w.vprefix
-            %a{:class => "oy-link x", :href => WikiController.r(w.link)}= w.title
+            %a{:class => "oy-link x", :href => WikiController.r(w.link)}= w.html_title
             %span.oy-msg= " (#{w.message})"
             %span.oy-sha= " (#{w.commit.sha})"        
 

@@ -12,11 +12,15 @@ class SpecialController < OYController
   end
 
   def all
+    full_page_titles = nil
+    full_page_titles = true if request[:titles] == "1"
     Dir.chdir(repos.path) do
       @contents = Dir["**/*.textile"]
     end
     @contents = @contents.map{|content|
-      repos.find_by_fragments(*content)
+      r = repos.find_by_fragments(*content)
+      r.parse_body if full_page_titles
+      r
     }.sort_by{|c| c.date}.reverse
   end
 
