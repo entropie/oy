@@ -28,7 +28,7 @@ a
   :min-height 100%
   :height auto !important
   :height 100%
-  :margin 0 auto -250px
+  :margin 0 auto -50px
 
 #oy-wrap
   :margin-left 10%
@@ -36,7 +36,7 @@ a
 
 #footer
   :background-color #120509
-  :height 250px
+  :height 50px
   :position relative
   p
     :padding-left 10%
@@ -47,11 +47,23 @@ a
 #oy-ab
   :position absolute
   :right 10%
-  :bottom 20px
-  :color = !clr_blue_link
+  :bottom 15px
+  :color = !clr_rlight_black
+  ul
+    :list-style-type none
+    li
+      :display inline
+      :margin-left 20px
+      a
+        :color = !clr_rlight_black
+        &:hover
+          :color = !clr_link_on_dark
+          :border-bottom 2px solid red
+          :border-bottom-color = !clr_link_on_dark
+        
   
 .push
-  :height 250px
+  :height 50px
   :clear both
   :padding-bottom 30px
 

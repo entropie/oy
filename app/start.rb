@@ -19,9 +19,13 @@ controller = %w"oy special media css wiki api".map{ |lib|
 }
 libs = []
 
-class Innate::Session
-  public :cookie
+
+class Innate # :nodoc: All
+  module Session
+    public :cookie
+  end
 end
+
 (controller + libs).each{|lib| require lib}
 
 

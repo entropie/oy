@@ -15,7 +15,7 @@ require "pp"
 ReposPath = File.expand_path("~/Source/oytest") 
 
 module OY
-  
+
   Source  = File.dirname(File.dirname(File.expand_path(__FILE__)))
 
   Actor   = Grit::Actor.new("Anonymous", "anonym@o.us")
