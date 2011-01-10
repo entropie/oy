@@ -13,6 +13,19 @@ module OY
 
     attr_accessor :parent, :html_title
 
+    def to_json
+      to_hash.to_json
+    end
+
+    def to_hash
+      {
+        :title => html_title,
+        :data  => raw_data,
+        :sha   => sha,
+        :url   => permalink
+      }
+    end
+    
     def is_media?
       false
     end
@@ -174,7 +187,7 @@ module OY
 
       update_working_dir(index, dir, page_name(path))
       @history = nil
-      sha
+      self
     end
 
     def exist?

@@ -22,6 +22,11 @@ module OY
         yield fp
       end
     end
+
+    def actor_from_string(str)
+      author, emailprt = str.split("<")
+      Grit::Actor.new(author, emailprt.delete(">"))
+    end
     
     def initialize(path)
       @path = path

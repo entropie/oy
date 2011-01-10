@@ -9,15 +9,40 @@ require '../ramaze/lib/ramaze'
 require "lib/oy"
 require "redcloth"
 
+require "net/http"
 require "rspec/core/rake_task"
+require "cgi"
 
 include OY
 
 task :test do
-  p page = repos.find_by_fragments("index")
-  a=page.data
-  p page
-  puts page.html_title
+
+  api = OY.api
+
+  d = "h1. Title From Rakefile\n\nsaad fdsfd"
+  r = api.post("oldblog/socialwebmeetsrpga") do |opts|
+    opts[:author]  = "Api <a@b.c>"
+    opts[:data]    = d
+    opts[:message] = "Update from Rakefile"
+  end
+
+  p r
+  exit
+  url = 'http://localhost:8200/' 
+  uri = URI.parse(url) 
+  req = Net::HTTP.new(uri.host, uri.port)
+  d = "Lalala Lorem foo bar ipsum dolor adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n\n"*3
+
+  data = {
+    :message => "update from net/http",
+    :extension => "textile",
+    :author => CGI.escape("Api <a@b.c>"),
+    :data => CGI.escape(d)
+  }.inject("") {|mem, arr|
+    mem << "%s=%s;" % arr
+  }
+  data =   result = req.post('/api/PUT/oldblog/socialwebmeetsrpga', data)
+  p JSON.parse(result.body)
 end
 
 task :create_spec_env do

@@ -8,6 +8,7 @@ require "grit"
 require "ostruct"
 require "redcloth"
 require "nokogiri"
+require "json"
 
 require "pp"
 
@@ -25,6 +26,11 @@ module OY
 
   Version = [0, 0, 1]
 
+  def api(host = nil)
+    @api ||= Api.new(host)
+  end
+  module_function :api
+  
   def path=(str)
     @path = str
   end
@@ -48,6 +54,8 @@ module OY
   require "model/git"
   require "blob_entry.rb"
   require "git_access.rb"
+
+  require "api.rb"
 
   require "repos"
   require "exceptions.rb"
