@@ -1,6 +1,8 @@
 !clr_ulight_bg = #FFFDF5
 !clr_light_bg = #DAE0E3
 
+!clr_black = #111
+  
 !clr_blink = #305454
 !clr_rlight_black = #403D3E
 !clr_rlight_blue = #0487D9
@@ -8,6 +10,11 @@
 !clr_head_bg = #6E1400
 !clr_link_on_dark = #F2F2F2
 !clr_blue_link = #1C1C3D  
+
+!clr_smoof_orange = #ffab27
+!clr_light_silver = #eeeeee    
+!clr_fresh_blue = #4096EE
+!clr_silver = silver
 
 
   
@@ -46,7 +53,7 @@ a
 
 #oy-ab
   :position absolute
-  :right 10%
+  :right 5%
   :bottom 15px
   :color = !clr_rlight_black
   ul
@@ -222,9 +229,46 @@ fieldset
       .oy-msg
         :color #364045
   #oy-body
+    strong
+      :background-color = !clr_light_silver
+      :padding 3px
+    code
+      :background-color = !clr_light_silver
+      :color = !clr_black
+      :padding 3px
+      :font-family monospace
+    h1,h2,h3,h4,h5,h6
+      :text-shadow 1px 1px grey      
+      :color = !clr_rlight_blue
+      :letter-spacing 3px
+      :padding 10px
+      :margin-left -5px
+      :border-left 5px solid red
+      :border-left-color = !clr_silver
+      :font-weight normal
     h1
       :font-size 2em
       :margin-bottom 10px
+    h2
+      :font-size 1.6em
+      :border-left-width 5px      
+      :margin-left -5px      
+    h3
+      :border-left-width 4px
+      :margin-left -4px
+      :font-size 1.4em
+    h4
+      :border-left-width 3px
+      :margin-left -3px
+      :font-size 1.2em
+    h5
+      :border-left-width 2px
+      :margin-left -2px
+      :font-size 1.1em
+    h6
+      :border-left-width 1px
+      :margin-left 1px
+      :font-size 1em
     p
       :margin-bottom 10px
       :padding-left 10px
@@ -357,12 +401,6 @@ a.oy-link
     :color silver
     :float right
     :padding-right 15px
-
-!clr_smoof_orange = #ffab27
-!clr_light_silver = #eeeeee    
-!clr_fresh_blue = #4096EE
-!clr_silver = silver
-    
 
 // http://www.zurb.com/blog_uploads/0000/0617/buttons-03.html      
 .awesome

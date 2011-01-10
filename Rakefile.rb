@@ -15,6 +15,27 @@ require "cgi"
 
 include OY
 
+task :docs do
+  Dir.glob("docs/*").each do |docfile|
+    file, ext = docfile.split(".").first
+    frags = ["about", *docfile.split("/")[1..-1]]
+
+    fc = File.open(docfile, 'r').read
+
+    begin
+      page = repos.find_by_fragments(frags.join("/"))
+    rescue NotFound
+      page = Wiki.create_bare(frags.join("/"))
+    end
+    puts "Update: >>> #{page.path}"
+    page = page.update do |pg|
+      pg.data = fc
+      pg.message = "Update Docfile"
+      pg.actor = Grit::Actor.new("Michael Trommer", "mictro@gmail.com")
+    end
+  end
+end
+
 task :test do
 
   api = OY.api
@@ -74,18 +95,6 @@ task :write_rdoc do
   str << ' --webcvs=http://github.com/entropie/oy/tree/master/'
   sh str
 end
-
-
-# Rake::RDocTask.new(:write_rdoc) do |rdoc|
-#   rdoc.rdoc_files.
-#     include('**/*.rb')
-
-#   rdoc.main = "README.rdoc" # page to start on
-#   #rdoc.title = "will_paginate documentation"
-
-#   rdoc.rdoc_dir = 'doc' # rdoc output folder
-#   rdoc.options << '--webcvs=http://github.com/entropie/oy/tree/master/'
-#end
 
 =begin
 Local Variables:
