@@ -20,7 +20,6 @@ module OY
     def post(url)
       options = {}
       yield options
-      p options[:message]
       result = @net.post(url_path(url, "POST"), hash_to_data(options))
       JSON.parse(result.body)
     end
