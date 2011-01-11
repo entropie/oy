@@ -22,7 +22,7 @@ opts = OptionParser.new do |opts|
 
   opts.banner = help
 
-  opts.on("-p", "--push [TO]", "Push Piped Data to [TOURL]") do |to|
+  opts.on("-p", "--push [TO]", "Push Piped Data to [URL]") do |to|
     raise InvalidInput, "No Destination URL given" unless to
     raise InvalidInput, "No Data Given (use a pipe)" if inputData.to_s.strip.empty?
 
@@ -46,7 +46,7 @@ begin
   opts.parse!
 rescue OptionParser::InvalidOption
   puts "oy: #{$!.message}"
-  puts "oy: try 'gollum --help' for more information"
+  puts "oy: try 'oy --help' for more information"
   exit 1
 end
 
