@@ -56,17 +56,18 @@ module OY
       klass = if path =~ /\.textile$/ then Wiki else Media end
       klass.new(file, commit, path)
     end
-    
-    def find_by_fragments(*fragments)
 
+    def find_directory(*fragments)
       if rpath = Repos.expand_path(fragments.join("/")) and File.directory?(rpath)
         return WikiDir.new(fragments.join("/"))
       end
-
+#      raise NotFound
+    end
+    
+    def find_by_fragments(*fragments)
       frags = sanitize_fragments(*fragments)
 
       commit = git.log("master", frags.join("/")).first
-      
       raise NotFound, "not found" unless commit
 
       tree = commit.tree("master")

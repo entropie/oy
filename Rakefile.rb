@@ -96,6 +96,15 @@ task :write_rdoc do
   sh str
 end
 
+task :keke do
+  shstr = "rake clean create_spec_env; rspec -f d -Ispec"
+  Dir.glob('spec/**/*_spec_*.rb').each do |specfile|
+    sh "#{shstr} #{specfile}"
+
+    raise ">>> #{specfile}" if File.exist?(File.join(Dir.pwd, 'bar'))
+  end
+end
+
 =begin
 Local Variables:
   mode:ruby

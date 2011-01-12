@@ -13,7 +13,7 @@ module OY
     end
 
     def lockdir_path
-      chek = Repos.expand_path(path)
+      check = Repos.expand_path(path)
       File.join(File.dirname(path), '.locked')
     end
     
@@ -397,25 +397,32 @@ module OY
     include WikiLock
 
     def lockdir_path
+      check = Repos.expand_path(path)
       File.join(path, ".locked")
     end
 
     def lock!
       lock_directory!
       # FIXME: ???
-      repos.git.git.checkout({}, 'HEAD', '--', lockdir_path)
+      Dir.chdir(repos.path){ repos.git.git.checkout({}, 'HEAD', '--', lockdir_path) }
       true
     end
 
-
     def unlock!
       update_repos_lockfiles(:delete, lockdir_path)
-      repos.git.git.rm({:f => true}, 'HEAD', '--', lockdir_path)      
+      # FIXME: 
+      Dir.chdir(repos.path){ repos.git.git.rm({:f => true}, 'HEAD', '--', lockdir_path) }
       true
     end
 
     def identifier
       path
+    end
+
+    # FIXME: 
+    def [](obj)
+      page_path = path + "/#{obj.to_s}" 
+      repos.find_by_fragments(*page_path.split("/"))
     end
     
     def pages(only_pages = true)
@@ -423,14 +430,15 @@ module OY
       files = Dir.entries(rpath)
       ret = files.map{|f|
         next if f =~ /^\.+/
+        frags = f.split("/")
         begin
-          repos.find_by_fragments(*f.split("/"))
+          repos.find_by_fragments(*frags)
         rescue NotFound
-          ">>> #{f}"
+          repos.find_directory(*frags) unless only_pages
         end
       }.compact
 
-      ret.reject!{|p| p.kind_of?(WikiDir) } if only_pages
+      #ret.reject!{|p| p.kind_of?(WikiDir) } if only_pages
       ret
     end
     

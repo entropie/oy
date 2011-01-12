@@ -120,12 +120,11 @@ describe OY::Wiki, "lock" do
   context "lock a subdir" do
 
     it "should be possible to lock a directory" do
-      p r("bar")
-      r("bar").lock!.should == true
+      repos.find_directory("bar").lock!.should == true
     end
 
     it "should be locked now" do
-      r("bar").locked?.should == true
+      repos.find_directory("bar").locked?.should == true
     end
 
     it "should raise an error if we try to update locked file" do
@@ -144,11 +143,11 @@ describe OY::Wiki, "lock" do
     end
 
     it "dir should be unlockable" do
-      r("bar").unlock!.should == true
+      repos.find_directory("bar").unlock!.should == true
     end
 
     it "dir should be not locked anymore" do
-      r("bar").locked?.should == false
+      repos.find_directory("bar").locked?.should == false
     end
   end
   
