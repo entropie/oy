@@ -17,7 +17,8 @@ module OY
         r = result.gsub(/\[{2}([a-zA-Z0-9\/]*?)( [a-zA-Z0-9\/]*?)?\]{2}/){|match|
           url = $1.downcase
           cls = begin
-                  repos.find_by_fragments(url) and "x"
+                  r=repos.find_by_fragments(url) and "x"
+                  raise NotFound if r.kind_of?(WikiDir)
                 rescue NotFound
                   "o"
                 end

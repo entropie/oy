@@ -58,6 +58,11 @@ module OY
     end
     
     def find_by_fragments(*fragments)
+
+      if rpath = Repos.expand_path(fragments.join("/")) and File.directory?(rpath)
+        return WikiDir.new(fragments.join("/"))
+      end
+
       frags = sanitize_fragments(*fragments)
 
       commit = git.log("master", frags.join("/")).first

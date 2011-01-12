@@ -16,6 +16,9 @@ module OY
 
   class FileLocked < Exception
   end
+
+  class FileNotLocked < Exception
+  end
   
 end
 

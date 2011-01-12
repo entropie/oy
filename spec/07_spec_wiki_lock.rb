@@ -119,33 +119,38 @@ describe OY::Wiki, "lock" do
 
   context "lock a subdir" do
 
-    # it "should be possible to lock a directory" do
-    #   r("bar").lock!.should == true
-    # end
+    it "should be possible to lock a directory" do
+      p r("bar")
+      r("bar").lock!.should == true
+    end
 
-    # it "should be locked now" do
-    #   r("bar").locked?.should == true
-    # end
+    it "should be locked now" do
+      r("bar").locked?.should == true
+    end
 
-    # it "should raise an error if we try to update locked file" do
-    #   expect{
-    #     r("bar", "test").update do |pg|
-    #       pg.message = "nobody will see"
-    #       pg.data    = "nobody will see"
-    #     end
-    #   }.to raise_error(OY::FileLocked)
-    # end
+    it "should raise an error if we try to update locked file" do
+      expect{
+        r("bar", "test").update do |pg|
+          pg.message = "nobody will see"
+          pg.data    = "nobody will see"
+        end
+      }.to raise_error(OY::FileLocked)
+    end
 
-    # it "should be unlockable" do
-    #   r("bar", "test").unlock!.should == true
-    # end
+    it "files should NOT be unlockable" do
+      expect{
+        r("bar", "test").unlock!
+      }.to raise_error(OY::FileNotLocked)
+    end
 
-    # it "should not be locked" do
-    #   r("bar", "test").locked?.should == false
-    # end
+    it "dir should be unlockable" do
+      r("bar").unlock!.should == true
+    end
 
+    it "dir should be not locked anymore" do
+      r("bar").locked?.should == false
+    end
   end
-
   
 end
 

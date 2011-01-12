@@ -18,7 +18,8 @@ module OY
     end
     
     def locked?
-      File.exist?(Repos.expand_path(lockfile_path)) or File.exist?(Repos.expand_path(lockdir_path))
+      File.exist?(Repos.expand_path(lockfile_path)) or
+        File.exist?(Repos.expand_path(lockdir_path))
     end
 
     def lock!
@@ -34,6 +35,9 @@ module OY
     end
 
     def unlock!
+      # check if file is locked, not the parent directory
+      raise FileNotLocked unless File.exist?(Repos.expand_path(lockfile_path))
+
       update_repos_lockfiles(:delete, lockfile_path)
       true
     end
@@ -67,13 +71,13 @@ module OY
           index = idx
           case what
           when :add
-            index.send(what, file, opts.message)
+            index.send(what, file, "")
             update_working_dir(index, dir, "", file)
           when :delete
             index.send(what, file)
             Dir.chdir(repos.path) do
               repos.git.git.rm({:f => true}, '--', file)
-              FileUtils.rm(file)
+              FileUtils.rm(file) rescue Errno::ENOENT
             end
           end
         end
@@ -388,7 +392,56 @@ module OY
     
   end
 
-  class Directory < Wiki
+  class WikiDir < Wiki
+
+    include WikiLock
+
+    def lockdir_path
+      File.join(path, ".locked")
+    end
+
+    def lock!
+      lock_directory!
+      # FIXME: ???
+      repos.git.git.checkout({}, 'HEAD', '--', lockdir_path)
+      true
+    end
+
+
+    def unlock!
+      update_repos_lockfiles(:delete, lockdir_path)
+      repos.git.git.rm({:f => true}, 'HEAD', '--', lockdir_path)      
+      true
+    end
+
+    def identifier
+      path
+    end
+    
+    def pages(only_pages = true)
+      rpath = Repos.expand_path(path)
+      files = Dir.entries(rpath)
+      ret = files.map{|f|
+        next if f =~ /^\.+/
+        begin
+          repos.find_by_fragments(*f.split("/"))
+        rescue NotFound
+          ">>> #{f}"
+        end
+      }.compact
+
+      ret.reject!{|p| p.kind_of?(WikiDir) } if only_pages
+      ret
+    end
+    
+    def exist?
+      File.directory?(Repos.expand_path(path))
+    end
+    
+    def initialize(dir)
+      @path = dir
+    end
+
   end
   
 
