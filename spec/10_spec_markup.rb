@@ -54,8 +54,8 @@ describe OY::Markup::Compare do
   it "Should apply Compare markup" do
     wiki = repos(true).find_by_fragments("index")
     v2, v1 = wiki.sha, wiki.history.first.sha
-    OY::Markup::Markups[:compare].new.to_html(wiki.diff(v2, v1).first.diff).first.
-      should == {:line=>"@@ -1,3 +1 @@", :class=>"gc", :ldln=>"...", :rdln=>"..."}
+    OY::Markup::Markups[:compare].new.to_html(wiki.diff(v2, v1).first.diff).first.sort_by{|a,b| a.to_s}.
+      should == [[:class, "gc"], [:ldln, "..."], [:line, "@@ -1 +1,3 @@"], [:rdln, "..."]]
   end
 end
 

@@ -14,6 +14,9 @@ module OY
   class IllegalAccess < Exception
   end
 
+  class FileLocked < Exception
+  end
+  
 end
 
 =begin

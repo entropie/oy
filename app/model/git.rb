@@ -5,6 +5,85 @@
 
 module OY
 
+  module WikiLock
+
+    def lockfile_path
+      check = Repos.expand_path(path)
+      path + ".locked"
+    end
+
+    def lockdir_path
+      chek = Repos.expand_path(path)
+      File.join(File.dirname(path), '.locked')
+    end
+    
+    def locked?
+      File.exist?(Repos.expand_path(lockfile_path)) or File.exist?(Repos.expand_path(lockdir_path))
+    end
+
+    def lock!
+      FileUtils.touch(Repos.expand_path(lockfile_path))
+      update_repos_lockfiles(:add, lockfile_path)
+      true
+    end
+
+    def lock_directory!
+      FileUtils.touch(Repos.expand_path(lockdir_path))
+      update_repos_lockfiles(:add, lockdir_path)
+      true
+    end
+
+    def unlock!
+      update_repos_lockfiles(:delete, lockfile_path)
+      true
+    end
+
+    def unlock_directory!
+      update_repos_lockfiles(:delete, lockdir_path)
+      true
+    end
+    
+    def revert_to(*args)
+      raise FileLocked, "file is locked" if locked?
+      super(*args)
+    end
+
+    def update
+      raise FileLocked, "file is locked" if locked?
+      super
+    end
+
+    def update_repos_lockfiles(what, *files)
+      index = nil
+
+      opts = OpenStruct.new
+      dir = ::File.dirname(path)
+      dir = "" if dir == "."
+
+      files.each do |file|
+        opts.message = "#{what}: #{file}"
+
+        sha = commit_index(opts) do |idx|
+          index = idx
+          case what
+          when :add
+            index.send(what, file, opts.message)
+            update_working_dir(index, dir, "", file)
+          when :delete
+            index.send(what, file)
+            Dir.chdir(repos.path) do
+              repos.git.git.rm({:f => true}, '--', file)
+              FileUtils.rm(file)
+            end
+          end
+        end
+      end
+      true
+    end
+    private :update_repos_lockfiles
+    
+  end
+  
   class Wiki
 
     attr_reader :blob, :commit, :path, :repos
@@ -12,6 +91,9 @@ module OY
     attr_reader :date, :author, :sha
 
     attr_accessor :parent, :html_title
+
+    include WikiLock
+    
 
     def to_json
       to_hash.to_json
@@ -163,12 +245,12 @@ module OY
       path || self.path
     end
     
-    def update_working_dir(index, dir, name)
+    def update_working_dir(index, dir, name, npath = nil)
       unless repos.git.bare
         tdir = ::File.join(repos.path)
-        puts ">>> Update: #{tdir}/#{path}"
+        puts ">>> Update: #{tdir}/ #{npath || path}"
         Dir.chdir(tdir) do
-          repos.git.git.checkout({}, 'HEAD', '--', path)
+          repos.git.git.checkout({}, 'HEAD', '--', npath || path)
         end
       end
     end
@@ -192,6 +274,8 @@ module OY
     
     
     def update
+      raise FileLocked, "file is locked" if locked?
+      
       opts = OpenStruct.new
       yield opts if block_given?
 
@@ -304,6 +388,9 @@ module OY
     
   end
 
+  class Directory < Wiki
+  end
+  
 
   class Media < Wiki
 
@@ -414,7 +501,7 @@ module OY
     end
     
   end
- 
+  
 end
 
 
