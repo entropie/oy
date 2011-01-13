@@ -5,88 +5,7 @@
 
 module OY
 
-  module WikiLock
-
-    def lockfile_path
-      check = Repos.expand_path(path)
-      path + ".locked"
-    end
-
-    def lockdir_path
-      check = Repos.expand_path(path)
-      File.join(File.dirname(path), '.locked')
-    end
-    
-    def locked?
-      File.exist?(Repos.expand_path(lockfile_path)) or
-        File.exist?(Repos.expand_path(lockdir_path))
-    end
-
-    def lock!
-      FileUtils.touch(Repos.expand_path(lockfile_path))
-      update_repos_lockfiles(:add, lockfile_path)
-      true
-    end
-
-    def lock_directory!
-      FileUtils.touch(Repos.expand_path(lockdir_path))
-      update_repos_lockfiles(:add, lockdir_path)
-      true
-    end
-
-    def unlock!
-      # check if file is locked, not the parent directory
-      raise FileNotLocked unless File.exist?(Repos.expand_path(lockfile_path))
-
-      update_repos_lockfiles(:delete, lockfile_path)
-      true
-    end
-
-    def unlock_directory!
-      update_repos_lockfiles(:delete, lockdir_path)
-      true
-    end
-    
-    def revert_to(*args)
-      raise FileLocked, "file is locked" if locked?
-      super(*args)
-    end
-
-    def update
-      raise FileLocked, "file is locked" if locked?
-      super
-    end
-
-    def update_repos_lockfiles(what, *files)
-      index = nil
-
-      opts = OpenStruct.new
-      dir = ::File.dirname(path)
-      dir = "" if dir == "."
-
-      files.each do |file|
-        opts.message = "#{what}: #{file}"
-
-        sha = commit_index(opts) do |idx|
-          index = idx
-          case what
-          when :add
-            index.send(what, file, "")
-            update_working_dir(index, dir, "", file)
-          when :delete
-            index.send(what, file)
-            Dir.chdir(repos.path) do
-              repos.git.git.rm({:f => true}, '--', file)
-              FileUtils.rm(file) rescue Errno::ENOENT
-            end
-          end
-        end
-      end
-      true
-    end
-    private :update_repos_lockfiles
-    
-  end
+  require "wiki/wikilock"
   
   class Wiki
 
@@ -98,7 +17,6 @@ module OY
 
     include WikiLock
     
-
     def to_json
       to_hash.to_json
     end
@@ -112,6 +30,7 @@ module OY
       }
     end
     
+    # returns always false
     def is_media?
       false
     end
@@ -120,20 +39,22 @@ module OY
       @blob, @commit, @path = blob, commit, path
     end
 
+    # returns the prefix for the page which is basically the dirname of #path
     def vprefix
       r = File.dirname(path)
       r = if r == "." then "" else "#{r}/" end
       "/#{r}"
     end
-    
+
     def repos
-      OY.repos
+      @repos ||= OY.repos
     end
 
     def identifier
       @blob.basename.split(".").first.downcase
     end
 
+    # permalink to page
     def permalink
       link(:perma)
     end
@@ -141,7 +62,16 @@ module OY
     def ident
       ident = @path.split(".").first
     end
-    
+
+    # Link to an action. What can be +nil+ for a standard page link
+    # or one of the following symbols:
+    #
+    # * +perma+   permalink to page with sha
+    # * +edit+    link to edit the page
+    # * +version+ link to a specific history version
+    # * +compare+ link to compare actual page to the first one in history
+    # * +revert+  revert page to last version (page)
+    # * +revert_do+ actually do the revert
     def link(what = nil)
       case what
       when :perma
@@ -164,10 +94,12 @@ module OY
       end
     end
 
+    # get the diff for +v1+ +v2+
     def diff(v1, v2)
       repos.git.diff(v1, v2, path)
     end
 
+    # revert page to specific sha or wiki page in history
     def revert_to(sha_or_wiki)
       wiki =
         if sha_or_wiki.kind_of?(String)
@@ -213,10 +145,12 @@ module OY
       @history
     end
 
+    # returns true if history is not empty
     def has_parent?
       not history.empty?
     end
 
+    # returns parent version or nil if there is no one
     def parent
       has_parent? and history.first
     end
@@ -229,14 +163,16 @@ module OY
       }
     end
 
+    # create a page
     def create(&block)
       update(&block)
     end
 
+    # dummy for now
     def normalize_commit(commit)
       commit
     end
-
+    
     def page_name(path)
       if segs = path.split("/")
         segs.first.downcase
@@ -276,7 +212,8 @@ module OY
       index.commit(options.message, parents, actor)
     end
     
-    
+
+    # edits a page
     def update # :yields: option_struct
       raise FileLocked, "file is locked" if locked?
       
@@ -327,6 +264,7 @@ module OY
     #   repos.find_by_fragments(*fragments)
     # end
 
+    # creates an empty Wiki page
     def self.create_bare(path)
       ret = OY.repos.find_by_fragments(path)
     rescue NotFound
@@ -334,7 +272,6 @@ module OY
     else
       raise AlreadyExist, "already in tree '#{path}'"
     end
-    
     
     def sha
       @commit.sha
@@ -372,6 +309,7 @@ module OY
       @commit.committed_date
     end
 
+    # returns commit message
     def message
       ret = @commit.message
       if ret.strip.empty?
@@ -380,10 +318,13 @@ module OY
       ret
     end
 
+    # title of the page
     def title
       @blob.basename.split(".").first.capitalize
     end
 
+    # Title of the page from first h1 in body. This is somewhat expensive to calculate
+    # because the body is being parsed by the markup system.
     def html_title
       @html_title || title
     end
@@ -391,180 +332,12 @@ module OY
     def size
       File.size(File.join(repos.path, path))
     end
-    
   end
 
-  class WikiDir < Wiki
+  require "wiki/wikidir"
+  require "wiki/media"
+  require "wiki/physical"
 
-    include WikiLock
-
-    def lockdir_path
-      check = Repos.expand_path(path)
-      File.join(path, ".locked")
-    end
-
-    def lock!
-      lock_directory!
-      # FIXME: ???
-      Dir.chdir(repos.path){ repos.git.git.checkout({}, 'HEAD', '--', lockdir_path) }
-      true
-    end
-
-    def unlock!
-      update_repos_lockfiles(:delete, lockdir_path)
-      # FIXME: 
-      Dir.chdir(repos.path){ repos.git.git.rm({:f => true}, 'HEAD', '--', lockdir_path) }
-      true
-    end
-
-    def identifier
-      path
-    end
-
-    # FIXME: 
-    def [](obj)
-      page_path = path + "/#{obj.to_s}" 
-      repos.find_by_fragments(*page_path.split("/"))
-    end
-    
-    def pages(only_pages = true)
-      rpath = Repos.expand_path(path)
-      files = Dir.entries(rpath)
-      ret = files.map{|f|
-        next if f =~ /^\.+/
-        frags = f.split("/")
-        begin
-          repos.find_by_fragments(*frags)
-        rescue NotFound
-          repos.find_directory(*frags) unless only_pages
-        end
-      }.compact
-
-      #ret.reject!{|p| p.kind_of?(WikiDir) } if only_pages
-      ret
-    end
-    
-    def exist?
-      File.directory?(Repos.expand_path(path))
-    end
-    
-    def initialize(dir)
-      @path = dir
-    end
-
-  end
-  
-
-  class Media < Wiki
-
-    MediaPath = File.join(OY.path, "media")
-    FileUtils.mkdir_p(MediaPath) unless File.exist?(MediaPath)
-
-    def is_media?
-      true
-    end
-    
-    def with_markup
-      @blob.data
-    end
-
-    def Media.create_bare(path)
-      npath = Repos.expand_path("media")
-      FileUtils.mkdir_p(npath)
-      Media.new(nil, nil, "media/#{path}")
-    end
-
-    def self.copy_uploaded_file(src, to)
-      Dir.chdir(Media::MediaPath) do
-        check = Repos.expand_path(to)
-        FileUtils.mkdir_p(File.dirname(to))
-        FileUtils.copy(src, to)
-      end
-    end
-    
-    def self.upload_file(name, extname, tempfile, filename, type)
-      filec = File.open(tempfile.path, 'rb').read
-      fname = "#{name}#{extname}"
-
-      copy_uploaded_file(tempfile.path, fname)
-      
-      bmedia = OY::Media.create_bare(fname)
-      media  = bmedia.create do |pg|
-        pg.message = "update"
-        pg.data = filec
-      end
-    end
-    
-    # def create # :yields: option_hash
-    #   opts = OpenStruct.new
-    #   yield opts if block_given?
-
-    #   Repos.expand_path(path)
-    #   Repos.write(path){|fp| fp << opts.data}
-
-    #   dir = ::File.dirname(path)
-    #   dir = "" if dir == "."
-
-    #   index = nil
-    #   sha = commit_index(opts) do |idx|
-    #     index = idx
-    #     index.add(path, opts.data)
-    #   end
-    #   fragments = path.split("/").reject{|p| p.empty?}
-    #   @history = nil
-    #   update_working_dir(index, '', page_name(path))
-    # end
-
-    def media_identifier
-      path.split("/")[1..-1].join("/")
-    end
-    
-    def media_url(with_sha = false)
-      add = with_sha ? "?sha=#{sha}" : ''
-      frags = path.split("/")[1..-1]
-      "/media/img/#{frags.join("/")}#{add}"
-    end
-
-    def permalink(with_sha = false)
-      add = with_sha ? "?sha=#{sha}" : ''
-      frags = path.split("/")[1..-1]
-      "/oy/special/media/#{frags.join("/")}#{add}"
-    end
-
-    def history(rsha = nil)
-      super(rsha, self.class)
-    end
-    
-  end
-
-  class Physical < Wiki
-    def title
-      File.basename(path).split(".").first.capitalize
-    end
-
-    def data
-      @data ||= File.open(Repos.expand_path(path), 'rb').read
-      with_markup
-    end
-
-    def is_media?
-      File.dirname(path) == "media"
-    end
-    
-    def with_markup(force_extension = nil)
-      ret = @data
-      return ret if is_media?
-      ["*", (force_extension || extension)].inject(ret){|memo, mup|
-        Markup.choose_for(mup).new(memo).to_html
-      }
-    end
-
-    def extension
-      File.basename(path).split(".").last
-    end
-    
-  end
-  
 end
 
 

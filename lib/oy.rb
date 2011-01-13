@@ -23,7 +23,12 @@ module OY
   $: << File.join(Source, "lib/oy")
   $: << File.join(Source, "app")
 
-
+  def puts(*args)
+    args.each do |a|
+      Kernel.puts "|> #{a}"
+    end
+  end
+  
   Version = [0, 0, 1]
 
   def api(host = nil)
@@ -47,16 +52,14 @@ module OY
     else
       @repos = VirtualRepos.new(OY.path)
     end
-
   end
   module_function :repos
 
   require "model/git"
+
   require "blob_entry.rb"
   require "git_access.rb"
-
   require "api.rb"
-
   require "repos"
   require "exceptions.rb"
   require "markup"
