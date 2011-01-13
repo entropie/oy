@@ -18,6 +18,10 @@
     %script{:type => "text/javascript", :src => "/js/oy.js"}=""
     
   %body
+    #oy-banner
+      %a{:href => "/"}
+        %img{:src => "/img/oybanner.png", :alt => "Oy!"}
+      
     #wrap
       #head
         = render_file "view/_head.haml"
