@@ -251,15 +251,15 @@ module OY
     
     def update_working_dir(index, dir, name, npath = nil)
       unless repos.git.bare
-        tdir = ::File.join(repos.path)
-        puts ">>> Update: #{tdir}/ #{npath || path}"
+        tdir = File.join(repos.path)
+        puts "Update: #{tdir}/ #{npath || path}"
         Dir.chdir(tdir) do
           repos.git.git.checkout({}, 'HEAD', '--', npath || path)
         end
       end
     end
     
-    def commit_index(options = {})
+    def commit_index(options = {}) # :yields: git_index
       normalize_commit(options)
       parents = [options.parent || repos.git.commit('master')]
       parents.flatten!
@@ -277,7 +277,7 @@ module OY
     end
     
     
-    def update
+    def update # :yields: option_struct
       raise FileLocked, "file is locked" if locked?
       
       opts = OpenStruct.new
@@ -304,26 +304,28 @@ module OY
       @blob && @commit && true
     end
     
-    def create
-      opts = OpenStruct.new
-      yield opts if block_given?
+    # def create # :yields: option_hash
+    #   opts = OpenStruct.new
+    #   yield opts if block_given?
 
-      Repos.expand_path(path)
-      Repos.write(path){|fp| fp << opts.data}
+    #   Repos.expand_path(path)
+    #   Repos.write(path){|fp| fp << opts.data}
 
-      dir = ::File.dirname(path)
-      dir = "" if dir == "."
+    #   dir = ::File.dirname(path)
+    #   dir = "" if dir == "."
 
-      index = nil
-      sha = commit_index(opts) do |idx|
-        index = idx
-        index.add(path, opts.data)
-      end
-      fragments = path.split("/").reject{|p| p.empty?}
-      update_working_dir(index, '', page_name(path))
-      @history = nil
-      repos.find_by_fragments(*fragments)
-    end
+    #   index = nil
+    #   sha = commit_index(opts) do |idx|
+    #     index = idx
+    #     index.add(path, opts.data)
+    #   end
+
+    #   fragments = path.split("/").reject{|p| p.empty?}
+    #   update_working_dir(index, '', page_name(path))
+    #   @history = nil
+
+    #   repos.find_by_fragments(*fragments)
+    # end
 
     def self.create_bare(path)
       ret = OY.repos.find_by_fragments(path)
@@ -493,25 +495,25 @@ module OY
       end
     end
     
-    def create
-      opts = OpenStruct.new
-      yield opts if block_given?
+    # def create # :yields: option_hash
+    #   opts = OpenStruct.new
+    #   yield opts if block_given?
 
-      Repos.expand_path(path)
-      Repos.write(path){|fp| fp << opts.data}
+    #   Repos.expand_path(path)
+    #   Repos.write(path){|fp| fp << opts.data}
 
-      dir = ::File.dirname(path)
-      dir = "" if dir == "."
+    #   dir = ::File.dirname(path)
+    #   dir = "" if dir == "."
 
-      index = nil
-      sha = commit_index(opts) do |idx|
-        index = idx
-        index.add(path, opts.data)
-      end
-      fragments = path.split("/").reject{|p| p.empty?}
-      @history = nil
-      update_working_dir(index, '', page_name(path))
-    end
+    #   index = nil
+    #   sha = commit_index(opts) do |idx|
+    #     index = idx
+    #     index.add(path, opts.data)
+    #   end
+    #   fragments = path.split("/").reject{|p| p.empty?}
+    #   @history = nil
+    #   update_working_dir(index, '', page_name(path))
+    # end
 
     def media_identifier
       path.split("/")[1..-1].join("/")
