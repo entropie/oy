@@ -12,7 +12,7 @@ require "json"
 
 require "pp"
 
-ReposPath = File.expand_path("~/Source/oytest") 
+ReposPath = File.expand_path("~/Source/oytest")
 
 module OY
 
@@ -64,7 +64,6 @@ module OY
   require "exceptions.rb"
   require "markup"
 end
-
 
 =begin
 Local Variables:

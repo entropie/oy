@@ -16,15 +16,25 @@ default_options = {
   :actor => Grit::Actor.new("Michael Trommer", "mictro@gmail.com")
 }
 
-inputData = STDIN.read
-
 opts = OptionParser.new do |opts|
 
   opts.banner = help
 
+  opts.on("-r", "--repos [REPOS]", "Start oy with with [REPOS]") do |repos|
+    repos_path = File.expand_path(repos)
+    raise OY::NotFound unless File.exist?(repos_path)
+    Dir.chdir("../app") do
+      OY.path = repos_path
+      require "start"
+      Ramaze.start(:host => "localhost", :port => 8200)
+    end
+  end
+  
   opts.on("-p", "--push [TO]", "Push Piped Data to [URL]") do |to|
     raise InvalidInput, "No Destination URL given" unless to
     raise InvalidInput, "No Data Given (use a pipe)" if inputData.to_s.strip.empty?
+
+    inputData = STDIN.read
 
     uri = URI.parse(to)
     host = uri.host

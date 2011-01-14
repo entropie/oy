@@ -185,34 +185,6 @@ module OY
       path || self.path
     end
     
-    def update_working_dir(index, dir, name, npath = nil)
-      unless repos.git.bare
-        tdir = File.join(repos.path)
-        puts "Update: #{tdir}/ #{npath || path}"
-        Dir.chdir(tdir) do
-          repos.git.git.checkout({}, 'HEAD', '--', npath || path)
-        end
-      end
-    end
-    
-    def commit_index(options = {}) # :yields: git_index
-      normalize_commit(options)
-      parents = [options.parent || repos.git.commit('master')]
-      parents.flatten!
-      parents.compact!
-      index = OY.repos.git.index
-      if tree = options.tree
-        index.read_tree(tree)
-      elsif parent = parents[0]
-        index.read_tree(parent.tree.id)
-      end
-      yield index if block_given?
-
-      actor = options.actor || OY::Actor
-      index.commit(options.message, parents, actor)
-    end
-    
-
     # edits a page
     def update # :yields: option_struct
       raise FileLocked, "file is locked" if locked?
@@ -318,6 +290,35 @@ module OY
       ret
     end
 
+    def update_working_dir(index, dir, name, npath = nil)
+      unless repos.git.bare
+        tdir = File.join(repos.path)
+        puts "Update: #{tdir}/ #{npath || path}"
+        Dir.chdir(tdir) do
+          repos.git.git.checkout({}, 'HEAD', '--', npath || path)
+        end
+      end
+    end
+    private :update_working_dir
+    
+    def commit_index(options = {}) # :yields: git_index
+      normalize_commit(options)
+      parents = [options.parent || repos.git.commit('master')]
+      parents.flatten!
+      parents.compact!
+      index = OY.repos.git.index
+      if tree = options.tree
+        index.read_tree(tree)
+      elsif parent = parents[0]
+        index.read_tree(parent.tree.id)
+      end
+      yield index if block_given?
+
+      actor = options.actor || OY::Actor
+      index.commit(options.message, parents, actor)
+    end
+    private :commit_index
+    
     # title of the page
     def title
       @blob.basename.split(".").first.capitalize
