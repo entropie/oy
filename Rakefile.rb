@@ -5,7 +5,8 @@
 
 
 require 'rubygems'
-require '../ramaze/lib/ramaze'
+#require '../ramaze/lib/ramaze'
+require "ramaze"
 require "lib/oy"
 require "redcloth"
 
