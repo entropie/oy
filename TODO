@@ -3,3 +3,4 @@
   Ruby	/usr/lib/ruby/gems/1.8/gems/oy-0.0.1/lib/oy/wiki/media.rb: in chdir, line 28
   Web	POST kommunism.us/media/upload
 * rspec should not break rake build
+* media file seems to not created
