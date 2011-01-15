@@ -8,7 +8,7 @@ This is inspired by *gollum*, the *github* wiki. *Ramaze* is the framework.
 
 <div style="float:right">
 
-!https://github.com/downloads/entropie/oy/oy.jpg!
+!>https://github.com/downloads/entropie/oy/oy.jpg!
 
 </div>
 
