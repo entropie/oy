@@ -5,10 +5,7 @@
 
 
 require 'rubygems'
-#require '../ramaze/lib/ramaze'
-require "ramaze"
 require "lib/oy"
-require "redcloth"
 
 require "net/http"
 require "rspec/core/rake_task"
