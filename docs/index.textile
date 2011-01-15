@@ -8,6 +8,8 @@ This is inspired by *gollum*, the *github* wiki. *Ramaze* is the framework.
 
 !>http://wiki.kommunism.us/img/oy.jpg!
 
+!>https://github.com/downloads/tav/ampify/logo.ampify.smallest.png!
+
 h2. Architecture
 
 Pathnames for wikipages are as well available in the git repos. So the page you get while requesting <code>/test/index</code> is equivalent with <code>/path/to/your/repos/test/index.textile</code>. Media files, for now only images, are stored in <code>media/</code> with full history.
