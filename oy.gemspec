@@ -4,8 +4,8 @@ Gem::Specification.new do |s|
   s.rubygems_version = '1.3.5'
 
   s.name              = 'oy'
-  s.version           = '0.0.1'
-  s.date              = '2011-01-15'
+  s.version           = '0.2.0'
+  s.date              = '2011-01-16'
   s.rubyforge_project = 'oy'
 
   s.summary     = "Git-powered wiki."
@@ -39,7 +39,10 @@ Gem::Specification.new do |s|
 
   # = MANIFEST =
   s.files = %w[
+    Gemfile
+    README.textile
     Rakefile.rb
+    TODO
     app/config.ru
     app/controller/api.rb
     app/controller/css.rb
@@ -91,6 +94,7 @@ Gem::Specification.new do |s|
     lib/oy/wiki/physical.rb
     lib/oy/wiki/wikidir.rb
     lib/oy/wiki/wikilock.rb
+    oy.gemspec
     script/polis_import.rb
     spec/01_spec_oy.rb
     spec/05_spec_wiki.rb
@@ -105,6 +109,7 @@ Gem::Specification.new do |s|
     spec/spec.rb
     spec/spec_data/ass.jpg
     spec/spec_data/banner.gif
+    spec/spec_data/oybanner.png
     spec/spec_helper.rb
   ]
   # = MANIFEST =

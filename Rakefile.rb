@@ -109,7 +109,9 @@ def name
 end
 
 def version
-  "0.0.1"
+  line = File.read("lib/#{name}.rb")[/^\s*Version\s*=\s*.*/]
+  r = eval("[" + line.match(/.*Version\s*=\s*\[(.*)\]/)[1] + "]")
+  r.join(".")
 end
 
 def date

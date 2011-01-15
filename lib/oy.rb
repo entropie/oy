@@ -6,9 +6,9 @@
 require "rubygems"
 require "grit"
 require "ostruct"
-require "redcloth"
 require "nokogiri"
 require "json"
+require "RedCloth"
 
 require "pp"
 
@@ -18,7 +18,7 @@ module OY
 
   Actor   = Grit::Actor.new("Anonymous", "anonym@o.us") unless const_defined?(:Actor)
 
-  Version = [0, 0, 1] unless const_defined?(:Version)
+  Version = [0, 2, 0] unless const_defined?(:Version)
   
   $: << File.join(Source, "lib/oy") unless $:.include?(File.join(Source, "lib/oy"))
   $: << File.join(Source, "app")    unless $:.include?(File.join(Source, "app"))
