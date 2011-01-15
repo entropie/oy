@@ -17,7 +17,7 @@ Oy! has a simple WWW Api. You're able to POST/GET pages from the Wiki in plainte
 h2. The Ideas
 
 * Path structure of the Web-app should be physically exist on disk. That makes it easier to find a page to edit or something.
-* _EVERY_ File should be stored in the repos. For now, the <code>/view</code> Directory from the Oy! repos is used to parse templates and define how the HTML is being outputted -- that will change. The <code>/view</code>, <code>/layout</code> directories will be life in your repos, so you can modify the way everything looks quit easily.
+* _EVERY_ File should be stored in the repos. For now, the <code>/view</code> Directory from the Oy! repos is used to parse templates and define how the HTML is being outputted -- that will change. The <code>/view</code>, <code>/layout</code> directories will be life in your repos, so you can modify the way everything looks quite easily.
 * Pages/Dirs/The entire repos will be lockable. <code>/test/foo</code> will be locked for web (write) access if there exist a file <code>/test/foo.locked</code>. This will be possible for directories too. Yet, there is no plan to implement a way to (un)lock files via web frontend.
 * ATM there is the only markup language RedCloth. There are plans to implement more. The basic idea is to output like everything you store in your repos somehow. Haml and HTML/XML are the next goals.
 
