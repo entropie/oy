@@ -31,7 +31,8 @@ Gem::Specification.new do |s|
   s.add_dependency('rspec')
   s.add_dependency('rspec-core')
   s.add_dependency('rspec-expectations')
-  s.add_dependency('rspec-mocks')  
+  s.add_dependency('rspec-mocks')
+  s.add_dependency('haml')    
   
   
   s.add_dependency('json')      
