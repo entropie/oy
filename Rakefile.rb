@@ -5,8 +5,6 @@
 
 
 require 'rubygems'
-require "lib/oy"
-
 require "net/http"
 require "rspec/core/rake_task"
 require "cgi"
@@ -14,6 +12,8 @@ require "cgi"
 include OY
 
 task :docs do
+  require "lib/oy"
+
   Dir.glob("docs/*").each do |docfile|
     file, ext = docfile.split(".").first
     frags = ["about", *docfile.split("/")[1..-1]]
