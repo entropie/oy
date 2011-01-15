@@ -1,3 +1,5 @@
+!https://github.com/downloads/entropie/oy/oybanner.png!
+
 h1. Oy! README
 
 h1. About
@@ -5,12 +7,6 @@ h1. About
 Oy! is a *Wiki* based on *git*. Purely written in *Ruby* with few dependencies. All you need to use it is clone Oy!, create a new git repos and start the application.
 
 This is inspired by *gollum*, the *github* wiki. *Ramaze* is the framework.
-
-<div style="float:right">
-
-!>https://github.com/downloads/entropie/oy/oy.jpg!
-
-</div>
 
 h2. Architecture
 
