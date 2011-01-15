@@ -7,27 +7,33 @@
 require "rubygems"
 require "optparse"
 require "grit"
-require "../lib/oy"
+require "pp"
+
+$:.unshift File.join(File.dirname(__FILE__), "../lib")
+$:.unshift File.join(File.dirname(__FILE__), "../app")
+
+require "oy"
 
 help = "Oy!: lalal\nlala\n"
 
-
 default_options = {
-  :actor => Grit::Actor.new("Michael Trommer", "mictro@gmail.com")
+  :port => 8200,
+  :hostname => "localhost",
+  :repos    => "."
 }
 
 opts = OptionParser.new do |opts|
 
   opts.banner = help
 
+  opts.on("-h", "--hostname [HOST]", "hostname") do |hn|
+    default_options[:hostname] = hn
+  end
+  
   opts.on("-r", "--repos [REPOS]", "Start oy with with [REPOS]") do |repos|
     repos_path = File.expand_path(repos)
     raise OY::NotFound unless File.exist?(repos_path)
-    Dir.chdir("../app") do
-      OY.path = repos_path
-      require "start"
-      Ramaze.start(:host => "localhost", :port => 8200)
-    end
+    default_options[:repos] = repos
   end
   
   opts.on("-p", "--push [TO]", "Push Piped Data to [URL]") do |to|
@@ -59,6 +65,15 @@ rescue OptionParser::InvalidOption
   puts "oy: try 'oy --help' for more information"
   exit 1
 end
+
+begin
+  OY.path = default_options[:repos]
+  require "start"
+  Dir.chdir(File.join(OY::Source, "app")) do
+    Ramaze.start(:host => default_options[:hostname], :port => 8200)
+  end
+end
+
 
 =begin
 Local Variables:
