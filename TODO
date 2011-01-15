@@ -4,4 +4,3 @@
   Web	POST kommunism.us/media/upload
 * rspec should not break rake build
 * media dir seems to not created
-* oybanner needs a fixed size
