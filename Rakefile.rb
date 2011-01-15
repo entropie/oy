@@ -9,8 +9,6 @@ require "net/http"
 require "rspec/core/rake_task"
 require "cgi"
 
-include OY
-
 task :docs do
   require "lib/oy"
 
