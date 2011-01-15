@@ -8,6 +8,7 @@ require 'rubygems'
 require "net/http"
 require "rspec/core/rake_task"
 require "cgi"
+require "date"
 
 task :docs do
   require "lib/oy"
