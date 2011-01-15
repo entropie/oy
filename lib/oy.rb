@@ -12,17 +12,16 @@ require "json"
 
 require "pp"
 
-#ReposPath = File.expand_path("~/Source/oytest")
-
-
 module OY
 
   Source  = File.dirname(File.dirname(File.expand_path(__FILE__))) unless const_defined?(:Source)
 
   Actor   = Grit::Actor.new("Anonymous", "anonym@o.us") unless const_defined?(:Actor)
+
+  Version = [0, 0, 1] unless const_defined?(:Version)
   
-  $: << File.join(Source, "lib/oy")
-  $: << File.join(Source, "app")
+  $: << File.join(Source, "lib/oy") unless $:.include?(File.join(Source, "lib/oy"))
+  $: << File.join(Source, "app")    unless $:.include?(File.join(Source, "app"))
 
   def puts(*args)
     args.each do |a|
@@ -30,8 +29,6 @@ module OY
     end
   end
   
-  Version = [0, 0, 1] unless const_defined?(:Version)
-
   def api(host = nil)
     @api ||= Api.new(host)
   end
