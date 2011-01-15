@@ -29,13 +29,8 @@ Gem::Specification.new do |s|
   s.add_dependency('ramaze')
   s.add_dependency('OptionParser', "~> 0.5.1")
   s.add_dependency('rspec')
-  s.add_dependency('rspec-core')
-  s.add_dependency('rspec-expectations')
-  s.add_dependency('rspec-mocks')
-  s.add_dependency('haml')    
-  
-  
-  s.add_dependency('json')      
+  s.add_dependency('haml')
+  s.add_dependency('json')
 
   # = MANIFEST =
   s.files = %w[
