@@ -33,6 +33,7 @@ class WikiController < OYController
       @title = @wiki.html_title
     end
   rescue NotFound
+    fragments = 'index' if fragments.empty?
     redirect WikiController.r(:create, *fragments)
   end
 
