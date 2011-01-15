@@ -14,11 +14,12 @@ require "pp"
 
 #ReposPath = File.expand_path("~/Source/oytest")
 
+
 module OY
 
-  Source  = File.dirname(File.dirname(File.expand_path(__FILE__)))
+  Source  = File.dirname(File.dirname(File.expand_path(__FILE__))) unless const_defined?(:Source)
 
-  Actor   = Grit::Actor.new("Anonymous", "anonym@o.us")
+  Actor   = Grit::Actor.new("Anonymous", "anonym@o.us") unless const_defined?(:Actor)
   
   $: << File.join(Source, "lib/oy")
   $: << File.join(Source, "app")
@@ -29,7 +30,7 @@ module OY
     end
   end
   
-  Version = [0, 0, 1]
+  Version = [0, 0, 1] unless const_defined?(:Version)
 
   def api(host = nil)
     @api ||= Api.new(host)
