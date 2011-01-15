@@ -7,9 +7,10 @@ module OY
 
   class Media < Wiki
 
-    MediaPath = File.join(OY.path, "media")
-    FileUtils.mkdir_p(MediaPath) unless File.exist?(MediaPath)
-
+    def self.media_path
+      File.join(OY.path, "media")
+    end
+    
     def is_media?
       true
     end
@@ -25,7 +26,7 @@ module OY
     end
 
     def self.copy_uploaded_file(src, to)
-      Dir.chdir(Media::MediaPath) do
+      Dir.chdir(Media.media_path) do
         check = Repos.expand_path(to)
         FileUtils.mkdir_p(File.dirname(to))
         FileUtils.copy(src, to)

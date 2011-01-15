@@ -10,7 +10,12 @@ require "rubygems"
 
 require "ramaze"
 
-require "../lib/oy"
+begin
+  require "../lib/oy"
+rescue LoadError
+  require "oy"
+end
+
 
 require "model/git"
 
@@ -21,7 +26,6 @@ controller = %w"oy special media css wiki api".map{ |lib|
 }
 libs = []
 
-
 module Innate # :nodoc: All
   class Session
     public :cookie
@@ -29,17 +33,6 @@ module Innate # :nodoc: All
 end
 
 (controller + libs).each{|lib| require lib}
-
-
-if __FILE__ == $0
-  if `hostname`.strip == "io"
-    Ramaze.start(:host => "kommunism.us",
-                 :port => 8200)
-  else
-    Ramaze.start(:host => "localhost",
-                 :port => 8200)
-  end
-end
 
 
 =begin

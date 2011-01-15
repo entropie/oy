@@ -33,7 +33,7 @@ opts = OptionParser.new do |opts|
   opts.on("-r", "--repos [REPOS]", "Start oy with with [REPOS]") do |repos|
     repos_path = File.expand_path(repos)
     raise OY::NotFound unless File.exist?(repos_path)
-    default_options[:repos] = repos
+    default_options[:repos] = repos_path
   end
   
   opts.on("-p", "--push [TO]", "Push Piped Data to [URL]") do |to|

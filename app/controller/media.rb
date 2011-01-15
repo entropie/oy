@@ -15,7 +15,7 @@ class MediaController < OYController
     if request[:p]
       redirect SpecialController.r(:media, *fragments)
     else
-      file_path = File.join(OY::Media::MediaPath, *fragments)
+      file_path = File.join(OY::Media.media_path, *fragments)
 
       raise NotFound, "not found" unless File.exist?(file_path)
       

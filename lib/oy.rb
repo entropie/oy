@@ -12,7 +12,7 @@ require "json"
 
 require "pp"
 
-ReposPath = File.expand_path("~/Source/oytest")
+#ReposPath = File.expand_path("~/Source/oytest")
 
 module OY
 
@@ -42,7 +42,7 @@ module OY
   module_function "path="
     
   def path
-    @path || ReposPath
+    @path || '.'
   end
   module_function :path  
   
