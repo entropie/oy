@@ -40,15 +40,14 @@ opts = OptionParser.new do |opts|
   
   opts.on("-p", "--push [TO]", "Push Piped Data to [URL]") do |to|
     raise InvalidInput, "No Destination URL given" unless to
-    raise InvalidInput, "No Data Given (use a pipe)" if inputData.to_s.strip.empty?
-
     inputData = STDIN.read
+    raise InvalidInput, "No Data Given (use a pipe)" if inputData.to_s.strip.empty?    
 
     uri = URI.parse(to)
     host = uri.host
     path = uri.path[1..-1]
-    
-    api = OY.api("http://#{host}")
+
+    api = OY.api("#{uri.scheme}://#{host}:#{uri.port}")
     r = api.post(path) do |opts|
       opts[:author]  = "Michael Trommer <mictro@gmail.com>"
       opts[:data]    = inputData
