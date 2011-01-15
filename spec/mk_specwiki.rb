@@ -69,6 +69,7 @@ spec_create_wiki_page "bar/test.textile"
 
 
 spec_create_media_page "ass.jpg"
+spec_create_media_page "oybanner.png"
 spec_create_media_page "banner.gif"
 spec_update_media_page "banner.gif", "ass.jpg"
 
