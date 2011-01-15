@@ -14,23 +14,25 @@ $:.unshift File.join(File.dirname(__FILE__), "../app")
 
 require "oy"
 
-help = "Oy!: lalal\nlala\n"
+help = "Oy!: The Simple Git-based Wiki\n\n"
 
 default_options = {
   :port => 8200,
   :hostname => "localhost",
-  :repos    => "."
+  :repos    => File.expand_path(".")
 }
 
 opts = OptionParser.new do |opts|
 
   opts.banner = help
 
-  opts.on("-h", "--hostname [HOST]", "hostname") do |hn|
+  opts.on("-p", "--port [PORT]", "Application port (default 8200)")
+  
+  opts.on("-h", "--hostname [HOST]", "Application hostname (default localhost)") do |hn|
     default_options[:hostname] = hn
   end
   
-  opts.on("-r", "--repos [REPOS]", "Start oy with with [REPOS]") do |repos|
+  opts.on("-r", "--repos [REPOS]", "Start oy with with [REPOS] (default is `pwd`)") do |repos|
     repos_path = File.expand_path(repos)
     raise OY::NotFound unless File.exist?(repos_path)
     default_options[:repos] = repos_path
@@ -50,9 +52,10 @@ opts = OptionParser.new do |opts|
     r = api.post(path) do |opts|
       opts[:author]  = "Michael Trommer <mictro@gmail.com>"
       opts[:data]    = inputData
-      opts[:message] = "Pushed from Other Oy! Wiki!"
+      opts[:message] = "Pushed via Api"
     end
     p r
+    exit 0
   end
   
 end
@@ -65,6 +68,7 @@ rescue OptionParser::InvalidOption
   puts "oy: try 'oy --help' for more information"
   exit 1
 end
+
 
 begin
   OY.path = default_options[:repos]
