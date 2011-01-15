@@ -28,7 +28,8 @@ Gem::Specification.new do |s|
   s.add_dependency('RedCloth', "~> 4.2.3")
   s.add_dependency('ramaze')
   s.add_dependency('OptionParser', "~> 0.5.1")
-  s.add_dependency('rspec')    
+  s.add_dependency('rspec')
+  s.add_dependency('json')      
 
   # = MANIFEST =
   s.files = %w[
