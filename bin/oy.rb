@@ -26,7 +26,9 @@ opts = OptionParser.new do |opts|
 
   opts.banner = help
 
-  opts.on("-p", "--port [PORT]", "Application port (default 8200)")
+  opts.on("-p", "--port [PORT]", "Application port (default 8200)") do |port|
+    default_options[:port] = port.to_i
+  end
   
   opts.on("-h", "--hostname [HOST]", "Application hostname (default localhost)") do |hn|
     default_options[:hostname] = hn
@@ -38,7 +40,7 @@ opts = OptionParser.new do |opts|
     default_options[:repos] = repos_path
   end
   
-  opts.on("-p", "--push [TO]", "Push Piped Data to [URL]") do |to|
+  opts.on("-P", "--push [TO]", "Push Piped Data to [URL]") do |to|
     raise InvalidInput, "No Destination URL given" unless to
     inputData = STDIN.read
     raise InvalidInput, "No Data Given (use a pipe)" if inputData.to_s.strip.empty?    
@@ -73,7 +75,7 @@ begin
   OY.path = default_options[:repos]
   require "start"
   Dir.chdir(File.join(OY::Source, "app")) do
-    Ramaze.start(:host => default_options[:hostname], :port => 8200)
+    Ramaze.start(:host => default_options[:hostname], :port => default_options[:port])
   end
 end
 
