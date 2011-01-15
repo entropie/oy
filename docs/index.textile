@@ -6,7 +6,11 @@ Oy! is a *Wiki* based on *git*. Purely written in *Ruby* with few dependencies. 
 
 This is inspired by *gollum*, the *github* wiki. *Ramaze* is the framework.
 
-!>https://github.com/downloads/entropie/oy/oy.jpg!
+<div style="float:right">
+
+https://github.com/downloads/entropie/oy/oy.jpg!
+
+</div>
 
 h2. Architecture
 
