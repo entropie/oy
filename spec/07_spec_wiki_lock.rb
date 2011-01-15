@@ -150,7 +150,25 @@ describe OY::Wiki, "lock" do
       repos.find_directory("bar").locked?.should == false
     end
   end
-  
+
+  context "lock media" do
+    it "should respond to #locked?" do
+      image = repos.find_by_path("media/ass.jpg")
+      image.locked?.should == false
+    end
+
+    it "should be possible to lock an image" do
+      image = repos.find_by_path("media/ass.jpg")
+      image.lock!.should == true
+      image.locked?.should == true
+    end
+
+    it "should be possible to unlock an image" do
+      image = repos.find_by_path("media/ass.jpg")
+      image.unlock!.should == true
+      image.locked?.should == false
+    end
+  end
 end
 
 

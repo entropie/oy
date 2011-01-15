@@ -75,6 +75,7 @@ RSpec::Core::RakeTask.new(:run_spec) do |t|
   t.pattern = Dir.glob('spec/**/*_spec_*.rb')
   t.rcov_opts  = %q[-Ispec -i spec_helper]
   t.rspec_opts = %q[-f d]
+  t.skip_bundler = true
   t.rcov = true
   t.verbose = true
 end
@@ -82,6 +83,7 @@ end
 RSpec::Core::RakeTask.new(:run_spec_wo) do |t|
   t.pattern = Dir.glob('spec/**/*_spec_*.rb')
   t.rspec_opts = %q[-f d]
+  t.skip_bundler = true  
   t.rcov = false
 end
 
