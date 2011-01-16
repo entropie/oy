@@ -10,8 +10,12 @@
     Commit Message:
     %em
       =@img.message
-  .oy-replace
-    = render_file "view/oy/special/upload.haml", :value => @img.media_identifier.split(".").first, :title => "Replace"
+  - if @img.locked?
+    .oy-locked
+      Image is locked.
+  - else
+    .oy-replace
+      = render_file "view/oy/special/upload.haml", :value => @img.media_identifier.split(".").first, :title => "Replace"
   - if @img.has_parent?
     %h2 History
     %ul

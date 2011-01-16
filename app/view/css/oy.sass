@@ -179,6 +179,15 @@ fieldset
     
 #oy-media-ls
   :max-width 900px
+  .oy-locked
+    :background-color = !clr_rlight_black
+    :padding 10px
+    :border-radius 5px
+    :-moz-border-radius 5px
+    :color = !clr_light_silver
+    :margin-bottom 20px
+    :text-align center
+    
   .oy-replace
     :margin-top 10px
     :margin-bottom 20px
@@ -361,6 +370,9 @@ fieldset
         &.author
           &:before
             :content " by "
+        &.locked
+          :color red
+          :right left
         &.edit
           a
             :color = !clr_blue_link
