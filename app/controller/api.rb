@@ -22,11 +22,11 @@ class ApiController < OYController
   def POST(*fragments)
     response[ 'Content-Type' ] = 'application/json'
 
-    data, author, ext, msg = request[:data], request[:author], request[:extension], request[:message]
+    data, author, msg = request[:data], request[:author], request[:message]
 
-    ext ||= "textile"
-    author = repos.actor_from_string(author)
+    ext = Markup.extension(request[:markup])
     
+    author = repos.actor_from_string(author)
     fragments.last << ".#{ext}"
 
     initial = false

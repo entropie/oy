@@ -10,7 +10,24 @@ module OY
     attr_reader    :path
     attr_reader    :git
 
-    def self.expand_path(npath)
+    def self.alternatives?(*fragments)
+      not alternatives(*fragments).empty?
+    end
+    
+    def self.alternatives(*fragments)
+      repos_path = Repos.expand_path(*fragments[0..-2])
+      mup_exts = Markup.real_markups.map{|mu| ".#{mu.extension}"}
+
+      mup_exts.map!{ |extension|
+        frags = fragments.dup
+        frags[-1] += extension
+        [Markup.normalize_extension(extension).to_sym, File.join(repos_path, frags.last)]
+      }.reject!{|ext, alt_file| not File.exist?(alt_file)}
+
+      Hash[*mup_exts.flatten]
+    end
+    
+    def self.expand_path(*npath)
       raise IllegalAccess, "illegal path" if npath.to_s.include?("..")
       File.join(OY.path, npath)
     end
@@ -61,7 +78,7 @@ module OY
       if rpath = Repos.expand_path(fragments.join("/")) and File.directory?(rpath)
         return WikiDir.new(fragments.join("/"))
       end
-#      raise NotFound
+      # raise NotFound
     end
     
     def find_by_fragments(*fragments)
@@ -90,7 +107,29 @@ module OY
       fragments[0] = "index" unless fragments[0]
 
       unless fragments[-1].split(".").size == 2
-        fragments[-1] = fragments[-1] += ".textile" unless fragments[-1] =~ /\.textile$/
+
+        alts = Repos.alternatives(*fragments)
+
+        selected_ext = nil
+        
+        if alts.empty?
+          # not found
+        elsif alts.size == 1
+          ext = alts.keys.first
+          selected_ext = ext
+          #fragments[-1] = fragments[-1] += ".#{ext}" # unless fragments[-1] =~ /\.textile$/
+        else
+          defext = Markup.default_extension.to_sym
+
+          # look for default markup
+          if alts[defext]
+            selected_ext = defext
+          else
+            raise AmbiguousChoice
+          end
+        end
+
+        fragments[-1] = fragments[-1] += ".#{selected_ext}"
       end
       fragments
     end

@@ -11,8 +11,8 @@ require "lib/oy"
 include OY
 OY.path = "/tmp/testrepos"
 
-def puts(*args)
-end
+# def puts(*args)
+# end
 
 def r(*args)
   nargs = args.empty? ? ["test", "spec"] : args

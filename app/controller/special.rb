@@ -16,13 +16,15 @@ class SpecialController < OYController
     full_page_titles = nil
     full_page_titles = true if request[:titles] == "1"
     Dir.chdir(repos.path) do
-      @contents = Dir["**/*.textile"]
+      @contents = Dir["**/*.*"]
     end
+    @contents.reject!{|c| File.dirname(c) == "media"}
+    
     @contents = @contents.map{|content|
       r = repos.find_by_fragments(*content)
       r.parse_body if full_page_titles
       r
-    }.sort_by{|c| c.date}.reverse
+    }.sort_by{|c| c.date }.reverse
   end
 
   # gets all media files for the entire repos

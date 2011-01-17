@@ -2,10 +2,15 @@
   %form{:action => WikiController.r(@action, :path => @path), :method => :post}
     %fieldset
       %legend= @identifier.capitalize
+      .oy-markup
+        %select{:name => :markup}
+          - OY::Markup.real_markups.each do |mu|
+            - if mu.extension == OY::Markup.default_extension
+              %option{:name => mu.extension, :selected => :selected}= mu.extension
+            - else
+              %option{:name => mu.extension}= mu.extension
       .oy-textbox
-        You're about to edit
-        %em= @path
-        &mdash; Formatting help? 
+        You're about to edit <em>#{@path}</em> &mdash; Formatting help?
         = "<small>(<a href='http://redcloth.org/hobix.com/textile/quick.html' target='_blank'>Its Textile!</a>)</small>"
         %textarea{:name => :data, :class => :body}= @raw_data
       .oy-messagebox

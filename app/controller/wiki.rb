@@ -63,8 +63,12 @@ class WikiController < OYController
 
   def new
     path = request[:path] or raise "no path given"
-    path = path[1..-1] if path[0..0] == "/"
-    wiki = Wiki.create_bare("#{path}.textile")
+
+    path = Wiki.normalize_path(path)
+
+    extension = Markup.extension(request[:markup])
+
+    wiki = Wiki.create_bare("#{path}.#{extension}")
 
     wiki.create do |pg|
       pg.message = request[:message]

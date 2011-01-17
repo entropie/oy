@@ -14,6 +14,10 @@ module OY
       
       self.extension = "compare"
 
+      def self.is_virtual?
+        true
+      end
+      
       def to_html(data)
         lines(data)
       end

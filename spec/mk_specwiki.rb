@@ -59,6 +59,15 @@ end
 spec_create_wiki_page "index.textile"
 spec_update_wiki_page "index.textile"
 
+spec_create_wiki_page "lala.org", File.readlines("spec/spec_data/sample.org").join
+
+spec_create_wiki_page "double.org", File.readlines("spec/spec_data/sample.org").join
+spec_create_wiki_page "double.textile"
+
+spec_create_wiki_page "doublewo.org", File.readlines("spec/spec_data/sample.org").join
+spec_create_wiki_page "doublewo.markdown"
+
+
 spec_create_wiki_page "foo.textile"
 
 spec_create_wiki_page "test/index.textile"

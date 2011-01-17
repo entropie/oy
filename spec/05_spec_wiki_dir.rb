@@ -15,7 +15,7 @@ describe OY::WikiDir do
 
     it "should have pages" do
       pages = repos.find_directory("/").pages
-      pages.size.should == 2
+      pages.size.should == 7
 
       pages.all?{|wiki| wiki.kind_of?(Wiki) }.should == true
     end

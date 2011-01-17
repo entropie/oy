@@ -25,7 +25,7 @@ module OY
 
   def puts(*args)
     args.each do |a|
-      Kernel.puts "|> #{a}"
+      Kernel.puts "  |> #{a}"
     end
   end
   

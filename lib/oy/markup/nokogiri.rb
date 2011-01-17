@@ -8,6 +8,10 @@ module OY
 
     class Nokogiri < Markup
       self.extension = "xml"
+
+      def self.is_virtual?
+        true
+      end
       
       def to_html
         @doc = ::Nokogiri::HTML::DocumentFragment.parse(data)

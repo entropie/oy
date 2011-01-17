@@ -8,6 +8,7 @@ module OY
   module Markup
 
     class Redcloth < Markup
+
       self.extension = "textile"
 
       def to_html

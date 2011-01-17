@@ -16,6 +16,12 @@ module OY
     attr_accessor :parent, :html_title
 
     include WikiLock
+
+
+    def self.normalize_path(npath)
+      npath = npath[1..-1] if npath[0..0] == "/"
+      npath
+    end
     
     def to_json
       to_hash.to_json
@@ -48,6 +54,10 @@ module OY
 
     def repos
       @repos ||= OY.repos
+    end
+
+    def extension
+      @path.split(".").last
     end
 
     def identifier
