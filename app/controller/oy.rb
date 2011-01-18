@@ -29,7 +29,6 @@ class OYController < Ramaze::Controller
       redirect_referer
     end
   end
-  private :add_repos_paths
 
   def oy_render_file(file, opts = {})
     path_in_repos = File.join("_view", file)
@@ -39,8 +38,6 @@ class OYController < Ramaze::Controller
       render_file(File.join("view", file), opts)
     end
   end
-  private :oy_render_file
-  
 
   def create_prefix(arr = false, npath = nil)
     fragments = (npath or request.path).split("/")[1..-1]
