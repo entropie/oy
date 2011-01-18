@@ -18,7 +18,7 @@ require "date"
 
 task :docs do
   require "lib/oy"
-
+  include OY
   Dir.glob("docs/*").each do |docfile|
     file, ext = docfile.split(".").first
     frags = ["about", *docfile.split("/")[1..-1]]
@@ -30,7 +30,6 @@ task :docs do
     rescue NotFound
       page = Wiki.create_bare(frags.join("/"))
     end
-    puts "Update: >>> #{page.path}"
     page = page.update do |pg|
       pg.data = fc
       pg.message = "Update Docfile"

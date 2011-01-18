@@ -1,6 +1,6 @@
-!>https://github.com/downloads/entropie/oy/oybanner.png!
-
 h1. Oy! README
+
+!>https://github.com/downloads/entropie/oy/oy.jpg!
 
 h1. About
 
@@ -8,19 +8,40 @@ Oy! is a *Wiki* based on *git*. Purely written in *Ruby* with few dependencies. 
 
 This is inspired by *gollum*, the *github* wiki. *Ramaze* is the framework.
 
-h2. Architecture
+The entire content is stored plaintext in the git repos, there are multiple ways to add/edit content. The Webfrontend, <code>$EDITOR</code> or the Oy! Ruby-API.
 
 Pathnames for wikipages are as well available in the git repos. So the page you get while requesting <code>/test/index</code> is equivalent with <code>/path/to/your/repos/test/index.textile</code>. Media files, for now only images, are stored in <code>media/</code> with full history.
 
-Oy! has a simple WWW Api. You're able to POST/GET pages from the Wiki in plaintext. It's also possible to pull/push pages from another Oy! Wiki.
+* Source on "Github":https://github.com/entropie/oy
+* Running "Demo":http://wiki.kommunism.us, feel free to play around.
 
-h2. The Ideas
+h2. Features
 
-* Path structure of the Web-app should be physically exist on disk. That makes it easier to find a page to edit or something.
-* _EVERY_ File should be stored in the repos. For now, the <code>/view</code> Directory from the Oy! repos is used to parse templates and define how the HTML is being outputted -- that will change. The <code>/view</code>, <code>/layout</code> directories will be life in your repos, so you can modify the way everything looks quite easily.
-* Pages/Dirs/The entire repos will be lockable. <code>/test/foo</code> will be locked for web (write) access if there exist a file <code>/test/foo.locked</code>. This will be possible for directories too. Yet, there is no plan to implement a way to (un)lock files via web frontend.
-* ATM there is the only markup language RedCloth. There are plans to implement more. The basic idea is to output like everything you store in your repos somehow. Haml and HTML/XML are the next goals.
+* No Database backend but <strong>Git</strong> powered.
+* Nice default template. Besides this, the look of Oy! is *100%* customizeable for every single repository. Thanks to MVC(Model View Controller) its possible to edit template files or customize Javascript or CSS(Cascading style Sheets). Just create a <code>{_view,_public,_layout}</code> directory within your repos and copy the original files to the right location and edit them for your needs.
+* Entire directories or single files are lockable from commandline. Given a file <code>./hello.textile</code> in your repository run a <code>touch ./hello.textile.locked && git add ./hello.textile.locked && git commit -m "lock hello"</code> and <code>/hello</code> is locked from the webinterface or through the Oy! Api.
+* Media files uploaded via the webinterface are stored with full history in the repository.
+* Simple REST(Representational State Transfer) like api. Just try a <code>curl http://wiki.kommunism.us/api/GET/index</code>. Also its possible to POST -- The Oy! executable provides a method to do this. I'ts done like this <code>cat index.textile | oy.rb -P http://wiki.kummunism.us/index</code>
+* Different Markups; for now *RedCloth* (which is default), *Markdown*, and *ORG*. I'ts dead simple to add your own.
 
-h3. Syntax
+h2. Installation
 
-As mentioned there is only one markup system ATM: RedCloth. Besides this, there are some other ways to modify output. For now we create just Wiki-Links, and change the page header (h1) to the very first h1 in the data defintion of the content file. Another idea is to implement own output formats in your own repos.
+For not the best way is to clone the repos, run <code>rake build</code> and install the gem:
+
+<code>git clone git://github.com/entropie/oy.git && cd oy && rake build && sudo gem install pkg/*.gem</code>
+
+h2. Running
+
+After installation run <code>oy.rb --help</code>. For the lazy ones: <code>oy.rb -r /path/to/initialised/git/repos -p <port> -h <hostname></code>
+
+The default port ist *8200* and the default hostname is *localhost*.
+
+h3. Markups
+
+* "Textile/RedCloth":http://www.textism.com/tools/textile/ <code>gem install RedCloth</code>, the default markup system.
+* "Markdown":http://daringfireball.net/projects/markdown/http://daringfireball.net/projects/markdown/ <code>gem install rdiscount</code>
+* "Org":http://orgmode.org/ <code>gem install org-ruby</code>
+
+h3. Additional Infos
+
+This is _really_ an early release. There will be bugs, probably lots of it. If a bug bites you in your hand please "file it":https://github.com/entropie/oy/issues. As well you might want to request features, which is totaly fine, but dont expect it will be done soon. You're encouraged to make a fork and add features yourself.

@@ -89,7 +89,7 @@ module OY
       frags = sanitize_fragments(*fragments)
 
       commit = git.log("master", frags.join("/")).first
-      raise NotFound, "not found" unless commit
+      raise NotFound, "not found '#{PP.pp(fragments, '')}'" unless commit
 
       tree = commit.tree("master")
       file = nil
