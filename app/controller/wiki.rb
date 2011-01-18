@@ -36,7 +36,7 @@ class WikiController < OYController
     end
   rescue NotFound
     fragments = 'index' if fragments.empty?
-    #redirect WikiController.r(:create, *fragments)
+    redirect WikiController.r(:create, *fragments)
   end
 
   def history(*fragments)
