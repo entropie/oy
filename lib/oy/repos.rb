@@ -32,6 +32,10 @@ module OY
       File.join(OY.path, npath)
     end
 
+    def self.exist?(path)
+      File.exist?(expand_path(path))
+    end
+    
     def self.write(path)
       path = Repos.expand_path(path)
       FileUtils.mkdir_p(File.dirname(path))
@@ -70,6 +74,7 @@ module OY
         end
       end
 
+      # FIXME:
       klass = if path =~ /\.textile$/ then Wiki else Media end
       klass.new(file, commit, path)
     end
@@ -78,7 +83,6 @@ module OY
       if rpath = Repos.expand_path(fragments.join("/")) and File.directory?(rpath)
         return WikiDir.new(fragments.join("/"))
       end
-      # raise NotFound
     end
     
     def find_by_fragments(*fragments)
@@ -117,7 +121,6 @@ module OY
         elsif alts.size == 1
           ext = alts.keys.first
           selected_ext = ext
-          #fragments[-1] = fragments[-1] += ".#{ext}" # unless fragments[-1] =~ /\.textile$/
         else
           defext = Markup.default_extension.to_sym
 

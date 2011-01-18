@@ -1,4 +1,4 @@
 - if @img
-  = render_file "view/oy/special/_image.haml", :img => @img
+  = oy_render_file "oy/special/_image.haml", :img => @img
 - else
-  = render_file "view/oy/special/_images.haml", :images => @images
+  = oy_render_file "oy/special/_images.haml", :images => @images

@@ -11,8 +11,10 @@ class WikiController < OYController
   def img(fragments)
     redirect MediaController.r(:img, *fragments)
   end
-  
+
   def index(*fragments)
+    add_repos_paths
+    
     key, *arguments = fragments
 
     methods = public_methods
@@ -34,7 +36,7 @@ class WikiController < OYController
     end
   rescue NotFound
     fragments = 'index' if fragments.empty?
-    redirect WikiController.r(:create, *fragments)
+    #redirect WikiController.r(:create, *fragments)
   end
 
   def history(*fragments)

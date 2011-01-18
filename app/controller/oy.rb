@@ -13,6 +13,35 @@ class OYController < Ramaze::Controller
 
   private
 
+  # FIXME:
+  def add_repos_paths
+    unless Ramaze.options.roots.include?(repos.path)
+      puts "_"*60
+      
+      Ramaze.options.roots.unshift(repos.path)
+      [:public, :layout, :view].each do |apath|
+        if OY::Repos.exist?("_#{apath}")
+          Ramaze.options.send("#{apath}s") << "_#{apath}"
+          puts "Ramaze.options.#{apath}s << '_#{apath}s'"
+        end
+      end
+      puts "_"*60      
+      redirect_referer
+    end
+  end
+  private :add_repos_paths
+
+  def oy_render_file(file, opts = {})
+    path_in_repos = File.join("_view", file)
+    if OY::Repos.exist?(path_in_repos)
+      render_file(OY::Repos.expand_path(path_in_repos), opts)
+    else
+      render_file(File.join("view", file), opts)
+    end
+  end
+  private :oy_render_file
+  
+
   def create_prefix(arr = false, npath = nil)
     fragments = (npath or request.path).split("/")[1..-1]
     fragments ||= []
