@@ -82,7 +82,7 @@ begin
   #     end
   #   end
 
-  Dir.chdir("app")
+  Dir.chdir(File.join(OY::Source, "app"))
 
   Ramaze.start(:host => default_options[:hostname], :port => default_options[:port])
 end
