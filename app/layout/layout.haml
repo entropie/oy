@@ -24,10 +24,10 @@
       
     #wrap
       #head
-        = render_file "view/_head.haml"
+        = oy_render_file "_head.haml"
 
       #oy-wrap
         = @content
         .push
     #footer
-      = render_file "view/_foot.haml"
+      = oy_render_file "_foot.haml"
