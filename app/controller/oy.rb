@@ -26,7 +26,6 @@ class OYController < Ramaze::Controller
         end
       end
       puts "_"*60      
-      redirect_referer
     end
   end
 
