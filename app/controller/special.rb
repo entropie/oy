@@ -12,14 +12,19 @@ class SpecialController < OYController
   end
 
   # gets the full file listing for the entire repos
+  #
+  # FIXME:
   def all
     full_page_titles = nil
     full_page_titles = true if request[:titles] == "1"
     Dir.chdir(repos.path) do
       @contents = Dir["**/*.*"]
     end
-    @contents.reject!{|c| File.dirname(c) == "media"}
-    
+
+    @contents.reject!{|c|
+      File.dirname(c) == "media" or File.dirname(c)[0] == ?_ or c =~ /\.locked$/
+    }
+
     @contents = @contents.map{|content|
       r = repos.find_by_fragments(*content)
       r.parse_body if full_page_titles
