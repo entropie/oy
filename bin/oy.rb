@@ -74,9 +74,17 @@ end
 begin
   OY.path = default_options[:repos]
   require "start"
-  Dir.chdir(File.join(OY::Source, "app")) do
-    Ramaze.start(:host => default_options[:hostname], :port => default_options[:port])
-  end
+
+  #   [:layout, :public, :view].each do |opt|
+  #     if OY::Repos.exist?("_#{opt}")
+  #       puts "Ramaze.options[:#{opt}s] << _#{opt}"
+  #       ropts.get("#{opt}s".to_sym)[:value].unshift "_#{opt}" 
+  #     end
+  #   end
+
+  Dir.chdir("app")
+
+  Ramaze.start(:host => default_options[:hostname], :port => default_options[:port])
 end
 
 
