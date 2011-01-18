@@ -51,7 +51,6 @@ module OY
         end
       }.compact
 
-      #ret.reject!{|p| p.kind_of?(WikiDir) } if only_pages
       ret
     end
     
@@ -64,7 +63,6 @@ module OY
     end
 
   end
-
   
 end
 

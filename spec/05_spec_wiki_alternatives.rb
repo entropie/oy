@@ -60,18 +60,6 @@ describe "OY::Wiki::Alternatives" do
 
   end
 
-  context "barfoo" do
-    it "lal" do
-      repos.find_by_fragments("test", "index")
-    end
-  end
-
-  
-  # context "barfoo" do
-  #   it "lal" do
-  #     repos.find_by_fragments("test", "index")
-  #   end
-  # end
 end
 
 

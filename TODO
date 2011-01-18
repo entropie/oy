@@ -4,3 +4,6 @@
   Web	POST kommunism.us/media/upload
 * rspec should not break rake build
 * media dir seems to not created
+* make template/layout/public optionally part of the repos
+* graphviz foo?
+  https://github.com/ndl/wiki_external_filter
