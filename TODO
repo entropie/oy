@@ -8,3 +8,7 @@
 * graphviz foo?
   https://github.com/ndl/wiki_external_filter
 * investigate into unicode files.
+* Make it possible to download wiki contents
+  https://github.com/al3x/git-wiki/blob/master/git-wiki.rb#L74
+* multiple branches?
+
