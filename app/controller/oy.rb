@@ -62,7 +62,7 @@ class OYController < Ramaze::Controller
   end
   
   def time_to_s(t)
-    t.strftime("%d-%b-%y")
+    t.strftime("%d-%b-%y &mdash; %H:%M")
   end
 end
 
