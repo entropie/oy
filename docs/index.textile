@@ -19,14 +19,14 @@ h2. Features
 
 * No Database backend but <strong>Git</strong> powered.
 * Nice default template. Besides this, the look of Oy! is *100%* customizeable for every single repository. Thanks to MVC(Model View Controller) its possible to edit template files or customize Javascript or CSS(Cascading style Sheets). Just create a <code>{_view,_public,_layout}</code> directory within your repos and copy the original files to the right location and edit them for your needs.
-* Entire directories or single files are lockable from commandline. Given a file <code>./hello.textile</code> in your repository run a <code>touch ./hello.textile.locked && git add ./hello.textile.locked && git commit -m "lock hello"</code> and <code>/hello</code> is locked from the webinterface or through the Oy! Api.
-* Media files uploaded via the webinterface are stored with full history in the repository.
-* Simple REST(Representational State Transfer) like api. Just try a <code>curl http://wiki.kommunism.us/api/GET/index</code>. Also its possible to POST -- The Oy! executable provides a method to do this. I'ts done like this <code>cat index.textile | oy.rb -P http://wiki.kummunism.us/index</code>
+* Entire directories or single files are lockable from commandline. Given a file <code>./hello.textile</code> in your repository run a <code>touch ./hello.textile.locked && git add ./hello.textile.locked && git commit -m "lock hello"</code> and <code>/hello</code> is readonly for the webinterface or through the Oy! Api.
+* Media files uploaded via the webinterface are stored with full history in the repository. To lock a directory: <code>touch ./.locked && git add ./.locked [...]</code> -- every single file in this directory is write protected now.
+* Simple REST(Representational State Transfer) like api. Just try a <code>curl http://wiki.kommunism.us/api/GET/index</code>. Also its possible to POST -- The Oy! executable provides a method to do this. I'ts done like this <code>cat index.textile | oy.rb -P http://wiki.kommunism.us/index</code>
 * Different Markups; for now *RedCloth* (which is default), *Markdown*, and *ORG*. I'ts dead simple to add your own.
 
 h2. Installation
 
-For not the best way is to clone the repos, run <code>rake build</code> and install the gem:
+For now the best way is to clone the repos, run <code>rake build</code> and install the gem:
 
 <code>git clone git://github.com/entropie/oy.git && cd oy && rake build && sudo gem install pkg/*.gem</code>
 
