@@ -46,6 +46,8 @@ class WikiController < OYController
   
   def edit(*fragments)
     @wiki = repos.find_by_fragments(*fragments)
+    flash[:error] = "Page is locked."
+    redirect @wiki.link if @wiki.locked?
     @title = @wiki.path
     @action = :update
   end
