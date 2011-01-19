@@ -79,7 +79,7 @@ class WikiController < OYController
       pg.data    = request[:data]
     end
 
-    redirect WikiController.r(path)
+    redirect wiki.link
   rescue AlreadyExist
     redirect WikiController.r(request[:path])
   end
