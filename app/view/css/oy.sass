@@ -16,6 +16,8 @@
 !clr_fresh_blue = #4096EE
 !clr_silver = silver
 
+!clr_topic_border = #E01B4C  
+  
 #oy-pg-message
   :position absolute
   :top 56px
@@ -96,7 +98,8 @@ a
   :padding-top 10px
   :padding-left 0px
   :-webkit-box-shadow 10px 10px 20px #aaaaaa
-  :-moz-box-shadow 10px 10px 20px #aaaaaa
+  // FIXME: 
+  // :-moz-box-shadow 0px 10px 20px #aaaaaa
   :box-shadow 10px 10px 20px #aaaaaa
   :margin-bottom 30px
   ul
@@ -291,6 +294,8 @@ fieldset
       :border-left-color = !clr_silver
       :font-weight normal
       :margin-bottom 10px
+      &:hover
+        :border-left-color = !clr_topic_border
     h1
       :font-size 2em
     h2
@@ -346,7 +351,6 @@ fieldset
       :margin-left 30px
       &:before
         :content " -- "
-      
   #oy-sub
     :clear both
     :position relative
@@ -369,27 +373,16 @@ fieldset
       li
         :margin-left 10px
         :font-size 1em
-        &:hover
-          a
-            :color = !clr_blink !important
+        a
+          :color #fff
         &.author
           &:before
             :content " by "
         &.locked
-          :color red
-          :right left
         &.edit
-          a
-            :color = !clr_blue_link
         &.compare
-          a
-            :color = !clr_blue_link            
         &.history
-          a
-            :color = !clr_blue_link            
         &.back-in-time
-          a
-            :color = !clr_blue_link            
         &.ledit
           :color silver
           a
@@ -469,51 +462,3 @@ a.oy-link
     :color silver
     :float right
     :padding-right 15px
-
-// http://www.zurb.com/blog_uploads/0000/0617/buttons-03.html      
-.awesome
-  :background #222 url(/img/alert-overlay.png) repeat-x
-  :display inline-block
-  :padding 5px 10px 6px
-  :text-decoration none
-  :line-height 1
-  :-moz-border-radius 5px
-  :-webkit-border-radius 5px
-  :-moz-box-shadow 0 1px 3px #999
-  :-webkit-box-shadow 0 1px 3px #999
-  :text-shadow 0 -1px 1px #222
-  :border-bottom 1px solid #222
-  :position relative
-  :cursor pointer
-  &:hover
-    :background-color #111
-    :color #fff
-  &:active
-    :top 1px
-.small.awesome, .small.awesome:visited
-  :font-size 11px
-  :padding 3px
-  :text-shadow none
-  :font-weight normal
-.medium.awesome, .medium.awesome:visited
-  :font-size 13px
-  :font-weight bold
-  :line-height 1
-  :text-shadow 0 -1px 1px rgba(0,0,0,0.25)
-.large.awesome, .large.awesome:visited
-  :font-size 14px
-  :padding 8px 14px 9px
-
-.orange.awesome, .orange.awesome:visited
-  :color = !clr_fresh_blue
-  :background-color = !clr_smoof_orange
-.orange.awesome:hover
-  :color = !clr_fresh_blue - 10
-  :background-color = !clr_smoof_orange + 30
-.silver.awesome, .silver.awesome:visited
-  :background-color = !clr_light_silver
-  :color = !clr_fresh_blue
-  :border-bottom = !clr_silver
-.silver.awesome:hover
-  :background-color = !clr_light_silver - 20
-  :color = !clr_fresh_blue
