@@ -53,6 +53,8 @@ class WikiController < OYController
   end
 
   def update
+    raise NotAllowed unless request.post?
+    
     path = request[:path] or raise "no path given"
 
     redirect WikiController.r(path) unless request.post?
@@ -66,6 +68,8 @@ class WikiController < OYController
   end
 
   def new
+    raise NotAllowed unless request.post?
+    
     path = request[:path] or raise "no path given"
 
     path = Wiki.normalize_path(path)
@@ -116,6 +120,7 @@ class WikiController < OYController
     @hist_page = @wiki.history(sha)
 
     if request[:do_it] == "1"
+      raise NotAllowed unless request.post?
       redirect @wiki.revert_to(@hist_page).link
     end
   end
