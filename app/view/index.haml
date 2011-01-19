@@ -10,7 +10,7 @@
     %ul.left
       %li.ledit
         Last edited:
-        %a{:title => "Last Edit / Permalink to this Version", :href => WikiController.r(@wiki.permalink), :class => "oy-perma"}= time_to_s(@wiki.date)
+        %a{:title => "Last Edited / Permalink to this Version", :href => WikiController.r(@wiki.permalink), :class => "oy-perma"}= time_to_s(@wiki.date)
       %li.author{:title => "Author of this Version"}= @wiki.author
     %ul.right
       - if @wiki.has_parent?

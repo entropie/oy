@@ -3,7 +3,7 @@
     %fieldset
       %legend= @identifier.capitalize
       .oy-markup
-        %select{:name => :markup}
+        %select{:name => :markup, :disabled => (@action == :update ? "disabled" : '')}
           - OY::Markup.real_markups.each do |mu|
             - if mu.extension == OY::Markup.default_extension
               %option{:name => mu.extension, :selected => :selected}= mu.extension
@@ -12,9 +12,10 @@
       .oy-textbox
         You're about to edit <em>#{@path}</em> &mdash; Formatting help?
         = "<small>(<a href='http://redcloth.org/hobix.com/textile/quick.html' target='_blank'>Its Textile!</a>)</small>"
+      .oy-textarea
         %textarea{:name => :data, :class => :body}= @raw_data
       .oy-messagebox
         %span Commit Message (optional)
         %input{:type => :text, :value => "", :name => :message}
       .oy-submit
-        %input{:type => :submit, :value => :Edit}
+        %input.awesome{:type => :submit, :value => "#{action.to_s.capitalize}"}

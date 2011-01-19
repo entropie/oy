@@ -39,6 +39,7 @@ module OY
     def self.write(path)
       path = Repos.expand_path(path)
       FileUtils.mkdir_p(File.dirname(path))
+      puts "Repos::write #{path}"
       File.open(path, 'w+') do |fp|
         yield fp
       end
@@ -110,6 +111,8 @@ module OY
     def sanitize_fragments(*fragments)
       fragments[0] = "index" unless fragments[0]
 
+      fragments.map!{|frag| URI.unescape(frag)}
+      
       unless fragments[-1].split(".").size == 2
 
         alts = Repos.alternatives(*fragments)
