@@ -2,6 +2,7 @@
   .info
     Following is the version you want to revert to. The actual version will still be stored, you're not gonna break anything.
   .do-it
-    %a.awesome.silver{:href => @hist_page.link(:revert_do)} Revert
+    %form{:action => @hist_page.link(:revert_do), :method => :POST}
+      %input.awesome.silver{:type => :submit, :value => "Revert"}
 
 = oy_render_file "index.haml", :wiki => @hist_page
