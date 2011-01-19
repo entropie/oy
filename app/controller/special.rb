@@ -26,10 +26,14 @@ class SpecialController < OYController
     }
 
     @contents = @contents.map{|content|
-      r = repos.find_by_fragments(*content)
-      r.parse_body if full_page_titles
-      r
-    }.sort_by{|c| c.date }.reverse
+      begin
+        r = repos.find_by_fragments(*content)
+        r.parse_body if full_page_titles
+        r
+      rescue NotFound
+        nil
+      end
+    }.compact.sort_by{|c| c.date }.reverse
   end
 
   # gets all media files for the entire repos
@@ -46,7 +50,7 @@ class SpecialController < OYController
     else
       Dir.chdir(repos.path) do
         @images = Dir["media/**"]
-        @images.reject!{|i| File.directory?(i)}
+        @images.reject!{|i| File.directory?(i) or i =~ /\.locked$/}
         @images.map!{|i|
           repos.find_by_path(i)
         }
