@@ -83,25 +83,30 @@ module OY
     # * +revert+  revert page to last version (page)
     # * +revert_do+ actually do the revert
     def link(what = nil)
+      escaped_ident = URI.escape(ident)
+      
       case what
       when :perma
-        "/#{ident}?sha=#{sha}"
+        "/#{escaped_ident}?sha=#{sha}"
       when :edit 
         # FIXME:
         "/edit/#{ident}"
       when :version
-        "/#{ident}?sha=#{history.first.sha}"
+        "/#{escaped_ident}?sha=#{history.first.sha}"
       when :history
-        "/history/#{ident}"
+        "/history/#{escaped_ident}"
       when :compare
-        "/compare/#{sha}/#{history.first.sha}/#{ident}"
+        "/compare/#{sha}/#{history.first.sha}/#{escaped_ident}"
       when :revert
-        "/revert/#{sha}/#{ident}"
+        "/revert/#{sha}/#{escaped_ident}"
       when :revert_do
-        "/revert/#{sha}/#{ident}?do_it=1"
+        "/revert/#{sha}/#{escaped_ident}?do_it=1"
       else
-        "/#{ident}"
+        "/#{escaped_ident}"
       end
+    rescue
+      p $!
+      "la"
     end
 
     # get the diff for +v1+ +v2+
@@ -223,29 +228,6 @@ module OY
       @blob && @commit && true
     end
     
-    # def create # :yields: option_hash
-    #   opts = OpenStruct.new
-    #   yield opts if block_given?
-
-    #   Repos.expand_path(path)
-    #   Repos.write(path){|fp| fp << opts.data}
-
-    #   dir = ::File.dirname(path)
-    #   dir = "" if dir == "."
-
-    #   index = nil
-    #   sha = commit_index(opts) do |idx|
-    #     index = idx
-    #     index.add(path, opts.data)
-    #   end
-
-    #   fragments = path.split("/").reject{|p| p.empty?}
-    #   update_working_dir(index, '', page_name(path))
-    #   @history = nil
-
-    #   repos.find_by_fragments(*fragments)
-    # end
-
     # creates an empty Wiki page
     def self.create_bare(path)
       ret = OY.repos.find_by_fragments(path)
@@ -303,9 +285,10 @@ module OY
     def update_working_dir(index, dir, name, npath = nil)
       unless repos.git.bare
         tdir = File.join(repos.path)
-        puts "Update: #{tdir}/ #{npath || path}"
         Dir.chdir(tdir) do
-          repos.git.git.checkout({}, 'HEAD', '--', npath || path)
+          real_path = URI.unescape(npath || path)
+          puts "Checkout #{Dir.pwd} / #{real_path}"
+          repos.git.git.checkout({}, 'HEAD', '--', real_path)
         end
       end
     end
