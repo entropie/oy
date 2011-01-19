@@ -8,6 +8,9 @@ module OY
   class NotFound < Exception
   end
 
+  class NotAllowed < Exception
+  end
+
   class AlreadyExist < Exception
   end
 
