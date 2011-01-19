@@ -23,6 +23,11 @@ module OY
   $: << File.join(Source, "lib/oy") unless $:.include?(File.join(Source, "lib/oy"))
   $: << File.join(Source, "app")    unless $:.include?(File.join(Source, "app"))
 
+  def self.local?
+    @hostname ||= `hostname`
+    if @hostname =~ /^xeno/ then true else false end
+  end
+  
   def puts(*args)
     args.each do |a|
       Kernel.puts "  |> #{a}"
