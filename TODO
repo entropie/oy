@@ -11,4 +11,4 @@
 * Make it possible to download wiki contents
   https://github.com/al3x/git-wiki/blob/master/git-wiki.rb#L74
 * multiple branches?
-
+* 202552  <jarib> str.unpack("U*").map { |e| "\\u%04x" % e }
