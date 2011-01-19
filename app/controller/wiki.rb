@@ -62,7 +62,7 @@ class WikiController < OYController
       pg.message = request[:message] || ""
       pg.data    = request[:data]
     end
-    redirect WikiController.r(path)
+    redirect wiki.link
   end
 
   def new
@@ -93,7 +93,7 @@ class WikiController < OYController
       wiki = repos.find_by_fragments(*path.split("/"))
     rescue NotFound
     else
-      redirect WikiController.r(wiki.path)
+      redirect wiki.path
     end
     
     @action = :new
