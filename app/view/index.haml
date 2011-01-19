@@ -14,19 +14,19 @@
       %li.author{:title => "Author of this Version"}= @wiki.author
     %ul.right
       - if @wiki.has_parent?
-        %li.history.awesome.silver
+        %li.history.awesome
           %a{:title => "History", :href => @wiki.link(:history)} History
-        %li.back-in-time.awesome.silver
+        %li.back-in-time.awesome
           %a{:href => @wiki.link(:version), :title => "Goto Previous Version"} Back In Time
-        %li.compare.awesome.silver
+        %li.compare.awesome
           %a{:title => "Compare with last Version", :href => @wiki.link(:compare)} Compare
       - if request[:sha] and not @wiki.locked?
-        %li.compare.awesome.silver
+        %li.compare.awesome
           %a{:title => "Revert to this version", :href => @wiki.link(:revert)} Revert
       - unless @wiki.locked?
-        %li.edit.awesome.silver
+        %li.edit.awesome
           %a{:title => "Edit Page", :href => @wiki.link(:edit)} Edit
       - else
-        %li.awesome.locked.silver
+        %li.awesome.locked.red
           Page is Locked
         
