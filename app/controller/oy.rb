@@ -7,8 +7,8 @@
 class OYController < Ramaze::Controller
   engine :Haml
   
-  set_layout_except 'layout'
-
+  layout(:layout) { !request.xhr? } 
+  
   IgnoreList = %w'edit create history new compare oy img revert'
 
   private
