@@ -11,6 +11,11 @@ class SpecialController < OYController
   def index
   end
 
+  def list_fonts
+    @fonts = CSSController.font_list
+  end
+  
+  
   # gets the full file listing for the entire repos
   #
   # FIXME:

@@ -14,6 +14,30 @@ class CSSController < Ramaze::Controller # def ctrl
   def oy
   end
 
+  class << self
+    attr_accessor   :default_font
+  end
+
+  self.default_font  = :lato
+  
+  def self.font_list
+    {
+      :lato          => "Lato:100,100italic,300,300italic,400,400italic,700,700italic,900,900italic",
+      :philosopher   => "Philosopher:regular",
+      :molengo       => "Molengo:regular",
+      :allerta       => "Allerta:regular",
+      :consolas      => "Consolas:regular,italic,bold,bolditalic",
+      :"droid sans"  => "Droid+Sans:regular,bold"
+    }
+  end
+
+  def font
+    font_identifier = request[:font] || self.class.default_font
+    font = self.class.font_list[font_identifier.to_sym]
+    str =  "@import url(//fonts.googleapis.com/css?family=#{font})\n"
+    str << "body\n  :font-family \"#{font.split(":").first}\", serif !important"
+  end
+  
 end
 
 

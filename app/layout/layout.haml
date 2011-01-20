@@ -12,6 +12,7 @@
     %link{:rel => "stylesheet", :type => "text/css", :href => "/css/awesome.css" }=''    
     %link{:rel => "stylesheet", :type => "text/css", :href => "/css/squaregrid.css" }=''
     %link{:rel => "stylesheet", :type => "text/css", :href => "/css/oy.css" }=''
+    %link{:id => :dynfont, :rel => "stylesheet", :type => "text/css", :href => "/css/font.css" }=''    
 
     %script{:type => "text/javascript", :src => "/js/jquery.js"}=""
     %script{:type => "text/javascript", :src => "/js/jquery-ui.js"}=""
@@ -38,6 +39,8 @@
     #wrap
       #head
         = oy_render_file "_head.haml"
+      #oy-fontsel{"data-title" => "Click to select another Font"}
+        AaBbCc
 
       #oy-wrap
         = @content
