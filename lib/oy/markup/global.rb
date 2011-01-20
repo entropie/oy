@@ -32,7 +32,6 @@ module OY
       end
 
       def parse_result(result)
-        #r = result.gsub(/\[{2}([a-zA-Z0-9\/]*?)( [a-zA-Z0-9\/]*?)?\]{2}/){|match|
         r = result.gsub(/\[{2}([\/0-9A-Z#{I18N_HIGHER_CASE_LETTERS}a-z#{I18N_LOWER_CASE_LETTERS}]+)([a-z#{I18N_LOWER_CASE_LETTERS}A-Z#{I18N_HIGHER_CASE_LETTERS}0-9\s]+)?\]{2}/u){|match|
           url = $1.downcase
           cls = begin
