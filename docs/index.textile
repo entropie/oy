@@ -24,23 +24,23 @@ h2. Features
 * Simple REST(Representational State Transfer) like api. Just try a <code>curl http://wiki.kommunism.us/api/GET/index</code>. Also its possible to POST -- The Oy! executable provides a method to do this. I'ts done like this <code>cat index.textile | oy.rb -P http://wiki.kommunism.us/index</code>
 * Different Markups; for now *RedCloth* (which is default), *Markdown*, and *ORG*. I'ts dead simple to add your own.
 
+h3. Markups
+
+* "Textile/RedCloth":http://www.textism.com/tools/textile/ <code>gem install RedCloth</code>, the default markup system.
+* "Markdown":http://daringfireball.net/projects/markdown/http://daringfireball.net/projects/markdown/ <code>gem install rdiscount</code>
+* "Org":http://orgmode.org/ <code>gem install org-ruby</code>
+
 h2. Installation
 
 For now the best way is to clone the repos, run <code>rake build</code> and install the gem:
 
 <code>git clone git://github.com/entropie/oy.git && cd oy && rake build && sudo gem install pkg/*.gem</code>
 
-h2. Running
+h3. Running
 
 After installation run <code>oy.rb --help</code>. For the lazy ones: <code>oy.rb -r /path/to/initialised/git/repos -p <port> -h <hostname></code>
 
 The default port ist *8200* and the default hostname is *localhost*.
-
-h3. Markups
-
-* "Textile/RedCloth":http://www.textism.com/tools/textile/ <code>gem install RedCloth</code>, the default markup system.
-* "Markdown":http://daringfireball.net/projects/markdown/http://daringfireball.net/projects/markdown/ <code>gem install rdiscount</code>
-* "Org":http://orgmode.org/ <code>gem install org-ruby</code>
 
 h3. Additional Infos
 
