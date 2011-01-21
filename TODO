@@ -12,5 +12,4 @@
   https://github.com/al3x/git-wiki/blob/master/git-wiki.rb#L74
 * multiple branches?
 * 202552  <jarib> str.unpack("U*").map { |e| "\\u%04x" % e }
-* only use ga for wiki.kommunism.us (do it via oy_render_file)
 * make it possible to use other templates (e.g. not haml)?
