@@ -23,6 +23,7 @@ h2. Features
 * Media files uploaded via the webinterface are stored with full history in the repository. To lock a directory: <code>touch ./.locked && git add ./.locked [...]</code> -- every single file in this directory is write protected now.
 * Simple REST(Representational State Transfer) like api. Just try a <code>curl http://wiki.kommunism.us/api/GET/index</code>. Also its possible to POST -- The Oy! executable provides a method to do this. I'ts done like this <code>cat index.textile | oy.rb -P http://wiki.kommunism.us/index</code>
 * Different Markups; for now *RedCloth* (which is default), *Markdown*, and *ORG*. I'ts dead simple to add your own.
+* Unicode support for pages, try [[test/ěĕėƒĝğġģĥ ěĕėƒĝğġģĥ]]
 
 h3. Markups
 
