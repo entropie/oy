@@ -26,16 +26,19 @@ class CSSController < Ramaze::Controller # def ctrl
       :philosopher   => "Philosopher:regular",
       :molengo       => "Molengo:regular",
       :allerta       => "Allerta:regular",
+      :"alerta-stencil"    => "Allerta+Stencil:regular",
       :consolas      => "Consolas:regular,italic,bold,bolditalic",
-      :"droid sans"  => "Droid+Sans:regular,bold"
+      :"droid sans"  => "Droid+Sans:regular,bold",
+      :lobster       => "Lobster:regular"
     }
   end
 
   def font
-    font_identifier = request[:font] || self.class.default_font
+    font_identifier = request[:font] || session[:font] || self.class.default_font
     font = self.class.font_list[font_identifier.to_sym]
+    session[:font] = font_identifier
     str =  "@import url(//fonts.googleapis.com/css?family=#{font})\n"
-    str << "body\n  :font-family \"#{font.split(":").first}\", serif !important"
+    str << "body\n  :font-family \"#{url_decode(font.split(":").first)}\", serif !important"
   end
   
 end
