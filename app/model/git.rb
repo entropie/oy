@@ -56,10 +56,6 @@ module OY
       @repos ||= OY.repos
     end
 
-    def extension
-      @path.split(".").last
-    end
-
     def identifier
       @blob.basename.split(".").first.downcase
     end
