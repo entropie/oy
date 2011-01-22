@@ -91,9 +91,6 @@ RSpec::Core::RakeTask.new(:run_spec_wo) do |t|
   t.rcov = false
 end
 
-require 'rocco/tasks'
-require "shellwords"
-
 
 if Gem.available?("yard")
   require "yard"
