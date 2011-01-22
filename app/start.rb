@@ -5,10 +5,8 @@
 
 
 require "rubygems"
-
-#require '../../ramaze/lib/ramaze'
-
 require "ramaze"
+require "redcloth"
 
 begin
   require "../lib/oy"
@@ -19,18 +17,10 @@ end
 
 require "model/git"
 
-require "redcloth"
-
 controller = %w"oy special media css wiki api".map{ |lib|
   File.join("controller", lib)
 }
 libs = []
-
-module Innate # :nodoc: All
-  class Session
-    public :cookie
-  end
-end
 
 (controller + libs).each{|lib| require lib}
 
