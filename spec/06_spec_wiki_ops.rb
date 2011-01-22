@@ -36,7 +36,7 @@ describe OY::Wiki, "operations" do
      end
 
     it "Should have #data with markup" do
-      repos.find_by_fragments('test', 'spec.textile').data.should == "<p>Data from Spec</p>"
+      repos.find_by_fragments('test', 'spec.textile').data.should =~ /<p>Data from Spec<\/p>$/
      end
 
     it "Should not have a history" do

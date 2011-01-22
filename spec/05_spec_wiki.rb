@@ -8,10 +8,11 @@ require "spec_helper"
 describe OY::Wiki do
 
   context "default" do
-    
-    it "should be normalize a path" do
-      Wiki.normalize_path("/foo/bar/baz").should == "foo/bar/baz"
-      Wiki.normalize_path("foo/bar/baz").should == "foo/bar/baz"      
+    describe ".normalize_path" do
+      it "should normalize a path" do
+        Wiki.normalize_path("/foo/bar/baz").should == "foo/bar/baz"
+        Wiki.normalize_path("foo/bar/baz").should == "foo/bar/baz"      
+      end
     end
   end
   
@@ -145,7 +146,7 @@ describe OY::Wiki do
 
   it "Should apply a markup on #data" do
     page = repos.find_by_fragments("index")
-    page.data.should =~ /^<h2>index<\/h2>/
+    page.data.should =~ /<h2 id=\"topic1\">index<\/h2>/
   end
 
   it "Should respond tp #page_name" do
@@ -157,6 +158,13 @@ describe OY::Wiki do
     Wiki.create_bare("notexist").class.should == Wiki
   end
 
+  it "Should have a page name" do
+    page = repos.find_by_fragments("index")
+    page.page_name.should == "index"
+    # page = repos.find_by_fragments("test", "index")
+    # page.page_name.should == "index"
+  end
+  
 end
 
 

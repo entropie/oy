@@ -5,6 +5,7 @@
 
 module OY
 
+  # Wiki represents a single wiki page. 
   class Wiki
 
     attr_reader :blob, :commit, :path, :repos
@@ -16,15 +17,18 @@ module OY
     include WikiLock
 
 
+    # Removes leading slash from given +path+
     def self.normalize_path(npath)
       npath = npath[1..-1] if npath[0..0] == "/"
       npath
     end
-    
+
+    # returns +to_hash+ jsoninfied
     def to_json
       to_hash.to_json
     end
 
+    # returns a Hash with basic values about the page
     def to_hash
       {
         :title => html_title,
@@ -38,7 +42,9 @@ module OY
     def is_media?
       false
     end
-    
+
+    # Initializes the page, should not be called directly.
+    # For example use Repos#find_by_fragments("path", "to", "page") without extension
     def initialize(blob, commit, path)
       @blob, @commit, @path = blob, commit, path
     end
@@ -50,19 +56,22 @@ module OY
       "/#{r}"
     end
 
+    # short lin to OY.repos
     def repos
       @repos ||= OY.repos
     end
 
+    # returns the filename of a page without extension
     def identifier
       @blob.basename.split(".").first.downcase
     end
 
-    # permalink to page
+    # returns the permalink to page
     def permalink
       link(:perma)
     end
 
+    # returns the path without extension
     def ident
       ident = @path.split(".").first
     end
@@ -182,12 +191,16 @@ module OY
       commit
     end
     
-    def page_name(path)
+    def self.page_name(path)
       if segs = path.split("/")
         segs.first.downcase
       else
         path.downcase
       end.split(".").first
+    end
+
+    def page_name(npath = nil)
+      self.class.page_name(npath || path)
     end
 
     def page_filename(path = nil)

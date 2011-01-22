@@ -95,10 +95,18 @@ require 'rocco/tasks'
 require "shellwords"
 
 
-require "yard"
-YARD::Rake::YardocTask.new(:write_doc) do |t|
-  t.files   = ['lib/**/*.rb', 'app/**/*.rb']
-  #t.options = ['--extra', '--opts']
+if Gem.available?("yard")
+  require "yard"
+  YARD::Rake::YardocTask.new(:write_doc) do |t|
+    t.files   = ['lib/**/*.rb', 'app/**/*.rb', 'spec/**/*.rb']
+    t.options = ['--title', 'Oy! Documentation', '-o', 'doc/']
+  end
+else
+  task :write_doc do
+    str = "rdoc --all --inline-source --line-numbers -f html --template=hanna -o doc"
+    str << ' --webcvs=http://github.com/entropie/oy/tree/master/'
+    sh str
+  end
 end
 
 
