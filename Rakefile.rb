@@ -67,14 +67,13 @@ end
 
 task :dry  => [:clean, :create_spec_env]
 
-task :rdoc => [:clean, :write_rdoc, :move_rdoc] do
+task :doc => [:clean, :write_doc, :move_doc] do
 end
 
-task :move_rdoc do
+task :move_doc do
   File.exist?("app/public/doc") and sh "rm -r app/public/doc"
   sh "mv doc app/public/doc"
 end
-
 
 RSpec::Core::RakeTask.new(:run_spec) do |t|
   t.pattern = Dir.glob('spec/**/*_spec_*.rb')
@@ -92,12 +91,14 @@ RSpec::Core::RakeTask.new(:run_spec_wo) do |t|
   t.rcov = false
 end
 
-#require 'hanna/rdoctask'
+require 'rocco/tasks'
+require "shellwords"
 
-task :write_rdoc do
-  str = "rdoc --all --inline-source --line-numbers -f html --template=hanna -o doc"
-  str << ' --webcvs=http://github.com/entropie/oy/tree/master/'
-  sh str
+
+require "yard"
+YARD::Rake::YardocTask.new(:write_doc) do |t|
+  t.files   = ['lib/**/*.rb', 'app/**/*.rb']
+  #t.options = ['--extra', '--opts']
 end
 
 
