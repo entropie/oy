@@ -13,3 +13,4 @@
 * multiple branches?
 * 202552  <jarib> str.unpack("U*").map { |e| "\\u%04x" % e }
 * make it possible to use other templates (e.g. not haml)?
+* 015915  <drbrain> entropie: /[\u0000-\uFFFF]/u would work for all
