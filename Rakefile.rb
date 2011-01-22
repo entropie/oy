@@ -67,7 +67,7 @@ end
 
 task :dry  => [:clean, :create_spec_env]
 
-task :doc => [:clean, :write_doc, :move_doc] do
+task :doc => [:clean, :write_doc, :move_doc, :sync_rdoc_to_public_wiki] do
 end
 
 task :move_doc do
@@ -108,6 +108,13 @@ else
     sh str
   end
 end
+
+task :sync_rdoc_to_public_wiki do |t|
+  if File.exist?("rsync.txt")
+    sh File.readlines("rsync.txt").join
+  end
+end
+
 
 
 # Stolen from gollum
