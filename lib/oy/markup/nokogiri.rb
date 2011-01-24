@@ -29,6 +29,9 @@ module OY
           end
         end
         @doc.children.before toc
+      rescue
+        puts $!
+        ''
       end
       
       def to_html
