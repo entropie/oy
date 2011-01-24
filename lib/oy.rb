@@ -18,7 +18,7 @@ module OY
 
   Actor   = Grit::Actor.new("Anonymous", "anonym@o.us") unless const_defined?(:Actor)
 
-  Version = [0, 3, 1] unless const_defined?(:Version)
+  Version = [0, 3, 3] unless const_defined?(:Version)
   
   $: << File.join(Source, "lib/oy") unless $:.include?(File.join(Source, "lib/oy"))
   $: << File.join(Source, "app")    unless $:.include?(File.join(Source, "app"))
