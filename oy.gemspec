@@ -117,7 +117,6 @@ Gem::Specification.new do |s|
     spec/spec_data/ass.jpg
     spec/spec_data/banner.gif
     spec/spec_data/oybanner.png
-    spec/spec_data/sample.org
     spec/spec_helper.rb
   ]
   # = MANIFEST =
