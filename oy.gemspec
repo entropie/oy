@@ -4,8 +4,8 @@ Gem::Specification.new do |s|
   s.rubygems_version = '1.3.5'
 
   s.name              = 'oy'
-  s.version           = '0.2.0'
-  s.date              = '2011-01-16'
+  s.version           = '0.3.1'
+  s.date              = '2011-01-24'
   s.rubyforge_project = 'oy'
 
   s.summary     = "Git-powered wiki."
@@ -35,6 +35,7 @@ Gem::Specification.new do |s|
   # = MANIFEST =
   s.files = %w[
     Gemfile
+    LICENSE
     README.textile
     Rakefile.rb
     TODO
@@ -47,28 +48,33 @@ Gem::Specification.new do |s|
     app/controller/wiki.rb
     app/layout/layout.haml
     app/model/git.rb
+    app/public/css/awesome.css
     app/public/css/b-base.css
     app/public/css/b-reset.css
     app/public/css/squaregrid.css
     app/public/favicon.ico
+    app/public/img/alert-overlay.png
     app/public/js/jquery-ui.js
     app/public/js/jquery.js
     app/public/js/modernizr-1.6.min.js
     app/public/js/oy.js
+    app/public/robots.txt
     app/start.rb
     app/view/_foot.haml
     app/view/_fork.html
+    app/view/_form.haml
+    app/view/_google_analytics.haml
     app/view/_head.haml
     app/view/compare.haml
     app/view/create.haml
     app/view/css/oy.sass
     app/view/edit.haml
-    app/view/form.haml
     app/view/history.haml
     app/view/index.haml
     app/view/oy/special/_image.haml
     app/view/oy/special/_images.haml
     app/view/oy/special/all.haml
+    app/view/oy/special/list_fonts.haml
     app/view/oy/special/media.haml
     app/view/oy/special/upload.haml
     app/view/revert.haml
@@ -82,17 +88,22 @@ Gem::Specification.new do |s|
     lib/oy/markup.rb
     lib/oy/markup/compare.rb
     lib/oy/markup/global.rb
+    lib/oy/markup/markdown.rb
     lib/oy/markup/nokogiri.rb
+    lib/oy/markup/org.rb
     lib/oy/markup/redcloth.rb
     lib/oy/repos.rb
+    lib/oy/wiki.rb
     lib/oy/wiki/media.rb
     lib/oy/wiki/physical.rb
     lib/oy/wiki/wikidir.rb
     lib/oy/wiki/wikilock.rb
     oy.gemspec
+    script/import_polis_images.rb
     script/polis_import.rb
     spec/01_spec_oy.rb
     spec/05_spec_wiki.rb
+    spec/05_spec_wiki_alternatives.rb
     spec/05_spec_wiki_dir.rb
     spec/06_spec_media.rb
     spec/06_spec_wiki_ops.rb
@@ -100,11 +111,13 @@ Gem::Specification.new do |s|
     spec/07_spec_wiki_lock.rb
     spec/10_spec_markup.rb
     spec/20_spec_api.rb
+    spec/30_spec_wiki_unicode.rb
     spec/mk_specwiki.rb
     spec/spec.rb
     spec/spec_data/ass.jpg
     spec/spec_data/banner.gif
     spec/spec_data/oybanner.png
+    spec/spec_data/sample.org
     spec/spec_helper.rb
   ]
   # = MANIFEST =
