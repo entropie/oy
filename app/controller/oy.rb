@@ -34,7 +34,7 @@ class OYController < Ramaze::Controller
     if OY::Repos.exist?(path_in_repos)
       render_file(OY::Repos.expand_path(path_in_repos), opts)
     else
-      render_file(File.join("view", file), opts)
+      render_file(File.join(OY::Source, "app", "view", file), opts)
     end
   end
 
