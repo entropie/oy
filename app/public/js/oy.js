@@ -29,11 +29,35 @@
      });
    };
 
+   $.fn.setupGraphs = function() {
+     $("table.chart").each(function(){
+       var chartType   = $(this).attr("data-charttype");
+       var chartHeight = $(this).attr("data-height");
+       var chartWidth  = $(this).attr("data-width");
+       var chartVTitle = $(this).attr("data-v-title");
+       var chartHTitle = $(this).attr("data-h-title");
+
+       $(this).gvChart({
+         chartType: chartType,
+         gvSettings: {
+           vAxis: {title: chartVTitle},
+           hAxis: {title: chartHTitle},
+           width: chartWidth,
+           height: chartHeight
+         }
+       });
+     });
+   };
+
+
 })(jQuery);
 
 
 $(document).ready(function () {
   $("#oy-fontsel").setupFontsel();
+
+  if($("table.chart").length) $("#oy-body").setupGraphs();
+
 });
 
 

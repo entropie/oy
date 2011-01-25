@@ -14,11 +14,15 @@
     %link{:rel => "stylesheet", :type => "text/css", :href => "/css/oy.css" }=''
     %link{:id => :dynfont, :rel => "stylesheet", :type => "text/css", :href => "/css/font.css" }=''    
 
+    %script{:type => "text/javascript", :src => "//www.google.com/jsapi"}=""
     %script{:type => "text/javascript", :src => "/js/jquery.js"}=""
     %script{:type => "text/javascript", :src => "/js/jquery-ui.js"}=""
     %script{:type => "text/javascript", :src => "/js/modernizr-1.6.min.js"}=""
+    %script{:type => "text/javascript", :src => "/js/jquery.gvChart-1.0.1.min.js"}=""
     %script{:type => "text/javascript", :src => "/js/oy.js"}=""
-
+    :javascript
+      gvChartInit();
+    
     - if OY.local?
       = oy_render_file "_google_analytics.haml"
   %body

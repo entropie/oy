@@ -17,12 +17,12 @@ class OYController < Ramaze::Controller
   def add_repos_paths
     unless Ramaze.options.roots.include?(repos.path)
       puts "_"*60
-      
+
       Ramaze.options.roots.unshift(repos.path)
       [:public, :layout, :view].each do |apath|
         if OY::Repos.exist?("_#{apath}")
           Ramaze.options.send("#{apath}s") << "_#{apath}"
-          puts "Ramaze.options.#{apath}s << '_#{apath}s'"
+          puts "Ramaze.options.#{apath}s << '_#{apath}'"
         end
       end
       puts "_"*60      
