@@ -19,6 +19,13 @@
 !clr_silver = silver
 
 !clr_topic_border = #E01B4C  
+
+.spinner
+  :text-align center
+  :display none
+  :position absolute
+  :left 48%
+  :top 0px
   
 #oy-pg-message
   :position absolute
@@ -177,6 +184,9 @@ fieldset
     :padding-left 10px
 
 #oy-editform
+  :position relative
+  .spinner
+    :top 50px
   fieldset
     :border-radius 10px
     :-moz-border-radius 10px        
@@ -196,11 +206,25 @@ fieldset
   .oy-textbox
     :padding 10px
     :margin-bottom 10px
+  .oy-textarea
+    :font-family fixed
   .oy-markup
     :float right
     :margin-top 10px
   .oy-submit
     :text-align right
+    :float right
+  .oy-preview
+    :text-align right    
+  #oy-preview-box
+    :display none
+  #oy-preview
+    :position relative
+    .oy-preview-buttons
+      :position absolute
+      :top -30px
+      :right 0px
+      :z-index 2000
   .oy-messagebox
     :margin-top 20px
     input
@@ -314,6 +338,8 @@ fieldset
       :text-align right
 
 #oy-page
+  .oy-preview-buttons
+    :text-align right
   #oy-topic
     :text-shadow 1px 1px grey
     :font-size 2em
@@ -331,6 +357,7 @@ fieldset
         :color #364045
   #oy-body
     .gvChart
+      :margin-left 10px
       :position inherit
       :display inline
       iframe

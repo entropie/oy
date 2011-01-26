@@ -29,6 +29,34 @@
      });
    };
 
+   $.fn.setupPreviewLink = function() {
+     $(this).click(function(){
+       var data = $("#oy-editform form").serialize();
+       $("#oy-editform-more").slideUp();
+       $("#oy-editform .spinner").show();
+
+       $.ajax({
+         type: "POST",
+         url:  "/preview",
+         data: data,
+         success: function(data){
+           $("#oy-preview-box").html(data);
+         },
+         complete: function(){
+           $("#oy-editform .spinner").fadeOut();
+           $("#oy-preview-box").slideDown();
+
+           $("#oy-page .oy-preview-buttons .edit").click(function(){
+             $("#oy-preview-box").slideUp(function(){
+               $("#oy-editform-more").slideDown();
+             });
+           });
+         }
+       });
+       return false;
+     });
+   };
+
    $.fn.setupGraphs = function() {
      $("table.chart").each(function(){
        var chartType   = $(this).attr("data-charttype");
@@ -57,6 +85,11 @@ $(document).ready(function () {
   $("#oy-fontsel").setupFontsel();
 
   if($("table.chart").length) $("#oy-body").setupGraphs();
+
+  if($(".oy-preview #preview").length){
+    $("#preview").setupPreviewLink();
+  }
+
 
 });
 

@@ -1,21 +1,31 @@
 #oy-editform
-  %form{:action => WikiController.r(@action, :path => @path), :method => :post}
+  %form{:action => WikiController.r(@action), :method => :post}
+    %input{:type => :hidden, :name => :path, :value => @path, :class => "oy-path"}
+    - if @extension
+      %input{:type => :hidden, :name => :extension, :value => @extension}
     %fieldset
       %legend= @identifier.capitalize
-      .oy-markup
-        %select{:name => :markup, :disabled => (@action == :update ? "disabled" : '')}
-          - OY::Markup.real_markups.each do |mu|
-            - if mu.extension == OY::Markup.default_extension
-              %option{:name => mu.extension, :selected => :selected}= mu.extension
-            - else
-              %option{:name => mu.extension}= mu.extension
-      .oy-textbox
-        You're about to edit <em>#{@path}</em> &mdash; Formatting help?
-        = "<small>(<a href='http://redcloth.org/hobix.com/textile/quick.html' target='_blank'>Its Textile!</a>)</small>"
-      .oy-textarea
-        %textarea{:name => :data, :class => :body}= @raw_data
-      .oy-messagebox
-        %span Commit Message (optional)
-        %input{:type => :text, :value => "", :name => :message}
-      .oy-submit
-        %input.awesome{:type => :submit, :value => "#{action.to_s.capitalize}"}
+      .spinner
+        %img{:src => "/img/hspinner.gif"}
+      #oy-preview-box
+      #oy-editform-more
+        .oy-markup
+          - h = @action == :update ? {:disabled => "disabled"} : {}
+          %select{ h.merge(:name => :markup) }
+            - OY::Markup.real_markups.each do |mu|
+              - if mu.extension == OY::Markup.default_extension
+                %option{:name => mu.extension, :selected => :selected}= mu.extension
+              - else
+                %option{:name => mu.extension}= mu.extension
+        .oy-textbox
+          You're about to edit <em>#{@path}</em> &mdash; Formatting help?
+          = "<small>(<a href='http://redcloth.org/hobix.com/textile/quick.html' target='_blank'>Its Textile!</a>)</small>"
+        .oy-textarea
+          %textarea{:name => :data, :class => :body}= @raw_data
+        .oy-messagebox
+          %span Commit Message (optional)
+          %input{:type => :text, :value => "", :name => :message}
+        .oy-preview
+          %input.awesome{:type => :submit, :name => :preview, :id => :preview, :value => "Preview"}
+    .oy-submit
+      %input.awesome.red.large{:type => :submit, :name => :submit, :value => "#{action.to_s.capitalize}"}

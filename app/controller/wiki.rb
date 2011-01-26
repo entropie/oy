@@ -48,17 +48,28 @@ class WikiController < OYController
     @wiki = repos.find_by_fragments(*fragments)
     flash[:error] = "Page is locked."
     redirect @wiki.link if @wiki.locked?
+    @extension = @wiki.extension
     @title = @wiki.path
     @action = :update
   end
 
-  def update
+  def preview
     raise NotAllowed unless request.post?
     
     path = request[:path] or raise "no path given"
-
-    redirect WikiController.r(path) unless request.post?
+    extension = request[:markup] || "textile"
     
+    @preview_wiki = Preview.create{|w|
+      w.data = request[:data].to_s.strip
+      w.path = request[:path]
+      w.extension = extension
+    }
+  end
+  
+  def update
+    path = request[:path] or raise "no path given"
+    redirect WikiController.r(path) unless request.post?
+
     wiki = repos.find_by_fragments(*path.split("/"))
     wiki.update do |pg|
       pg.message = request[:message] || ""
@@ -75,7 +86,6 @@ class WikiController < OYController
     path = Wiki.normalize_path(path)
 
     extension = Markup.extension(request[:markup])
-
     wiki = Wiki.create_bare("#{path}.#{extension}")
 
     wiki.create do |pg|

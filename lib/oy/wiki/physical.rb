@@ -32,6 +32,43 @@ module OY
     end
     
   end
+
+  class Preview < Physical
+
+    attr_accessor :data
+
+    attr_accessor :path
+
+    attr_accessor :extension
+    
+    def title
+      File.basename(path).split(".").first.capitalize
+    end
+
+    def initialize
+    end
+
+    def is_media?
+      false
+    end
+    
+    def self.create
+      wiki = self.new
+      yield wiki
+      wiki
+    end
+
+    def with_markup(force_extension = nil)
+      ret = @data
+      return ret if is_media?
+      ["*", (force_extension || extension)].inject(ret){|memo, mup|
+        Markup.choose_for(mup).new(memo).to_html
+      }
+    end
+
+    
+  end
+
   
 end
 
