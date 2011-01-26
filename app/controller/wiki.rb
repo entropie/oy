@@ -8,7 +8,7 @@ class WikiController < OYController
 
   include OY
 
-  def img(fragments)
+  def img(*fragments)
     redirect MediaController.r(:img, *fragments)
   end
 
