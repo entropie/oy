@@ -24,8 +24,7 @@ h2. Features
 * Simple REST(Representational State Transfer) like api. Just try a <code>curl http://wiki.kommunism.us/api/GET/index</code>. Also its possible to POST -- The Oy! executable provides a method to do this. I'ts done like this <code>cat index.textile | oy.rb -P http://wiki.kommunism.us/index</code>
 * Different Markups; for now *RedCloth* (which is default), *Markdown*, and *ORG*. I'ts dead simple to add your own.
 * Unicode support for pages, try [[test/ěĕėƒĝğġģĥ ěĕėƒĝğġģĥ]]
-* Support for graphs from tables, on top of Google graph api and
-* "gvChart":http://www.ivellios.toron.pl/technikalia/2010/06/22/gvchart-plugin-jquery-with-google-charts/ gem
+* Support for graphs from tables, on top of Google graph api and "gvChart":http://www.ivellios.toron.pl/technikalia/2010/06/22/gvchart-plugin-jquery-with-google-charts/ gem
 
 h3. Markups
 
