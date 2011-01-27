@@ -29,6 +29,14 @@
      });
    };
 
+   $.fn.setupToc = function() {
+     var toc = $(this);
+     $("h2", toc).click(function(){
+       $("h2", toc).toggleClass("active");
+       $("ul", toc).fadeToggle();
+     });
+   };
+
    $.fn.setupPreviewLink = function() {
      $(this).click(function(){
        var data = $("#oy-editform form").serialize();
@@ -85,6 +93,7 @@ $(document).ready(function () {
   $("#oy-fontsel").setupFontsel();
 
   if($("table.chart").length) $("#oy-body").setupGraphs();
+  if($("#oy-toc").length) $("#oy-toc").setupToc();
 
   if($(".oy-preview #preview").length){
     $("#preview").setupPreviewLink();

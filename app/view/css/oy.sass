@@ -91,6 +91,7 @@ body
 a
   :color #00f
   :text-decoration none
+  :z-index 5000
   
 #wrap
   :min-height 100%
@@ -389,8 +390,20 @@ fieldset
         :font-size 0.8em
         :margin-bottom 0px
         :text-align right
+        &:before
+          :content url(/img/rarr.jpeg)
+          :margin-right 10px
+          :margin-top 4px
+          :opacity 0.6
+        &:hover, &.active
+          &:before
+            :content url(/img/darr.jpeg)
+            :margin-right 10px
+            :margin-top 4px
+            :opacity 0.6
+          
       ul
-        :opacity 0
+        :display none
         :background-color #DCDFE8
         :margin 0px
         :margin-bottom 20px
@@ -423,15 +436,15 @@ fieldset
             :margin-left 60px
           &:hover
             :color = !clr_rlight_blue
-      &:hover
-        h2
-          :color = clr_topic_border
-        ul
-          :transition opacity 2s ease-in-out
-          :-webkit-transition opacity 2s ease-in-out
-          :-moz-transition opacity 2s ease-in-out
-          :-o-transition opacity 2s ease-in-out
-          :opacity 0.9
+      // &:hover
+      //   h2
+      //     :color = clr_topic_border
+      //   ul
+      //     :transition opacity 2s ease-in-out
+      //     :-webkit-transition opacity 2s ease-in-out
+      //     :-moz-transition opacity 2s ease-in-out
+      //     :-o-transition opacity 2s ease-in-out
+      //     :opacity 0.9
       
     strong
       :background-color = !clr_light_silver
