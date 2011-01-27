@@ -8,27 +8,228 @@ module OY
 
     class Global < Markup
 
-      # from instiki:
-      # https://github.com/parasew/instiki/blob/master/lib/wiki_words.rb
-      I18N_HIGHER_CASE_LETTERS =
-        "ÀÁÂÃÄÅĀĄĂÆÇĆČĈĊĎĐÈÉÊËĒĘĚĔĖĜĞĠĢĤĦÌÍÎÏĪĨĬĮİĲĴĶŁĽĹĻĿÑŃŇŅŊÒÓÔÕÖØŌŐŎŒŔŘŖŚŠŞŜȘŤŢŦȚÙÚÛÜŪŮŰŬŨŲŴŶŸȲÝŹŽŻ" + 
-        "ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ" + 
-        "ЀЁЂЃЄЅІЇЈЉЊЋЌЍЎЏАБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯѠѢѤѦѨѪѬѮѰѲѴѶѸѺѼѾҀҊҌҎҐҒҔҖҘҚҜҞҠҢҤҦҨҪҬҮҰҲҴҶҸҺҼҾӀӁӃӅӇӉӋӍӐӒӔӖӘӚӜӞӠӢӤӦӨӪӬӮӰӲӴӶӸӺӼӾԀԂԄԆԈԊԌԎԐԒԔԖԘԚԜԞԠԢ" +
-        "ԱԲԳԴԵԶԷԸԹԺԻԼԽԾԿՀՁՂՃՄՅՆՇՈՉՊՋՌՍՎՏՐՑՒՓՔՕՖ"
-      I18N_LOWER_CASE_LETTERS =
-        "àáâãäåāąăæçćĉċčďđèéêëēęěĕėƒĝğġģĥħìíîïīĩĭįıĳĵķĸłľĺļŀñńňņŉŋòóôõöøōŏőœŕřŗśŝšşșťţŧțùúûüūůűŭũųŵýÿŷžżźÞþßſð" +
-        "άέήίΰαβγδεζηθικλμνξοπρςστυφχψωϊϋόύώΐ" +
-        "абвгдежзийклмнопрстуфхцчшщъыьэюяѐёђѓєѕіїјљњћќѝўџѡѣѥѧѩѫѭѯѱѳѵѷѹѻѽѿҁҋҍҏґғҕҗҙқҝҟҡңҥҧҩҫҭүұҳҵҷҹһҽҿӂӄӆӈӊӌӎӏӑӓӕӗәӛӝӟӡӣӥӧөӫӭӯӱӳӵӷӹӻӽӿԁԃԅԇԉԋԍԏԑԓԕԗԙԛԝԟԡԣ" +
-        "աբգդեզէըթժիլխծկհձղճմյնշոչպջռսվտրցւփքօֆև"      
-
       self.extension = "*"
 
       def self.is_virtual?
         true
       end
+
+      # Extract all tags into the tagmap and replace with placeholders.
+      #
+      # data - The raw String data.
+      #
+      # Returns the placeholder'd String data
+      #
+      # From Gollum: lib/gollum/markup.rb
+      def extract_tags!
+        @tagmap = {}
+        data.gsub!(/(.?)\[\[(.+?)\]\]([^\[]?)/m) do
+          if $1 == "'" && $3 != "'"
+            "[[#{$2}]]#{$3}"
+          elsif $2.include?('][')
+            p 1
+            if $2[0..4] == 'file:'
+              pre = $1
+              post = $3
+              parts = $2.split('][')
+              parts[0][0..4] = ""
+              link = "#{parts[1]}|#{parts[0].sub(/\.org/,'')}"
+              id = Digest::SHA1.hexdigest(link)
+              @tagmap[id] = link
+              "#{pre}#{id}#{post}"
+            else
+              $&
+            end
+          else
+            id = Digest::SHA1.hexdigest($2)
+            @tagmap[id] = $2
+            "#{$1}#{id}#{$3}"
+          end
+        end
+        nil
+      end
+
+      # Process all tags from the tagmap and replace the placeholders with the
+      # final markup.
+      #
+      # data      - The String data (with placeholders).
+      #
+      # Returns the marked up String data.
+      #
+      # From Gollum: lib/gollum/markup.rb
+      def process_tags(data)
+        @tagmap.each do |id, tag|
+          data.gsub!(id, process_tag(tag))
+        end
+        data
+      end
+
+      # Process a single tag into its final HTML form.
+      #
+      # tag       - The String tag contents (the stuff inside the double
+      #             brackets).
+      #
+      # Returns the String HTML version of the tag.
+      #
+      # From Gollum: lib/gollum/markup.rb
+      def process_tag(tag)
+        if html = process_image_tag(tag)
+          html
+          # elsif html = process_file_link_tag(tag)
+          #   html
+        else
+          process_page_link_tag(tag)
+        end
+      end
+
+      # Find the given file in the repo.
+      #
+      # name - The String absolute or relative path of the file.
+      #
+      # Returns the Gollum::File or nil if none was found.
+      #
+      # From Gollum: lib/gollum/markup.rb
+      def find_file(name)
+        expaned_path = 
+          File.join(Media.media_path, name.gsub(/img\//, ''))
+        File.exist?(expaned_path) and name
+      end
+
+      # Parse any options present on the image tag and extract them into a
+      # Hash of option names and values.
+      #
+      # tag - The String tag contents (the stuff inside the double brackets).
+      #
+      # Returns the options Hash:
+      #   key - The String option name.
+      #   val - The String option value or true if it is a binary option.
+      def parse_image_tag_options(tag)
+        tag.split('|')[1..-1].inject({}) do |memo, attr|
+          parts = attr.split('=').map { |x| x.strip }
+          memo[parts[0]] = (parts.size == 1 ? true : parts[1])
+          memo
+        end
+      end
       
+      # Attempt to process the tag as an image tag.
+      #
+      # tag - The String tag contents (the stuff inside the double brackets).
+      #
+      # Returns the String HTML if the tag is a valid image tag or nil
+      #   if it is not.
+      #
+      # From Gollum: lib/gollum/markup.rb, modified
+      def process_image_tag(tag)
+        parts = tag.split('|')
+        return if parts.size.zero?
+
+        name  = parts[0].strip
+
+        path  = if file = find_file(name)
+                  file
+                elsif name =~ /^https?:\/\/.+(jpg|png|gif|svg|bmp)$/i
+                  name
+                end
+
+        if path
+          opts = parse_image_tag_options(tag)
+          containered = false
+
+          classes = [] # applied to whatever the outermost container is
+          attrs   = [] # applied to the image
+
+          align = opts['align']
+          if opts['float']
+            containered = true
+            align ||= 'left'
+            if %w{left right}.include?(align)
+              classes << "float-#{align}"
+            end
+          elsif %w{top texttop middle absmiddle bottom absbottom baseline}.include?(align)
+            attrs << %{align="#{align}"}
+          elsif align
+            if %w{left center right}.include?(align)
+              containered = true
+              classes << "align-#{align}"
+            end
+          end
+
+          if width = opts['width']
+            if width =~ /^\d+(\.\d+)?(em|px)$/
+              attrs << %{width="#{width}"}
+            end
+          end
+
+          if height = opts['height']
+            if height =~ /^\d+(\.\d+)?(em|px)$/
+              attrs << %{height="#{height}"}
+            end
+          end
+
+          if alt = opts['alt']
+            attrs << %{alt="#{alt}"}
+          end
+
+          attr_string = attrs.size > 0 ? attrs.join(' ') + ' ' : ''
+
+          if opts['frame'] || containered
+            classes << 'frame' if opts['frame']
+            %{<span class="#{classes.join(' ')}">} +
+              %{<span>} +
+              %{<img src="#{path}" #{attr_string}/>} +
+              (alt ? %{<span>#{alt}</span>} : '') +
+              %{</span>} +
+              %{</span>}
+          else
+            %{<img src="#{path}" #{attr_string}/>}
+          end
+        end
+      end
+
+      # FIXME: alternative link handling
+      def process_page_link_tag(tag)
+        parts = tag.split(' ')
+
+        url, *descp = parts
+        title = descp.join(" ")
+
+        alternatives = Repos.alternatives(*url.split("/"))
+        css = alternatives.empty? ? "o" : "x"
+
+        defext = OY::Markup.default_extension.to_sym
+
+        base_link = []
+        add_links = []
+
+        path = 
+          if alternatives.size > 0
+            if alternatives.include?(defext)
+              base_link << [url, alternatives[defext]]
+            else
+            end
+          end
+
+        base_link.map!{|url, _| %Q(<a href="#{url.downcase}" class="oy-link #{css}">#{title}</a>) }
+        base_link.join
+      end
+
       def to_html
-        parse_result(data)
+        ret = ''
+        # parse_time = measure do
+        #   ret = parse_result(data)
+        # end
+        # puts "ParseTime for #{self.class}: #{wiki.identifier}: #{parse_time}sec (old engine)"
+
+        parse_time = measure do
+          extract_tags!
+          ret = process_tags(data)
+        end
+
+        if wiki
+          puts "", "ParseTime for #{self.class}: #{wiki.identifier}: #{parse_time}sec (new engine)", ""
+          ret << %Q(\n\n<div id="oy-page-parse-time">ParseTime for #{self.class.to_s.split("::").last}: <em>#{"%.6f" % parse_time}</em>sec</div>)
+        end
+        ret
       end
 
       def parse_result(result)
