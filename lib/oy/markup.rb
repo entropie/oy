@@ -92,6 +92,13 @@ module OY
         @wiki = wiki
         @data = data
       end
+
+      def measure
+        t = Time.now
+        yield
+        Time.now - t
+      end
+
     end
 
     require "markup/global"
