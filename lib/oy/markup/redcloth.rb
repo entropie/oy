@@ -12,7 +12,9 @@ module OY
       self.extension = "textile"
 
       def to_html
-        RedCloth.new(data).to_html
+        redcloth = RedCloth.new(data)
+        redcloth.hard_breaks = false
+        redcloth.to_html
       end
 
     end
