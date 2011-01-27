@@ -201,6 +201,8 @@ module OY
         base_link = []
         add_links = []
 
+        url = "/#{url}" unless url[0..0] == "/"
+        
         path = 
           if alternatives.size > 0
             if alternatives.include?(defext)
