@@ -91,8 +91,28 @@ body
 a
   :color #00f
   :text-decoration none
-  :z-index 5000
-  
+
+a[href^="http:"], a[href^="https:"], a[href^="//"]
+  &:before
+    :content url(/img/exlink.png)
+    :opacity 0.3
+    :padding-right 5px
+    :padding-left 4px
+  &:hover
+    &:before
+      :opacity 1
+
+a[href*="wikipedia.org"]
+  &:before
+    :content url(/img/wplink.jpeg)
+a[href*="twitter.com"]
+  &:before
+    :content url(/img/twitlink.jpeg)
+a[href*="github.com"]
+  &:before
+    :content url(/img/githublink.png)
+
+      
 #wrap
   :min-height 100%
   :height auto !important
@@ -128,10 +148,7 @@ a
         :color = !clr_rlight_black
         &:hover
           :color = !clr_link_on_dark
-          :border-bottom 2px solid red
-          :border-bottom-color = !clr_link_on_dark
-        
-  
+
 .push
   :height 50px
   :clear both
