@@ -15,3 +15,4 @@
 * make it possible to use other templates (e.g. not haml)?
 * n015915  <drbrain> entropie: /[\u0000-\uFFFF]/u would work for all
 * pagination for media files
+* 013027  <lianj> vielleicht ne liste mit gaengigen paste sites und denen ein globales icon geben
