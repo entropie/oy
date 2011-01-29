@@ -20,6 +20,10 @@
 
 !clr_topic_border = #E01B4C  
 
+!clr_wikilink = navy
+!clr_wikilink_nexist = grey
+!clr_lin = grey
+  
 .spinner
   :text-align center
   :display none
@@ -93,6 +97,7 @@ a
   :text-decoration none
 
 a[href^="http:"], a[href^="https:"], a[href^="//"]
+  :white-space nowrap
   &:before
     :content url(/img/exlink.png)
     :opacity 0.3
@@ -422,6 +427,7 @@ fieldset
           
       ul
         :display none
+        :z-index 2000
         :background-color #DCDFE8
         :margin 0px
         :margin-bottom 20px
@@ -610,13 +616,19 @@ a.oy-link
     :border-bottom 2px solid
     :border-bottom-color = !clr_head_bg
   &.x
-    :color navy
+    :color = !clr_wikilink
     &:hover
-      :border-color navy
+      :border-color = !clr_wikilink
   &.o
-    :color grey
+    :color = !clr_wikilink_nexist
     &:hover
-      :border-color grey
+      :border-color = !clr_wikilink_nexist
+  &.alt
+    :color = !clr_wikilink
+    :border-bottom-width 1px
+    &:hover
+      :border-color = !clr_wikilink
+    
 
 .oy-sha
   :color silver
