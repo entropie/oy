@@ -182,14 +182,15 @@ module OY
       end
 
       # makes a html link for given +url+
-      def mk_link(url, css, title, alternative = false)
-        if alternative
-          %Q(<a href='#{url.downcase}' class='oy-link #{css}'><sup>#{title}</sup></a>)          
-        else
-          %Q(<a href='#{url.downcase}' class='oy-link #{css}'>#{title}</a>)
-        end
+      # If +title+ is +nil get the name from OY::Markup::markup_abbrevs
+      # by the exteions of the file.
+      # If this fails it returns a link with title "NIL"
+      def mk_link(url, css, title)
+        abbrev_title = title.nil? ? OY::Markup.markup_abbrevs[File.extname(url)[1..-1].to_sym] : title
+        %Q(<a href='#{url.downcase}' class='oy-link #{css}'>#{abbrev_title}</a>)
+      rescue
+        mk_link(url, css, "NIL")
       end
-      private :mk_link
 
 
       # returns the default markup extesion as symbol
@@ -246,10 +247,13 @@ module OY
         title = title[1..-1] if title[0..0] == "/"
 
         base_link.map!{|url, _|  mk_link(url, (alternatives.empty? ? "o" : "x"), title) }
-        i = 0
-        add_links.map!{|url, _|  mk_link(url, 'alt', (i+=1).to_s, true) }
+        add_links.map!{|url, _|  mk_link(url, 'alt', nil) }
 
-        (base_link + add_links).join
+        ret = base_link.join
+        unless add_links.empty?
+          ret << " <span class='alts'><sup>(%s)</sup></span>" % add_links.join(", ")
+        end
+        ret
       end
       
       def to_html
@@ -264,7 +268,7 @@ module OY
           ret = process_tags(data)
         end
 
-        if wiki
+        if wiki and wiki.extension == "textile"
           puts "", "ParseTime for #{self.class}: #{wiki.identifier}: #{parse_time}sec (new engine)", ""
           ret << %Q(\n\n<div id="oy-page-parse-time">ParseTime for #{self.class.to_s.split("::").last}: <em>#{"%.6f" % parse_time}</em>sec</div>)
         end
