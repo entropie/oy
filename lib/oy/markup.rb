@@ -14,6 +14,15 @@ module OY
     # default extension without .
     self.default_extension = "textile"
 
+    # Returns a Hash with all the markup abbrevs
+    def self.markup_abbrevs
+      @markup_abbrevs ||= {
+        :textile  =>  "tt",
+        :markdown =>  "md",
+        :org      =>  "org"
+      }
+    end
+    
     # returns extension string without leading .
     def self.normalize_extension(ext)
       ext = ext[1..-1] if ext[0] == ?.
