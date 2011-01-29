@@ -37,7 +37,7 @@ module OY
         :url   => permalink
       }
     end
-    
+
     # returns always false
     def is_media?
       false
@@ -48,7 +48,7 @@ module OY
     def initialize(blob, commit, path)
       @blob, @commit, @path = blob, commit, path
     end
-
+    
     # returns the prefix for the page which is basically the dirname of #path
     def vprefix
       r = File.dirname(path)

@@ -131,14 +131,14 @@ describe OY::Markup::Global do
       
       it "should add alternatives after base link (/double)" do
         base_link = "<a href='/double.textile' class='oy-link x'>Double</a>"
-        add_link  = "<a href='/double.org' class='oy-link alt'><sup>[1]</sup></a>"
+        add_link  = "<a href='/double.org' class='oy-link alt'><sup>1</sup></a>"
         OY::Markup::Global.new("[[Double]]").to_html.
           should eql(base_link + add_link)
       end
 
       it "should add alternatives without base link (/doublewo)" do
         base_link = "<a href='/doublewo.markdown' class='oy-link x'>Doublewo</a>"
-        add_link  = "<a href='/doublewo.org' class='oy-link alt'><sup>[1]</sup></a>"
+        add_link  = "<a href='/doublewo.org' class='oy-link alt'><sup>1</sup></a>"
         OY::Markup::Global.new("[[Doublewo]]").to_html.
           should eql(base_link + add_link)
       end

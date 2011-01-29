@@ -184,7 +184,7 @@ module OY
       # makes a html link for given +url+
       def mk_link(url, css, title, alternative = false)
         if alternative
-          %Q(<a href='#{url.downcase}' class='oy-link #{css}'><sup>[#{title}]</sup></a>)          
+          %Q(<a href='#{url.downcase}' class='oy-link #{css}'><sup>#{title}</sup></a>)          
         else
           %Q(<a href='#{url.downcase}' class='oy-link #{css}'>#{title}</a>)
         end
