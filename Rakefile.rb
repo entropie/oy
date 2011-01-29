@@ -202,7 +202,7 @@ task :gemspec => :validate do
 end
 
 task :validate do
-  libfiles = Dir['lib/*'] - ["lib/#{name}.rb", "lib/#{name}"]
+  libfiles = Dir['lib/*'] - ["lib/#{name}.rb", "lib/#{name}", "lib/core"]
   unless libfiles.empty?
     puts "Directory `lib` should only contain a `#{name}.rb` file and `#{name}` dir."
     exit!
