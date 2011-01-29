@@ -48,6 +48,7 @@ class OYController < Ramaze::Controller
       return arr ? fragments : ''
     elsif IgnoreList.include?(fragments.first)
       return "" if fragments.first == "revert"
+      return "" if fragments.first == "compare"      
       fragments.shift
     end
     if arr then fragments else
