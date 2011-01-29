@@ -22,8 +22,7 @@
     %script{:type => "text/javascript", :src => "/js/oy.js"}=""
     :javascript
       gvChartInit();
-    
-    - if OY.local?
+    - unless OY.local?
       = oy_render_file "_google_analytics.haml"
   %body
     #oy-banner
