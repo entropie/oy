@@ -9,6 +9,7 @@ require "ostruct"
 require "nokogiri"
 require "json"
 require "RedCloth"
+require "unicode"
 
 require "pp"
 
@@ -23,6 +24,11 @@ module OY
   $: << File.join(Source, "lib/oy") unless $:.include?(File.join(Source, "lib/oy"))
   $: << File.join(Source, "app")    unless $:.include?(File.join(Source, "app"))
 
+
+  Dir["#{Source}/lib/core/**/*.rb"].each do |core_ext|
+    require core_ext
+  end
+  
   def self.local?
     @hostname ||= `hostname`
     if @hostname =~ /^xeno/ then true else false end
