@@ -86,14 +86,14 @@ module OY
     # * +revert+  revert page to last version (page)
     # * +revert_do+ actually do the revert
     def link(what = nil)
-      escaped_ident = URI.escape(ident)
-      
+      escaped_ident = URI.escape(ident) + ".#{extension}"
+
       case what
       when :perma
         "/#{escaped_ident}?sha=#{sha}"
       when :edit 
         # FIXME:
-        "/edit/#{ident}"
+        "/edit/#{escaped_ident}"
       when :version
         "/#{escaped_ident}?sha=#{history.first.sha}"
       when :history
