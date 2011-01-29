@@ -61,24 +61,90 @@ describe OY::Markup do
 end
 
 describe OY::Markup::Global do
-  it "Should replace wikilinks: [[Link]] => /link" do
-    OY::Markup::Global.new("[[test]]").to_html.should eql("<a href='/test' class='oy-link o'>test</a>")
-  end
+  context "Wikilinks" do
 
-  it "Should replace wikilinks: [[Link]] => /link (case sensitive)" do
-    OY::Markup::Global.new("[[Test]]").to_html.should eql("<a href='/test' class='oy-link o'>Test</a>")
-  end
 
-  it "Should replace wikilinks: [[Link Title]] => /link with title" do
-    OY::Markup::Global.new("[[test Title]]").to_html.should eql("<a href='/test' class='oy-link o'>Title</a>")
-  end
+    context "Don't Exist w/o Title" do
+      it "Should replace wikilinks: [[Test]];  /test => test" do
+        OY::Markup::Global.new("[[Test]]").to_html.should eql("<a href='/test' class='oy-link o'>Test</a>")
+      end
 
-  it "Should replace wikilinks: [[Link Title]] => /link with title (case sensitive)" do
-    OY::Markup::Global.new("[[Test title]]").to_html.should eql("<a href='/test' class='oy-link o'>title</a>")
-  end
+      it "Should replace wikilinks: [[/Test]]; /test => test" do
+        OY::Markup::Global.new("[[/Test]]").to_html.should eql("<a href='/test' class='oy-link o'>Test</a>")
+      end
 
-  it "Should replace wikilinks: [[Link Title Foo]] => /link with title seperated with spaces" do
-    OY::Markup::Global.new("[[Test Title Foo]]").to_html.should eql("<a href='/test' class='oy-link o'>Title Foo</a>")
+      it "Should replace wikilinks: [[Test/foo/bar]]; /test/foo/bar => test/foo/bar" do
+        OY::Markup::Global.new("[[Test/foo/bar]]").to_html.should eql("<a href='/test/foo/bar' class='oy-link o'>Test/foo/bar</a>")
+      end
+    end
+
+    context "Existing w/o Title" do
+      it "Should replace wikilinks: [[Foo]];  /foo => foo" do
+        OY::Markup::Global.new("[[Foo]]").to_html.should eql("<a href='/foo' class='oy-link x'>Foo</a>")
+      end
+
+      it "Should replace wikilinks: [[/Foo]]; /foo => foo" do
+        OY::Markup::Global.new("[[/Foo]]").to_html.should eql("<a href='/foo' class='oy-link x'>Foo</a>")
+      end
+
+      it "Should replace wikilinks: [[Test/foo]]; /test/foo => test/foo" do
+        OY::Markup::Global.new("[[Test/foo]]").to_html.should eql("<a href='/test/foo' class='oy-link x'>Test/foo</a>")
+      end
+    end
+
+    context "Links with Title" do
+
+      it "Should replace wikilinks: [[test Title]]; => /test with Title" do
+        OY::Markup::Global.new("[[test Title]]").to_html.should eql("<a href='/test' class='oy-link o'>Title</a>")
+      end
+
+      it "Should replace wikilinks: [[test Long Title is long]]; => /test with Long Title is long" do
+        OY::Markup::Global.new("[[test Long Title is long]]").to_html.
+          should eql("<a href='/test' class='oy-link o'>Long Title is long</a>")
+      end
+
+      it "Should replace wikilinks: [[test Äöü]]; => /test with Unicode Title" do
+        OY::Markup::Global.new("[[test Äöü]]").to_html.should eql("<a href='/test' class='oy-link o'>Äöü</a>")
+      end
+
+      it "Should replace wikilinks: [[Äöü]]; => /äöü" do
+        OY::Markup::Global.new("[[Äöü]]").to_html.should eql("<a href='/äöü' class='oy-link o'>Äöü</a>")
+      end
+
+      it "Should replace wikilinks: [[test Äöü]]; => /test with Unicode Title" do
+        OY::Markup::Global.new("[[test Äöü]]").to_html.should eql("<a href='/test' class='oy-link o'>Äöü</a>")
+      end
+
+    end
+
+    context "Alternatives" do
+
+      it "should be possible to link direct to a page with extension (double) w/o title" do
+        OY::Markup::Global.new("[[Double.org]]").to_html.
+          should eql("<a href='/double.org' class='oy-link o'>Double.org</a>")
+      end
+
+      it "should be possible to link direct to a page with extension (double) with title" do
+        OY::Markup::Global.new("[[Double.org Title]]").to_html.
+          should eql("<a href='/double.org' class='oy-link o'>Title</a>")
+      end
+      
+      it "should add alternatives after base link (/double)" do
+        base_link = "<a href='/double.textile' class='oy-link x'>Double</a>"
+        add_link  = "<a href='/double.org' class='oy-link alt'><sup>[1]</sup></a>"
+        OY::Markup::Global.new("[[Double]]").to_html.
+          should eql(base_link + add_link)
+      end
+
+      it "should add alternatives without base link (/doublewo)" do
+        base_link = "<a href='/doublewo.markdown' class='oy-link x'>Doublewo</a>"
+        add_link  = "<a href='/doublewo.org' class='oy-link alt'><sup>[1]</sup></a>"
+        OY::Markup::Global.new("[[Doublewo]]").to_html.
+          should eql(base_link + add_link)
+      end
+      
+    end
+    
   end
 
 end

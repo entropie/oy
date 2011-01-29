@@ -186,7 +186,16 @@ module OY
         end
       end
 
-      # FIXME: alternative link handling
+      def mk_link(url, css, title, alternative = false)
+        if alternative
+          %Q(<a href='#{url.downcase}' class='oy-link #{css}'><sup>[#{title}]</sup></a>)          
+        else
+          %Q(<a href='#{url.downcase}' class='oy-link #{css}'>#{title}</a>)
+        end
+      end
+      
+      private :mk_link
+      
       def process_page_link_tag(tag)
         parts = tag.split(' ')
 
@@ -194,27 +203,52 @@ module OY
         title = descp.join(" ")
 
         alternatives = Repos.alternatives(*url.split("/"))
-        css = alternatives.empty? ? "o" : "x"
+        #css = 
 
         defext = OY::Markup.default_extension.to_sym
 
-        base_link = []
-        add_links = []
+        base_link, add_links = [], []
 
         url = "/#{url}" unless url[0..0] == "/"
+        title = url if title.empty?
+
         
-        path = 
-          if alternatives.size > 0
-            if alternatives.include?(defext)
-              base_link << [url, alternatives[defext]]
+        if not alternatives.empty?
+          alternatives.each_pair do |ext, file|
+            if ext == defext    # find page with default extension
+
+              base_url =
+                if alternatives.size > 1
+                  # add extension for base_url unless given
+                  url !~ /\.#{ext}$/ ? "#{url}.#{ext}" : url
+                else url end
+              
+              base_link << [base_url, file]
             else
+              add_links << ["#{url}.#{ext}", file]
             end
           end
+        else
+          # not existing page
+          base_link << [url, nil]
+        end
 
-        base_link.map!{|url, _| %Q(<a href="#{url.downcase}" class="oy-link #{css}">#{title}</a>) }
-        base_link.join
+        # sort links by extension
+        add_links = add_links.sort_by{|link, file| File.extname(file) }
+
+        if base_link.empty?
+          base_link << add_links.shift
+        end
+        
+        title = title[1..-1] if title[0..0] == "/"
+
+        base_link.map!{|url, _|  mk_link(url, (alternatives.empty? ? "o" : "x"), title) }
+        i = 0
+        add_links.map!{|url, _|  mk_link(url, 'alt', (i+=1).to_s, true) }
+
+        (base_link + add_links).join
       end
-
+      
       def to_html
         ret = ''
         # parse_time = measure do
@@ -234,20 +268,21 @@ module OY
         ret
       end
 
-      def parse_result(result)
-        r = result.gsub(/\[{2}([\/0-9A-Za-z0-9#{I18N_HIGHER_CASE_LETTERS}#{I18N_LOWER_CASE_LETTERS}]+)([A-Za-z0-9#{I18N_LOWER_CASE_LETTERS}#{I18N_HIGHER_CASE_LETTERS}\s]+)?\]{2}/u){|match|
-          url = $1.downcase
-          cls = begin
-                  r=repos.find_by_fragments(url)
-                  raise NotFound if r.kind_of?(WikiDir)
-                  "x"
-                rescue NotFound
-                  "o"
-                end
-          "<a href='/#{url}' class='oy-link #{cls}'>#{($2 || $1).strip}</a>"
-        }
-        r
-      end
+      # def parse_result(result)
+      #   r = result.gsub(/\[{2}([\/0-9A-Za-z0-9#{I18N_HIGHER_CASE_LETTERS}#{I18N_LOWER_CASE_LETTERS}]+)([A-Za-z0-9#{I18N_LOWER_CASE_LETTERS}#{I18N_HIGHER_CASE_LETTERS}\s]+)?\]{2}/u){|match|
+      #     url = $1.downcase
+      #     cls = begin
+      #             r=repos.find_by_fragments(url)
+      #             raise NotFound if r.kind_of?(WikiDir)
+      #             "x"
+      #           rescue NotFound
+      #             "o"
+      #           end
+      #     "<a href='/#{url}' class='oy-link #{cls}'>#{($2 || $1).strip}</a>"
+      #   }
+      #   r
+      # end
+
     end
     
   end
