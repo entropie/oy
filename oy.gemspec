@@ -31,6 +31,7 @@ Gem::Specification.new do |s|
   s.add_dependency('rspec')
   s.add_dependency('haml')
   s.add_dependency('json')
+  s.add_dependency('unicode')
 
   # = MANIFEST =
   s.files = %w[
