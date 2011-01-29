@@ -82,19 +82,6 @@ module OY
         end
       end
 
-      # Find the given file in the repo.
-      #
-      # name - The String absolute or relative path of the file.
-      #
-      # Returns the Gollum::File or nil if none was found.
-      #
-      # From Gollum: lib/gollum/markup.rb
-      def find_file(name)
-        expaned_path = 
-          File.join(Media.media_path, name.gsub(/img\//, ''))
-        File.exist?(expaned_path) and name
-      end
-
       # Parse any options present on the image tag and extract them into a
       # Hash of option names and values.
       #
@@ -110,6 +97,14 @@ module OY
           memo
         end
       end
+
+      # returns the filename if +name+ exist in the repos or nil
+      def media_file_exist?(name)
+        expaned_path = 
+          File.join(Media.media_path, name.gsub(/img\//, ''))
+        File.exist?(expaned_path) and name
+      end
+      private :media_file_exist?
       
       # Attempt to process the tag as an image tag.
       #
@@ -125,7 +120,7 @@ module OY
 
         name  = parts[0].strip
 
-        path  = if file = find_file(name)
+        path  = if file = media_file_exist?(name)
                   file
                 elsif name =~ /^https?:\/\/.+(jpg|png|gif|svg|bmp)$/i
                   name
@@ -186,6 +181,7 @@ module OY
         end
       end
 
+      # makes a html link for given +url+
       def mk_link(url, css, title, alternative = false)
         if alternative
           %Q(<a href='#{url.downcase}' class='oy-link #{css}'><sup>[#{title}]</sup></a>)          
@@ -193,9 +189,19 @@ module OY
           %Q(<a href='#{url.downcase}' class='oy-link #{css}'>#{title}</a>)
         end
       end
-      
       private :mk_link
+
+
+      # returns the default markup extesion as symbol
+      def defext
+        @defext ||= OY::Markup.default_extension.to_sym
+      end
       
+
+      # Makes a link for tag if there are no alternatives in the repos.
+      #
+      # If there are alternatives makes the link for the default markup, and
+      # adds alternatives as superscript links after the base link.
       def process_page_link_tag(tag)
         parts = tag.split(' ')
 
@@ -203,9 +209,6 @@ module OY
         title = descp.join(" ")
 
         alternatives = Repos.alternatives(*url.split("/"))
-        #css = 
-
-        defext = OY::Markup.default_extension.to_sym
 
         base_link, add_links = [], []
 
@@ -282,7 +285,6 @@ module OY
       #   }
       #   r
       # end
-
     end
     
   end
