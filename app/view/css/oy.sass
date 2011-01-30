@@ -412,10 +412,6 @@ fieldset
         :border-radius 10px
     :position relative
     #oy-toc
-      :transition opacity 1s ease-in-out
-      :-webkit-transition opacity 1s ease-in-out
-      :-moz-transition opacity 1s ease-in-out
-      :-o-transition opacity 1s ease-in-out
       :position absolute
       :top -60px
       :right -10px
@@ -437,6 +433,8 @@ fieldset
             :opacity 0.6
           
       ul
+        :-moz-box-shadow 2px 2px 3px #999
+        :-webkit-box-shadow 2px 2px 3px #999
         :display none
         :z-index 2000
         :background-color #DCDFE8
@@ -471,15 +469,6 @@ fieldset
             :margin-left 60px
           &:hover
             :color = !clr_rlight_blue
-      // &:hover
-      //   h2
-      //     :color = clr_topic_border
-      //   ul
-      //     :transition opacity 2s ease-in-out
-      //     :-webkit-transition opacity 2s ease-in-out
-      //     :-moz-transition opacity 2s ease-in-out
-      //     :-o-transition opacity 2s ease-in-out
-      //     :opacity 0.9
       
     strong
       :background-color = !clr_light_silver
