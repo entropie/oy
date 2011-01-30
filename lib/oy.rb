@@ -39,6 +39,7 @@ module OY
       Kernel.puts "  |> #{a}"
     end
   end
+  module_function :puts
   
   def api(host = nil)
     @api ||= Api.new(host)
