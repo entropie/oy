@@ -47,3 +47,9 @@ The default port ist *8200* and the default hostname is *localhost*.
 h3. Additional Infos
 
 This is _really_ an early release. There will be bugs, probably lots of it. If a bug bites you in your hand please "file it":https://github.com/entropie/oy/issues. As well you might want to request features, which is totaly fine, but dont expect it will be done soon. You're encouraged to make a fork and add features yourself.
+
+h4. Development
+
+* "Generated Documentation":/doc/frames.html (yard)
+* "Rspec output":/spec.html
+* "Coverage":/doc/coverage/index.html
