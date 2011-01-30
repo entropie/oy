@@ -71,9 +71,23 @@ rescue OptionParser::InvalidOption
 end
 
 
+def setup_logger!
+  Ramaze::Log.loggers.clear
+end
+
+
+
+# FIXME: this stuff needs to live in oy/oy.rb
 begin
   OY.path = default_options[:repos]
+
   require "start"
+
+  # FIXME:
+  $VERBOSE = nil # turn off sass deprecation warnings
+
+  setup_logger!
+  
 
   #   [:layout, :public, :view].each do |opt|
   #     if OY::Repos.exist?("_#{opt}")
@@ -82,9 +96,16 @@ begin
   #     end
   #   end
 
+  # Ramaze::Cache.options do |cache|
+  #   cache.names = [:pages]
+  #   cache.default = Ramaze::Cache::MemCache
+  # end
+
   Dir.chdir(File.join(OY::Source, "app"))
 
-  Ramaze.start(:host => default_options[:hostname], :port => default_options[:port])
+  Innate::View.options.read_cache = true
+  
+  Ramaze.start(:adapter => :webrick, :host => default_options[:hostname], :port => default_options[:port])
 end
 
 
