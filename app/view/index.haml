@@ -13,6 +13,9 @@
         %a{:title => "Last Edited / Permalink to this Version", :href => WikiController.r(@wiki.permalink), :class => "oy-perma"}= time_to_s(@wiki.date)
       %li.author{:title => "Author of this Version"}= @wiki.author
     %ul.right
+      - if @cached
+        %li.cached
+          %a.awesome{:title => "Reread", :href => @wiki.link(:reread)} Reread
       - if @wiki.has_parent?
         %li.history
           %a.awesome{:title => "History", :href => @wiki.link(:history)} History
