@@ -6,7 +6,6 @@
 
 require "rubygems"
 require "ramaze"
-require "redcloth"
 
 begin
   require "../lib/oy"
