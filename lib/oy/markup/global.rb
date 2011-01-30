@@ -258,20 +258,14 @@ module OY
       
       def to_html
         ret = ''
-        # parse_time = measure do
-        #   ret = parse_result(data)
+
+        extract_tags!
+        ret = process_tags(data)
+
+        # if wiki and wiki.extension == "textile"
+        #   puts "ParseTime for #{self.class}: #{wiki.identifier}: #{parse_time}sec (new engine)"
+        #   ret << %Q(\n\n<div id="oy-page-parse-time">ParseTime for #{self.class.to_s.split("::").last}: <em>#{"%.6f" % parse_time}</em>sec</div>)
         # end
-        # puts "ParseTime for #{self.class}: #{wiki.identifier}: #{parse_time}sec (old engine)"
-
-        parse_time = measure do
-          extract_tags!
-          ret = process_tags(data)
-        end
-
-        if wiki and wiki.extension == "textile"
-          puts "", "ParseTime for #{self.class}: #{wiki.identifier}: #{parse_time}sec (new engine)", ""
-          ret << %Q(\n\n<div id="oy-page-parse-time">ParseTime for #{self.class.to_s.split("::").last}: <em>#{"%.6f" % parse_time}</em>sec</div>)
-        end
         ret
       end
 

@@ -177,7 +177,10 @@ module OY
     def with_markup(force_extension = nil)
       ret = @blob.data
       ["*", (force_extension || extension), "xml"].inject(ret){|memo, mup|
-        Markup.choose_for(mup).new(memo, self).to_html
+        markup = Markup.choose_for(mup)
+        Markup::measure_to_stdout(markup, self) do
+          markup.new(memo, self).to_html
+        end
       }
     end
 

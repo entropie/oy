@@ -15,9 +15,6 @@ module OY
         self.extension = "org"
 
         def to_html
-          puts
-          puts data
-          puts
           Orgmode::Parser.new(data).to_html
         end
         

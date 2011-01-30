@@ -7,6 +7,15 @@ module OY
 
   module Markup
 
+    def self.measure_to_stdout(mup, wiki)
+      t = Time.now
+      ret = yield
+      diff = Time.now - t
+      OY::puts "ParseTime for '#{wiki.ident}' #{"%10s" % mup.to_s.split("::").last}: #{"%.6f" % diff}sec"
+      ret
+    end
+
+    
     class << self
       attr_accessor :default_extension
     end
@@ -100,12 +109,6 @@ module OY
       def initialize(data, wiki = nil)
         @wiki = wiki
         @data = data
-      end
-
-      def measure
-        t = Time.now
-        yield
-        Time.now - t
       end
 
     end
