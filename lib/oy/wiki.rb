@@ -104,6 +104,8 @@ module OY
         "/revert/#{sha}/#{escaped_ident}"
       when :revert_do
         "/revert/#{sha}/#{escaped_ident}?do_it=1"
+      when :reread
+        "/clear_cache/#{URI.escape(ident)}"
       else
         "/#{escaped_ident}"
       end
