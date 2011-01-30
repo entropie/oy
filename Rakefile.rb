@@ -52,29 +52,48 @@ task :test do
   p r
 end
 
+desc "Creates the wiki for testing"
 task :create_spec_env do
   sh   "mkdir -p /tmp/testrepos && cd /tmp/testrepos && git init"
   ruby "-r spec/spec_helper.rb spec/mk_specwiki.rb"
 end
 
+desc "cleans all files created by rdoc"
 task :clean do
   File.exist?("/tmp/testrepos") and sh "rm -r /tmp/testrepos"
   File.exist?("coverage") and sh "rm -r coverage"
   File.exist?("app/public/doc") and sh "rm -r app/public/doc"  
 end
 
+desc "Runs the spec (simple)"
 task :spec => [:clean, :create_spec_env, :run_spec_wo] do
 end
 
+
+desc "Cleans the repos, writes and moves doc to app/public, runs the specs and synces to publicwiki"
+task :spec_to_public => [:clean, :write_doc, :move_doc,
+                         :create_spec_env, :run_spec_to_file, :move_coverage, :sync_rdoc_to_public_wiki] do
+end
+
+
+desc "Cleans everything and creates the spec env"
 task :dry  => [:clean, :create_spec_env]
 
+desc "creates docs and synces to public wiki"
 task :doc => [:clean, :write_doc, :move_doc, :sync_rdoc_to_public_wiki] do
 end
 
+desc "moves doc to app/public"
 task :move_doc do
   File.exist?("app/public/doc") and sh "rm -r app/public/doc"
   sh "mv doc app/public/doc"
 end
+
+desc "moves coverage to app/public/doc"
+task :move_coverage do
+  sh "mv coverage app/public/doc/"
+end
+
 
 RSpec::Core::RakeTask.new(:run_spec) do |t|
   t.pattern = Dir.glob('spec/**/*_spec_*.rb')
@@ -92,6 +111,16 @@ RSpec::Core::RakeTask.new(:run_spec_wo) do |t|
   t.rcov = false
 end
 
+RSpec::Core::RakeTask.new(:run_spec_to_file) do |t|
+  t.pattern = Dir.glob('spec/**/*_spec_*.rb')
+  t.rcov_opts  = %q[-Ispec -i spec_helper -x /Library/]
+  t.rspec_opts = %q[-f h -o app/public/spec.html]
+  t.skip_bundler = true
+  t.rcov = true
+  t.verbose = true
+end
+
+
 
 if Gem.available?("yard")
   require "yard"
@@ -107,6 +136,7 @@ else
   end
 end
 
+desc "Syncs doc to public wiki"
 task :sync_rdoc_to_public_wiki do |t|
   if File.exist?("rsync.txt")
     sh File.readlines("rsync.txt").join
