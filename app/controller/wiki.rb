@@ -19,7 +19,7 @@ class WikiController < OYController
   end
 
   def clear_cache(*fragments)
-    fragments = 'index' if fragments.empty?    
+    fragments = 'index' if fragments.empty?
     cache = Ramaze::Cache.cache_helper_value
     cache.delete(fragments)
     redirect_referer
@@ -33,7 +33,7 @@ class WikiController < OYController
     
     key, *arguments = fragments
 
-    fragments = 'index' if fragments.empty?    
+    fragments = ["index"] if fragments.empty?    
     
     if public_methods.include?(key)
       call(key.to_sym, *arguments)
