@@ -32,15 +32,15 @@ class WikiController < OYController
     
     key, *arguments = fragments
 
-    methods = public_methods
-
-    if methods.include?(key)
+    fragments = 'index' if fragments.empty?    
+    
+    if public_methods.include?(key)
       call(key.to_sym, *arguments)
     else
       @wiki, @time = cache[fragments]
       if @wiki
         @cached = true
-        puts "!!! CACHED: #{@wiki.ident}"
+        puts "!!! CACHED: #{PP.pp(fragments, '').strip}: #{@wiki.ident}"
       else
         @time = Time.now
         @wiki = repos.find_by_fragments(*fragments)
@@ -54,12 +54,11 @@ class WikiController < OYController
         end
         @wiki.parse_body
         @title = @wiki.html_title
-        puts "!!! CREATE CACHE: #{@wiki.ident}"
+        puts "!!! CREATE CACHE: #{PP.pp(fragments, '').strip}: #{@wiki.ident}"
         cache.store(fragments, [@wiki, @time])
       end
     end
   rescue NotFound
-    fragments = 'index' if fragments.empty?
     redirect WikiController.r(:create, *fragments)
   end
 
