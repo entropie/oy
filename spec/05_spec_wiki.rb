@@ -80,37 +80,37 @@ describe OY::Wiki do
 
   it "Should have some attributes (#permalink => String)" do
     page = repos.find_by_fragments("index")
-    page.permalink.should == "/#{page.ident}?sha=#{page.sha}"
+    page.permalink.should == "/#{page.ident}.textile?sha=#{page.sha}"
   end
 
   it "Should have a link(:perma)" do
     page = repos.find_by_fragments("index")
-    page.link(:perma).should == "/#{page.ident}?sha=#{page.sha}"
+    page.link(:perma).should == "/#{page.ident}.textile?sha=#{page.sha}"
   end
 
   it "Should have a link(:edit)" do
     page = repos.find_by_fragments("index")
-    page.link(:edit).should == "/edit/index"
+    page.link(:edit).should == "/edit/index.textile"
   end
 
   it "Should have a link(:version)" do
     page = repos.find_by_fragments("index")
-    page.link(:version).should == "/#{page.ident}?sha=#{page.parent.sha}"
+    page.link(:version).should == "/#{page.ident}.textile?sha=#{page.parent.sha}"
   end
 
   it "Should have a link(:history)" do
     page = repos.find_by_fragments("index")
-    page.link(:history).should == "/history/#{page.ident}"
+    page.link(:history).should == "/history/#{page.ident}.textile"
   end
 
   it "Should have a link(:compare)" do
     page = repos.find_by_fragments("index")
-    page.link(:compare).should == "/compare/#{page.sha}/#{page.history.first.sha}/#{page.ident}"
+    page.link(:compare).should == "/compare/#{page.sha}/#{page.history.first.sha}/#{page.ident}.textile"
   end
 
   it "Should have a link" do
     page = repos.find_by_fragments("index")
-    page.link.should == "/#{page.ident}"
+    page.link.should == "/#{page.ident}.textile"
   end
   
   it "Should have a #parent" do
