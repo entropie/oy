@@ -6,6 +6,10 @@
 class WikiController < OYController
   map :/
 
+  helper :cache
+
+  #cache_action(:method => :index)
+  
   include OY
 
   def img(*fragments)
