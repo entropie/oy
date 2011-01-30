@@ -7,10 +7,14 @@ class CSSController < Ramaze::Controller # def ctrl
   map     "/css"
   provide :css, :Sass
   engine :Sass
+
   trait :sass_options => {
     :style => :expanded,
   } 
 
+  helper :cache
+  #cache_action(:method => :oy)
+  
   def oy
   end
 
