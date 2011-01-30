@@ -8,7 +8,9 @@ class WikiController < OYController
 
   helper :cache
 
-  #cache_action(:method => :index)
+  # cache_action(:method => :index){
+  #   action.params.join("/")
+  # }
   
   include OY
 
@@ -16,7 +18,16 @@ class WikiController < OYController
     redirect MediaController.r(:img, *fragments)
   end
 
+  def clear_cache(*fragments)
+    cache = Ramaze::Cache.cache_helper_value
+    cache.delete(fragments)
+    redirect_referer
+    ''
+  end
+
   def index(*fragments)
+    cache = Ramaze::Cache.cache_helper_value
+
     add_repos_paths
     
     key, *arguments = fragments
@@ -26,17 +37,26 @@ class WikiController < OYController
     if methods.include?(key)
       call(key.to_sym, *arguments)
     else
-      @wiki = repos.find_by_fragments(*fragments)
+      @wiki, @time = cache[fragments]
+      if @wiki
+        @cached = true
+        puts "!!! CACHED: #{@wiki.ident}"
+      else
+        @time = Time.now
+        @wiki = repos.find_by_fragments(*fragments)
 
-      if sha = request[:sha]
-        unless @wiki.sha == sha
-          parent = @wiki
-          @wiki = @wiki.history(sha)
-          @wiki.parent = parent
+        if sha = request[:sha]
+          unless @wiki.sha == sha
+            parent = @wiki
+            @wiki = @wiki.history(sha)
+            @wiki.parent = parent
+          end
         end
+        @wiki.parse_body
+        @title = @wiki.html_title
+        puts "!!! CREATE CACHE: #{@wiki.ident}"
+        cache.store(fragments, [@wiki, @time])
       end
-      @wiki.parse_body
-      @title = @wiki.html_title
     end
   rescue NotFound
     fragments = 'index' if fragments.empty?
