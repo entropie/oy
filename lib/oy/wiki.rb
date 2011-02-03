@@ -116,9 +116,6 @@ module OY
       else
         "/#{escaped_ident}"
       end
-    rescue
-      p $!
-      "la"
     end
 
     # get the diff for +v1+ +v2+
@@ -270,6 +267,8 @@ module OY
     
     def extension
       @blob.basename.split(".").last
+    rescue
+      File.basename(path).split(".").last
     end
     
     def data
