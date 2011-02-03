@@ -375,7 +375,7 @@ fieldset
       :text-align right
 
 #oy-page
-  :margin-top 15px
+  :margin-top 25px
   :position relative
   .oy-preview-buttons
     :text-align right
@@ -614,14 +614,18 @@ fieldset
           :color silver
           a
             :color = !clr_blue_link
-  #oy-top
+  #oy-top    
     :position absolute
     :right 0px
     :width 100%
-    :top -50px
+    :top -60px
     :border none
     ul
       :margin-top 0px
+      li
+        :opacity 0.1
+        &:hover
+          :opacity 0.7
 
 #oy-page
   .compare
