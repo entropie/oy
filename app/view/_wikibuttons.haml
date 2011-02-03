@@ -1,10 +1,10 @@
 %ul.right
   - if @sha
     %li.backlink
-      %a.awesome{:title => "To most recent Version", :href => @wiki.link(:link)} To Most Recent
+      %a.awesome{:title => "To most recent Version", :href => @wiki.link(:link)} Recent
   - if @cached
     %li.cached
-      %a.awesome{:title => "Reread", :href => @wiki.link(:reread)} Reread
+      %a.awesome{:title => "Reread from repos", :href => @wiki.link(:reread)} Reread
   - if @wiki.has_parent?
     %li.history
       %a.awesome{:title => "History", :href => @wiki.link(:history)} History
