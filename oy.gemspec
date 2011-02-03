@@ -4,8 +4,8 @@ Gem::Specification.new do |s|
   s.rubygems_version = '1.3.5'
 
   s.name              = 'oy'
-  s.version           = '0.3.3'
-  s.date              = '2011-01-24'
+  s.version           = '0.3.5'
+  s.date              = '2011-02-04'
   s.rubyforge_project = 'oy'
 
   s.summary     = "Git-powered wiki."
@@ -55,17 +55,31 @@ Gem::Specification.new do |s|
     app/public/css/squaregrid.css
     app/public/favicon.ico
     app/public/img/alert-overlay.png
+    app/public/img/darr.jpeg
+    app/public/img/exlink.png
+    app/public/img/githublink.png
+    app/public/img/hshad-d.gif
+    app/public/img/hshad.gif
+    app/public/img/hspinner.gif
+    app/public/img/rarr.jpeg
+    app/public/img/twitlink.jpeg
+    app/public/img/wplink.jpeg
     app/public/js/jquery-ui.js
+    app/public/js/jquery.gvChart-1.0.1.min.js
     app/public/js/jquery.js
     app/public/js/modernizr-1.6.min.js
     app/public/js/oy.js
     app/public/robots.txt
     app/start.rb
+    app/view/_desc_markdown.haml
+    app/view/_desc_org.haml
+    app/view/_desc_textile.haml
     app/view/_foot.haml
     app/view/_fork.html
     app/view/_form.haml
     app/view/_google_analytics.haml
     app/view/_head.haml
+    app/view/_wikibuttons.haml
     app/view/compare.haml
     app/view/create.haml
     app/view/css/oy.sass
@@ -78,9 +92,11 @@ Gem::Specification.new do |s|
     app/view/oy/special/list_fonts.haml
     app/view/oy/special/media.haml
     app/view/oy/special/upload.haml
+    app/view/preview.haml
     app/view/revert.haml
     bin/oy.rb
     docs/index.textile
+    lib/core/String.rb
     lib/oy.rb
     lib/oy/api.rb
     lib/oy/blob_entry.rb
@@ -118,6 +134,7 @@ Gem::Specification.new do |s|
     spec/spec_data/ass.jpg
     spec/spec_data/banner.gif
     spec/spec_data/oybanner.png
+    spec/spec_data/sample.org
     spec/spec_helper.rb
   ]
   # = MANIFEST =
