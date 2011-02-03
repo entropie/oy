@@ -17,6 +17,7 @@ class OYController < Ramaze::Controller
 
   private
 
+  # This is a wrapper function for Repos#find_by_fragments which caches
   def find_by_fragments(*frags)
     fragments = frags.dup
 
@@ -40,7 +41,8 @@ class OYController < Ramaze::Controller
       [page, t, false]
     end
   end
-  
+
+  # Shortcut to ramaze cache
   def cache
     Ramaze::Cache.cache_helper_value    
   end
@@ -61,6 +63,8 @@ class OYController < Ramaze::Controller
     end
   end
 
+  # Chooses whether the file should be rendered from the repos +_view/+ or
+  # the one provided by Oy!
   def oy_render_file(file, opts = {})
     path_in_repos = File.join("_view", file)
     if OY::Repos.exist?(path_in_repos)
