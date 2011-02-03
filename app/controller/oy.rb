@@ -8,10 +8,42 @@ class OYController < Ramaze::Controller
   engine :Haml
   
   layout(:layout) { !request.xhr? } 
+
+  helper :cache
+
+  include OY
   
   IgnoreList = %w'edit create history new compare oy img revert'
 
   private
+
+  def find_by_fragments(*frags)
+    fragments = frags.dup
+
+    fragments = ["index"] if fragments.empty?
+
+    # be sure to have an extension for caching
+    unless fragments.last =~ OY::Markup.extension_regexp
+      fragments.last << ".#{OY::Markup.default_extension}"
+    end
+
+    cache_key = Wiki.mk_cache_key_from_fragments(*fragments)
+    wiki, time = cache[cache_key]
+    if wiki
+      puts "!!! USE CACHE: #{PP.pp(wiki.cache_key, '').strip}: #{wiki.ident}"
+      [wiki, time, true]
+    else
+      page = repos.find_by_fragments(*fragments)
+      puts "!!! CREATE CACHE: #{PP.pp(page.cache_key, '').strip}: #{page.ident}"
+      page.parse_body
+      cache.store(page.cache_key, [page, t = Time.now])
+      [page, t, false]
+    end
+  end
+  
+  def cache
+    Ramaze::Cache.cache_helper_value    
+  end
 
   # FIXME:
   def add_repos_paths

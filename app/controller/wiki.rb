@@ -8,17 +8,10 @@ class WikiController < OYController
 
   helper :cache
   
-  include OY
-
   def img(*fragments)
     redirect MediaController.r(:img, *fragments)
   end
 
-  def cache
-    Ramaze::Cache.cache_helper_value    
-  end
-  private :cache
-  
   def clear_cache(*fragments)
     fragments = 'index' if fragments.empty?
     cache_key = Wiki.mk_cache_key_from_fragments(*fragments)
@@ -31,43 +24,20 @@ class WikiController < OYController
     
     key, *arguments = fragments
 
-    fragments = ["index"] if fragments.empty?    
-
-    # be sure to have an extension for caching
-    unless fragments.last =~ OY::Markup.extension_regexp
-      fragments.last << ".#{OY::Markup.default_extension}"
-    end
-
     @sha = request[:sha]
     
     if public_methods.include?(key)
       call(key.to_sym, *arguments)
     else
-      cache_key = Wiki.mk_cache_key_from_fragments(*fragments)
-      @wiki, @time = cache[cache_key]
-      # dont use cache if specific version is requested
-      # 
       # FIXME: maybe cache historical pages too
-      if @wiki and not @sha
-        @cached = true
-        puts "!!! CACHED: #{PP.pp(cache_key, '').strip}: #{@wiki.ident}"
-      else
-        @time, @wiki = Time.now, repos.find_by_fragments(*fragments)
+      @wiki, @time, @cached = find_by_fragments(*fragments)
 
-        if @sha and not @wiki.sha == @sha
-          parent = @wiki
-          @wiki = @wiki.history(@sha)
-          @wiki.parent = parent
-        end
-        
-        @wiki.parse_body
-        @title = @wiki.html_title
-        
-        unless @sha
-          puts "!!! CREATE CACHE: #{PP.pp(@wiki.cache_key, '').strip}: #{@wiki.ident}"
-          cache.store(@wiki.cache_key, [@wiki, @time])
-        end
+      if @sha and @wiki.sha != @sha
+        parent = @wiki
+        @wiki = @wiki.history(@sha)
+        @wiki.parent = parent
       end
+      @title = @wiki.html_title
     end
   rescue NotFound
     redirect WikiController.r(:create, *fragments)
@@ -109,6 +79,7 @@ class WikiController < OYController
       pg.message = request[:message] || ""
       pg.data    = request[:data]
     end
+    cache.delete(wiki.cache_key)
     redirect wiki.link
   end
 

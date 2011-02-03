@@ -8,6 +8,8 @@ class SpecialController < OYController
 
   include OY
 
+  helper :cache
+  
   def index
   end
 
@@ -32,9 +34,9 @@ class SpecialController < OYController
 
     @contents = @contents.map{|content|
       begin
-        r = repos.find_by_fragments(*content)
-        r.parse_body if full_page_titles
-        r
+        frags = content.split("/")
+        wiki, _, _ = find_by_fragments(*frags)
+        wiki
       rescue NotFound
         nil
       end
