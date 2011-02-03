@@ -7,11 +7,13 @@ class WikiController < OYController
   map :/
 
   helper :cache
-  
+
+  # Redirection for media files 
   def img(*fragments)
     redirect MediaController.r(:img, *fragments)
   end
 
+  # clears the cache for +fragments+
   def clear_cache(*fragments)
     fragments = 'index' if fragments.empty?
     cache_key = Wiki.mk_cache_key_from_fragments(*fragments)
@@ -19,6 +21,11 @@ class WikiController < OYController
     redirect_referer
   end
 
+  # The heart of Oy!
+  #
+  # This method is responsible for every rendered wiki page.
+  #
+  # Unless a +sha+ is given via request, every page will be cached.
   def index(*fragments)
     add_repos_paths # FIXME: do this at startup
     
@@ -43,6 +50,7 @@ class WikiController < OYController
     redirect WikiController.r(:create, *fragments)
   end
 
+  # Renders all the versions for +fragments+
   def history(*fragments)
     @wiki = repos.find_by_fragments(*fragments)
     @wikis = @wiki.history
@@ -87,10 +95,9 @@ class WikiController < OYController
     raise NotAllowed unless request.post?
     
     path = request[:path] or raise "no path given"
-
     path = Wiki.normalize_path(path)
 
-    extension = Markup.extension(request[:markup])
+    extension = Markup.extension(request[:extension])
     wiki = Wiki.create_bare("#{path}.#{extension}")
 
     wiki.create do |pg|
@@ -114,9 +121,11 @@ class WikiController < OYController
     else
       redirect wiki.path
     end
+
+    @extension = path[/\.(\w+)$/, 1] || OY::Markup.default_extension
     
     @action = :new
-    @path = path
+    @path = Wiki.normalize_path(path.include?(".") ? path.split(".").first : path)
     @identifier = File.basename(@path)
   end
 
