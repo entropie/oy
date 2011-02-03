@@ -7,10 +7,6 @@ class WikiController < OYController
   map :/
 
   helper :cache
-
-  # cache_action(:method => :index){
-  #   action.params.join("/")
-  # }
   
   include OY
 
@@ -18,45 +14,59 @@ class WikiController < OYController
     redirect MediaController.r(:img, *fragments)
   end
 
+  def cache
+    Ramaze::Cache.cache_helper_value    
+  end
+  private :cache
+  
   def clear_cache(*fragments)
     fragments = 'index' if fragments.empty?
-    cache = Ramaze::Cache.cache_helper_value
-    cache.delete(fragments)
+    cache_key = Wiki.mk_cache_key_from_fragments(*fragments)
+    cache.delete(cache_key)
     redirect_referer
-    ''
   end
 
   def index(*fragments)
-    cache = Ramaze::Cache.cache_helper_value
-
-    add_repos_paths
+    add_repos_paths # FIXME: do this at startup
     
     key, *arguments = fragments
 
     fragments = ["index"] if fragments.empty?    
+
+    # be sure to have an extension for caching
+    unless fragments.last =~ OY::Markup.extension_regexp
+      fragments.last << ".#{OY::Markup.default_extension}"
+    end
+
+    @sha = request[:sha]
     
     if public_methods.include?(key)
       call(key.to_sym, *arguments)
     else
-      @wiki, @time = cache[fragments]
-      if @wiki
+      cache_key = Wiki.mk_cache_key_from_fragments(*fragments)
+      @wiki, @time = cache[cache_key]
+      # dont use cache if specific version is requested
+      # 
+      # FIXME: maybe cache historical pages too
+      if @wiki and not @sha
         @cached = true
-        puts "!!! CACHED: #{PP.pp(fragments, '').strip}: #{@wiki.ident}"
+        puts "!!! CACHED: #{PP.pp(cache_key, '').strip}: #{@wiki.ident}"
       else
-        @time = Time.now
-        @wiki = repos.find_by_fragments(*fragments)
+        @time, @wiki = Time.now, repos.find_by_fragments(*fragments)
 
-        if sha = request[:sha]
-          unless @wiki.sha == sha
-            parent = @wiki
-            @wiki = @wiki.history(sha)
-            @wiki.parent = parent
-          end
+        if @sha and not @wiki.sha == @sha
+          parent = @wiki
+          @wiki = @wiki.history(@sha)
+          @wiki.parent = parent
         end
+        
         @wiki.parse_body
         @title = @wiki.html_title
-        puts "!!! CREATE CACHE: #{PP.pp(fragments, '').strip}: #{@wiki.ident}"
-        cache.store(fragments, [@wiki, @time])
+        
+        unless @sha
+          puts "!!! CREATE CACHE: #{PP.pp(@wiki.cache_key, '').strip}: #{@wiki.ident}"
+          cache.store(@wiki.cache_key, [@wiki, @time])
+        end
       end
     end
   rescue NotFound
@@ -81,8 +91,8 @@ class WikiController < OYController
     raise NotAllowed unless request.post?
     
     path = request[:path] or raise "no path given"
-    extension = request[:markup] || "textile"
-    
+    extension = request[:extension] || "textile"
+
     @preview_wiki = Preview.create{|w|
       w.data = request[:data].to_s.strip
       w.path = request[:path]

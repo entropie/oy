@@ -66,7 +66,6 @@
     };
 
     $.fn.setupGraphs = function() {
-        alert(1);
         $("table.chart").each(function(){
             var chartType   = $(this).attr("data-charttype");
             var chartHeight = $(this).attr("data-height");

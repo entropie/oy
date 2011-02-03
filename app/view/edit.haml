@@ -1,3 +1,3 @@
 #oy-topnav
   %a.awesome.magenta{:href => WikiController.r(@wiki.link)} Back To Page
-= oy_render_file "_form.haml", :identifier => @wiki.identifier, :raw_data => @wiki.raw_data, :path => @wiki.path, :action => @action
+= oy_render_file "_form.haml", :identifier => @wiki.identifier, :raw_data => @wiki.raw_data, :path => @wiki.path, :action => @action, :extension => @extension

@@ -46,6 +46,12 @@ module OY
       end
     end
 
+    # builds a regexp for all extensions with leading dot.
+    def self.extension_regexp
+      exts = OY::Markup.real_markups.map{|mu| mu.extension}
+      %r'\.#{exts.join("|")}'
+    end
+    
     def self.real_markups
       @markups ||= Markups.to_a.select{|ext| not ext.is_virtual? }
     end

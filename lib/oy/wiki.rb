@@ -16,6 +16,13 @@ module OY
 
     include WikiLock
 
+    def self.mk_cache_key_from_fragments(*fragments)
+      fragments.join("/")
+    end
+    
+    def cache_key
+      path
+    end
 
     # Removes leading slash from given +path+
     def self.normalize_path(npath)
@@ -105,7 +112,7 @@ module OY
       when :revert_do
         "/revert/#{sha}/#{escaped_ident}?do_it=1"
       when :reread
-        "/clear_cache/#{URI.escape(ident)}"
+        "/clear_cache/#{URI.escape(ident)}.#{extension}"
       else
         "/#{escaped_ident}"
       end

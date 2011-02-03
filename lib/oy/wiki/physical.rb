@@ -23,6 +23,7 @@ module OY
       ret = @data
       return ret if is_media?
       ["*", (force_extension || extension)].inject(ret){|memo, mup|
+        p Markup.choose_for(mup)
         Markup.choose_for(mup).new(memo).to_html
       }
     end
@@ -54,6 +55,10 @@ module OY
       wiki
     end
 
+    def with_markup(fextension = "textile")
+      super(extension)
+    end
+    
   end
 
   

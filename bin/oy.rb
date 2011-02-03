@@ -103,7 +103,7 @@ begin
 
   Dir.chdir(File.join(OY::Source, "app"))
 
-  Innate::View.options.read_cache = true
+  #Innate::View.options.read_cache = true
   
   Ramaze.start(:adapter => :webrick, :host => default_options[:hostname], :port => default_options[:port])
 end

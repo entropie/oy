@@ -1,4 +1,6 @@
 #oy-page
+  #oy-top
+    = oy_render_file "_wikibuttons.haml", :wiki => @wiki, :sha => @sha
   #oy-topic
     %h1= @wiki.html_title
   #oy-body
@@ -12,24 +14,4 @@
         Last edited:
         %a{:title => "Last Edited / Permalink to this Version", :href => WikiController.r(@wiki.permalink), :class => "oy-perma"}= time_to_s(@wiki.date)
       %li.author{:title => "Author of this Version"}= @wiki.author
-    %ul.right
-      - if @cached
-        %li.cached
-          %a.awesome{:title => "Reread", :href => @wiki.link(:reread)} Reread
-      - if @wiki.has_parent?
-        %li.history
-          %a.awesome{:title => "History", :href => @wiki.link(:history)} History
-        %li.back-in-time
-          %a.awesome{:href => @wiki.link(:version), :title => "Goto Previous Version"} Back In Time
-        %li.compare
-          %a.awesome{:title => "Compare with last Version", :href => @wiki.link(:compare)} Compare
-      - if request[:sha] and not @wiki.locked?
-        %li.compare
-          %a.awesome{:title => "Revert to this version", :href => @wiki.link(:revert)} Revert
-      - unless @wiki.locked?
-        - unless request[:sha]
-          %li.edit
-            %a.awesome{:title => "Edit Page", :href => @wiki.link(:edit)} Edit
-      - else
-        %li.locked
-          %span.awesome.red Readonly
+    = oy_render_file "_wikibuttons.haml", :wiki => @wiki, :sha => @sha

@@ -234,7 +234,7 @@ fieldset
     :padding 10px
     :margin-bottom 10px
   .oy-textarea
-    :font-family fixed
+    :font-family monospace
   .oy-markup
     :float right
     :margin-top 10px
@@ -375,6 +375,8 @@ fieldset
       :text-align right
 
 #oy-page
+  :margin-top 15px
+  :position relative
   .oy-preview-buttons
     :text-align right
   #oy-topic
@@ -575,7 +577,7 @@ fieldset
       :margin-left 30px
       &:before
         :content " -- "
-  #oy-sub
+  #oy-sub, #oy-top
     :clear both
     :position relative
     :margin-bottom 30px
@@ -611,7 +613,15 @@ fieldset
         &.ledit
           :color silver
           a
-            :color = !clr_blue_link            
+            :color = !clr_blue_link
+  #oy-top
+    :position absolute
+    :right 0px
+    :width 100%
+    :top -50px
+    :border none
+    ul
+      :margin-top 0px
 
 #oy-page
   .compare
