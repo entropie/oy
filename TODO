@@ -1,19 +1,10 @@
-* Errno::ENOENT at /media/upload
-  No such file or directory - ./media
-  Ruby	/usr/lib/ruby/gems/1.8/gems/oy-0.0.1/lib/oy/wiki/media.rb: in chdir, line 28
-  Web	POST kommunism.us/media/upload
-* rspec should not break rake build
 * media dir seems to not created
-* make template/layout/public optionally part of the repos
 * graphviz foo?
   https://github.com/ndl/wiki_external_filter
-* investigate into unicode files.
 * Make it possible to download wiki contents
   https://github.com/al3x/git-wiki/blob/master/git-wiki.rb#L74
 * multiple branches?
-* 202552  <jarib> str.unpack("U*").map { |e| "\\u%04x" % e }
 * make it possible to use other templates (e.g. not haml)?
-* n015915  <drbrain> entropie: /[\u0000-\uFFFF]/u would work for all
 * pagination for media files
 * 013027  <lianj> vielleicht ne liste mit gaengigen paste sites und denen ein globales icon geben
-* WikiController#index cache before testing for request[:sha]
+
