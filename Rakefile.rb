@@ -130,7 +130,7 @@ if Gem.available?("yard")
   end
 else
   task :write_doc do
-    str = "rdoc --all --inline-source --line-numbers -f html --template=hanna -o doc"
+    str = "rdoc --all --inline-source --line-numbers -f html -o doc"
     str << ' --webcvs=http://github.com/entropie/oy/tree/master/'
     sh str
   end
@@ -143,6 +143,7 @@ task :sync_rdoc_to_public_wiki do |t|
   end
 end
 
+task :sync => :sync_rdoc_to_public_wiki
 
 
 # Stolen from gollum
