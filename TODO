@@ -7,4 +7,5 @@
 * make it possible to use other templates (e.g. not haml)?
 * pagination for media files
 * 013027  <lianj> vielleicht ne liste mit gaengigen paste sites und denen ein globales icon geben
-
+* authentication:
+  * use a different branch for login data?
