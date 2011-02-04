@@ -47,7 +47,7 @@ class SpecialController < OYController
   def media(*fragments)
     unless fragments.empty?
       imgpath = File.join("media/", *fragments)
-      @img = repos.find_by_path(imgpath)
+      @img, t, cached = find_by_path(imgpath)
 
       if sha = request[:sha]
         @perma_link_value = sha
@@ -59,7 +59,8 @@ class SpecialController < OYController
         @images = Dir["media/**"]
         @images.reject!{|i| File.directory?(i) or i =~ /\.locked$/}
         @images.map!{|i|
-          repos.find_by_path(i)
+          img, t, cached = find_by_path(i)
+          img
         }
       end
     end

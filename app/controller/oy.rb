@@ -42,6 +42,24 @@ class OYController < Ramaze::Controller
     end
   end
 
+  # This is a wrapper function for Repos#find_by_path which caches
+  def find_by_path(path)
+    path = path.dup
+
+    cache_key = path
+    
+    wiki, time = cache[cache_key]
+    if wiki
+      puts "!!! USE CACHE: #{PP.pp(wiki.cache_key, '').strip}: #{wiki.ident}"
+      [wiki, time, true]
+    else
+      page = repos.find_by_path(path)
+      puts "!!! CREATE CACHE: #{PP.pp(page.cache_key, '').strip}: #{page.ident}"
+      cache.store(cache_key, [page, t = Time.now])
+      [page, t, false]
+    end
+  end
+
   # Shortcut to ramaze cache
   def cache
     Ramaze::Cache.cache_helper_value    
