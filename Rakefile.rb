@@ -16,6 +16,8 @@ require "cgi"
 require "date"
 
 
+require "rake/maintenance.rb"
+
 task :docs do
   require "lib/oy"
   OY.path = "/Users/mit/Source/oytest"
