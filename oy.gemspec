@@ -4,8 +4,8 @@ Gem::Specification.new do |s|
   s.rubygems_version = '1.3.5'
 
   s.name              = 'oy'
-  s.version           = '0.3.5'
-  s.date              = '2011-02-04'
+  s.version           = '0.3.7'
+  s.date              = '2011-02-05'
   s.rubyforge_project = 'oy'
 
   s.summary     = "Git-powered wiki."
@@ -39,7 +39,7 @@ Gem::Specification.new do |s|
     LICENSE
     README.textile
     Rakefile.rb
-    TODO
+    TODO.howm
     app/config.ru
     app/controller/api.rb
     app/controller/css.rb
@@ -116,6 +116,7 @@ Gem::Specification.new do |s|
     lib/oy/wiki/wikidir.rb
     lib/oy/wiki/wikilock.rb
     oy.gemspec
+    rake/maintenance.rb
     script/import_polis_images.rb
     script/polis_import.rb
     spec/01_spec_oy.rb
