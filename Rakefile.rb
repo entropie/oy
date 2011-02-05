@@ -15,13 +15,14 @@ end
 require "cgi"
 require "date"
 
+require "lib/oy"
 
 require "rake/maintenance.rb"
+include OY
 
 task :docs do
-  require "lib/oy"
+
   OY.path = "/Users/mit/Source/oytest"
-  include OY
   Dir.glob("docs/*").each do |docfile|
     file, ext = docfile.split(".").first
     frags = ["about", *docfile.split("/")[1..-1]]
