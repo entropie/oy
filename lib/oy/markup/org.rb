@@ -9,7 +9,7 @@ module OY
 
     if Gem.available?("org-ruby")
       require "org-ruby"
-      
+
       class Org < Markup
 
         self.extension = "org"
@@ -17,12 +17,12 @@ module OY
         def to_html
           Orgmode::Parser.new(data).to_html
         end
-        
+
       end
     else
       warn "Markup: org-ruby not available as template (`gem install org-ruby`)"
     end
-    
+
   end
 end
 

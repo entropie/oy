@@ -23,7 +23,7 @@ module OY
 
     def unlock!
       update_repos_lockfiles(:delete, lockdir_path)
-      # FIXME: 
+      # FIXME:
       Dir.chdir(repos.path){ repos.git.git.rm({:f => true}, 'HEAD', '--', lockdir_path) }
       true
     end
@@ -32,12 +32,12 @@ module OY
       path
     end
 
-    # FIXME: 
+    # FIXME:
     def [](obj)
-      page_path = path + "/#{obj.to_s}" 
+      page_path = path + "/#{obj.to_s}"
       repos.find_by_fragments(*page_path.split("/"))
     end
-    
+
     def pages(only_pages = true)
       rpath = Repos.expand_path(path)
       files = Dir.entries(rpath)
@@ -53,17 +53,17 @@ module OY
 
       ret
     end
-    
+
     def exist?
       File.directory?(Repos.expand_path(path))
     end
-    
+
     def initialize(dir)
       @path = dir
     end
 
   end
-  
+
 end
 
 

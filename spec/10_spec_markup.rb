@@ -16,13 +16,13 @@ describe OY::Markup do
     it "Should return default extension" do
       OY::Markup.extension(nil).should == "textile"
       OY::Markup.extension(".textile").should == "textile"
-      OY::Markup.extension("textile").should == "textile"            
+      OY::Markup.extension("textile").should == "textile"
     end
-    
+
     it "Should have loaded some markup definitions" do
       OY::Markup.const_get(:Global).should == OY::Markup::Global
       OY::Markup.const_get(:Redcloth).should == OY::Markup::Redcloth
-      OY::Markup.const_get(:Compare).should == OY::Markup::Compare    
+      OY::Markup.const_get(:Compare).should == OY::Markup::Compare
     end
 
     it "Should select the right class for file extension (textile)" do
@@ -44,18 +44,18 @@ describe OY::Markup do
     it "Should list real_markups" do
       OY::Markup.real_markups.size.should > 0
     end
-    
+
   end
 
   context "extensions"do
-    
+
     it "Should list extensions" do
       OY::Markup.extensions.size.should > 1
     end
 
     it "Should return true on valid extension (textile)" do
       OY::Markup.valid_extension?("textile").should == true
-      OY::Markup.valid_extension?(".textile").should == true      
+      OY::Markup.valid_extension?(".textile").should == true
     end
   end
 end
@@ -128,7 +128,7 @@ describe OY::Markup::Global do
         OY::Markup::Global.new("[[Double.org Title]]").to_html.
           should eql("<a href='/double.org' class='oy-link o'>Title</a>")
       end
-      
+
       it "should add alternatives after base link (/double)" do
         base_link = "<a href='/double.textile' class='oy-link x'>Double</a>"
         add_link  = "<span class='alts'><sup>(<a href='/double.org' class='oy-link alt'>org</a>)</sup></span>"
@@ -142,9 +142,9 @@ describe OY::Markup::Global do
         OY::Markup::Global.new("[[Doublewo]]").to_html.
           should eql(base_link + " " + add_link)
       end
-      
+
     end
-    
+
   end
 
 end

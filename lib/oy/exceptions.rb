@@ -23,9 +23,9 @@ module OY
   class FileNotLocked < Exception
   end
 
-  class AmbiguousChoice < Exception 
+  class AmbiguousChoice < Exception
   end
-  
+
 end
 
 =begin

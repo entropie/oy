@@ -36,7 +36,7 @@ describe OY::WikiDir do
       repos.find_directory("/").locked?.should == false
     end
   end
-  
+
 end
 
 

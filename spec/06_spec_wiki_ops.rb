@@ -26,7 +26,7 @@ describe OY::Wiki, "operations" do
      it "Should exist" do
       repos.find_by_fragments('test', 'spec.textile').should exist
      end
-    
+
     it "Should have a message" do
       repos.find_by_fragments('test', 'spec.textile').message.should == "Message from Spec"
     end
@@ -47,12 +47,12 @@ describe OY::Wiki, "operations" do
   end
 
   context "Edit a page" do
-    
+
     it "Should be possible to edit" do
       wiki = repos.find_by_fragments('test', 'spec.textile')
       wiki.update do |pg|
         pg.message = "New message from Spec"
-        pg.data    = "New data from Spec"        
+        pg.data    = "New data from Spec"
       end
     end
 

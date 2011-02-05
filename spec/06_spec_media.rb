@@ -42,7 +42,7 @@ describe OY::Media do
     page = repos.find_by_path("media/banner.gif")
     page.permalink(true).should == "/oy/special/media/banner.gif?sha=#{page.sha}"
   end
-  
+
 end
 
 

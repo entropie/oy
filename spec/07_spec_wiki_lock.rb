@@ -17,7 +17,7 @@ describe OY::Wiki, "lock" do
     it "should respond_to #lockdir_path" do
       r("index").lockdir_path.should == "./.locked"
     end
-    
+
     it "should exist" do
       r("index").should exist
     end
@@ -61,7 +61,7 @@ describe OY::Wiki, "lock" do
         end
       }.to_not raise_error(OY::FileLocked)
     end
-    
+
   end
 
   context "lock a directory" do

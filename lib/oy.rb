@@ -20,7 +20,7 @@ module OY
   Actor   = Grit::Actor.new("Anonymous", "anonym@o.us") unless const_defined?(:Actor)
 
   Version = [0, 3, 5] unless const_defined?(:Version)
-  
+
   $: << File.join(Source, "lib/oy") unless $:.include?(File.join(Source, "lib/oy"))
   $: << File.join(Source, "app")    unless $:.include?(File.join(Source, "app"))
 
@@ -28,34 +28,34 @@ module OY
   Dir["#{Source}/lib/core/**/*.rb"].each do |core_ext|
     require core_ext
   end
-  
+
   def self.local?
     @hostname ||= `hostname`
     if @hostname =~ /^xeno/ then true else false end
   end
-  
+
   def puts(*args)
     args.each do |a|
       Kernel.puts "  |> #{a}"
     end
   end
   module_function :puts
-  
+
   def api(host = nil)
     @api ||= Api.new(host)
   end
   module_function :api
-  
+
   def path=(str)
     @path = str
   end
   module_function "path="
-    
+
   def path
     @path || '.'
   end
-  module_function :path  
-  
+  module_function :path
+
   def repos(with_git = true)
     if with_git
       @repos = Repos.new(OY.path)

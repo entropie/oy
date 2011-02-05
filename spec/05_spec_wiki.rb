@@ -11,11 +11,11 @@ describe OY::Wiki do
     describe ".normalize_path" do
       it "should normalize a path" do
         Wiki.normalize_path("/foo/bar/baz").should == "foo/bar/baz"
-        Wiki.normalize_path("foo/bar/baz").should == "foo/bar/baz"      
+        Wiki.normalize_path("foo/bar/baz").should == "foo/bar/baz"
       end
     end
   end
-  
+
   it "Should exist" do
     page = repos.find_by_fragments("index")
     page.exist?.should == true
@@ -26,7 +26,7 @@ describe OY::Wiki do
     repos.find_by_fragments("foo").class.should == Wiki
     repos.find_by_fragments("test", "index").class.should == Wiki
     repos.find_by_fragments("test", "foo").class.should == Wiki
-    repos.find_by_fragments("lala").class.should == Wiki    
+    repos.find_by_fragments("lala").class.should == Wiki
   end
 
   it "Should be possible to access the history" do
@@ -112,7 +112,7 @@ describe OY::Wiki do
     page = repos.find_by_fragments("index")
     page.link.should == "/#{page.ident}.textile"
   end
-  
+
   it "Should have a #parent" do
     page = repos.find_by_fragments("index")
     page.parent.class.should == Wiki
@@ -138,7 +138,7 @@ describe OY::Wiki do
     page = repos.find_by_fragments("index")
     page.message.should == "update from spec"
   end
-  
+
   it "Should have a #history" do
     page = repos.find_by_fragments("index")
     page.history.first.class.should == Wiki
@@ -164,7 +164,7 @@ describe OY::Wiki do
     # page = repos.find_by_fragments("test", "index")
     # page.page_name.should == "index"
   end
-  
+
 end
 
 

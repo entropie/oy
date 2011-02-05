@@ -19,7 +19,7 @@ module OY
     def to_wiki(repos, commit)
       Wiki.new(blob(repos), commit, @path)
     end
-    
+
     # Gets the normalized directory path String for this blob.
     def dir
       @dir ||= self.class.normalize_dir(::File.dirname(@path))
@@ -36,7 +36,7 @@ module OY
     #
     # Returns an unbaked Grit::Blob instance.
     def blob(repo)
-      @blob ||= Grit::Blob.create(repo, 
+      @blob ||= Grit::Blob.create(repo,
         :id => @sha, :name => name, :size => @size)
     end
 
@@ -57,7 +57,7 @@ module OY
     end
 
     # Normalizes a given directory name for searching through tree paths.
-    # Ensures that a directory begins with a slash, or 
+    # Ensures that a directory begins with a slash, or
     #
     #   normalize_dir("")      # => ""
     #   normalize_dir(".")     # => ""
@@ -67,7 +67,7 @@ module OY
     #
     # dir - String directory name.
     #
-    # Returns a normalized String directory name, or nil if no directory 
+    # Returns a normalized String directory name, or nil if no directory
     # is given.
     def self.normalize_dir(dir)
       if dir

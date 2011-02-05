@@ -13,7 +13,7 @@ module OY
     def self.alternatives?(*fragments)
       not alternatives(*fragments).empty?
     end
-    
+
     def self.alternatives(*fragments)
       repos_path = Repos.expand_path(*fragments[0..-2])
       mup_exts = Markup.real_markups.map{|mu| ".#{mu.extension}"}
@@ -26,7 +26,7 @@ module OY
 
       Hash[*mup_exts.flatten]
     end
-    
+
     def self.expand_path(*npath)
       raise IllegalAccess, "illegal path" if npath.to_s.include?("..")
       File.join(OY.path, npath)
@@ -35,7 +35,7 @@ module OY
     def self.exist?(path)
       File.exist?(expand_path(path))
     end
-    
+
     def self.write(path)
       path = Repos.expand_path(path)
       FileUtils.mkdir_p(File.dirname(path))
@@ -49,7 +49,7 @@ module OY
       author, emailprt = str.split("<")
       Grit::Actor.new(author, emailprt.delete(">"))
     end
-    
+
     def initialize(path)
       @path = path
       @git = Grit::Repo.new(path)
@@ -62,7 +62,7 @@ module OY
 
       raise NotFound, "not found" unless commit
       tree = commit.tree("master")
-      
+
       path.split("/").each do |frag|
         sub = tree/frag
         case sub
@@ -85,7 +85,7 @@ module OY
         return WikiDir.new(fragments.join("/"))
       end
     end
-    
+
     def find_by_fragments(*fragments)
       frags = sanitize_fragments(*fragments)
 
@@ -112,13 +112,13 @@ module OY
       fragments[0] = "index" unless fragments[0]
 
       fragments.map!{|frag| URI.unescape(frag)}
-      
+
       unless fragments[-1].split(".").size == 2
 
         alts = Repos.alternatives(*fragments)
 
         selected_ext = nil
-        
+
         if alts.empty?
           # not found
         elsif alts.size == 1
@@ -139,7 +139,7 @@ module OY
       end
       fragments
     end
-    
+
   end
 
   class VirtualRepos < Repos
@@ -153,7 +153,7 @@ module OY
     def is_media?
       to_commit.is_media?
     end
-    
+
     def extension
       path.split(".").last
     end
@@ -161,7 +161,7 @@ module OY
     def history(sha = nil)
       to_commit.history(sha)
     end
-    
+
     def commit
       to_commit.commit
     end
@@ -185,7 +185,7 @@ module OY
     def link(*args)
       to_commit.link(*args)
     end
-    
+
     def initialize(path)
       @path = path
     end
@@ -197,11 +197,11 @@ module OY
     def data
       @page.data
     end
-    
+
     def page
       @page
     end
-    
+
     def to_commit
       @git ||= OY.repos(true).find_by_path(page.path)
     end
@@ -213,7 +213,7 @@ module OY
       end
       self
     end
-    
+
     def find_by_fragments(*fragments)
       frags = sanitize_fragments(*fragments)
       Dir.chdir(path) do

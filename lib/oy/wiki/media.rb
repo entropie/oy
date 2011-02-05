@@ -16,7 +16,7 @@ module OY
       FileUtils.mkdir_p(npath)
       Media.new(nil, nil, "media/#{path}")
     end
-    
+
     def self.copy_uploaded_file(src, to)
       Dir.chdir(Media.media_path) do
         check = Repos.expand_path(to)
@@ -24,13 +24,13 @@ module OY
         FileUtils.copy(src, to)
       end
     end
-    
+
     def self.upload_file(name, extname, tempfile, filename, type)
       filec = File.open(tempfile.path, 'rb').read
       fname = "#{name}#{extname}"
 
       copy_uploaded_file(tempfile.path, fname)
-      
+
       bmedia = OY::Media.create_bare(fname)
       media  = bmedia.create do |pg|
         pg.message = "update"
@@ -41,7 +41,7 @@ module OY
     def is_media?
       true
     end
-    
+
     def with_markup
       @blob.data
     end
@@ -49,7 +49,7 @@ module OY
     def media_identifier
       path.split("/")[1..-1].join("/")
     end
-    
+
     def media_url(with_sha = false)
       add = with_sha ? "?sha=#{sha}" : ''
       frags = path.split("/")[1..-1]
@@ -65,9 +65,9 @@ module OY
     def history(rsha = nil)
       super(rsha, self.class)
     end
-    
+
   end
-  
+
 end
 
 

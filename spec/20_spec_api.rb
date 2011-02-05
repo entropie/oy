@@ -18,7 +18,7 @@ describe Api do
     @api.url_path("foo/bar/baz").should == "/api/GET/foo/bar/baz"
     @api.url_path("foo/baz", "post").should == "/api/POST/foo/baz"
   end
-  
+
 end
 
 

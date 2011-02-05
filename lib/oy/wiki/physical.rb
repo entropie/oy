@@ -18,7 +18,7 @@ module OY
     def is_media?
       File.dirname(path) == "media"
     end
-    
+
     def with_markup(force_extension = nil)
       ret = @data
       return ret if is_media?
@@ -31,7 +31,7 @@ module OY
     def extension
       File.basename(path).split(".").last
     end
-    
+
   end
 
   class Preview < Physical
@@ -41,14 +41,14 @@ module OY
     attr_accessor :path
 
     attr_accessor :extension
-    
+
     def initialize
     end
 
     def is_media?
       false
     end
-    
+
     def self.create
       wiki = self.new
       yield wiki
@@ -58,10 +58,10 @@ module OY
     def with_markup(fextension = "textile")
       super(extension)
     end
-    
+
   end
 
-  
+
 end
 
 

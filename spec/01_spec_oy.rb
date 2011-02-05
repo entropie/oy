@@ -15,7 +15,7 @@ describe OY do
     OY.path = "/tmp/testrepos"
     OY.path.should == "/tmp/testrepos"
   end
-  
+
   it "Should habe a default Actor" do
     OY::Actor.class.should == Grit::Actor
   end
@@ -31,7 +31,7 @@ describe OY do
   it "Should require LIBs" do
     OY.const_get(:Markup).should == Markup
     OY.const_get(:Repos).should == Repos
-    OY.const_get(:GitAccess).should == GitAccess    
+    OY.const_get(:GitAccess).should == GitAccess
   end
 end
 

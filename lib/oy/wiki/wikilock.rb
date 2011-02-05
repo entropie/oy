@@ -16,7 +16,7 @@ module OY
       check = Repos.expand_path(path)
       File.join(File.dirname(path), '.locked')
     end
-    
+
     def locked?
       File.exist?(Repos.expand_path(lockfile_path)) or
         File.exist?(Repos.expand_path(lockdir_path))
@@ -46,7 +46,7 @@ module OY
       update_repos_lockfiles(:delete, lockdir_path)
       true
     end
-    
+
     def revert_to(*args)
       raise FileLocked, "file is locked" if locked?
       super(*args)
@@ -85,7 +85,7 @@ module OY
       true
     end
     private :update_repos_lockfiles
-    
+
   end
 end
 

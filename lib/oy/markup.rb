@@ -15,7 +15,7 @@ module OY
       ret
     end
 
-    
+
     class << self
       attr_accessor :default_extension
     end
@@ -31,13 +31,13 @@ module OY
         :org      =>  "org"
       }
     end
-    
+
     # returns extension string without leading .
     def self.normalize_extension(ext)
       ext = ext[1..-1] if ext[0] == ?.
       ext
     end
-    
+
     # return default extension if +ext+ is nil or checks wheter +ext+ is valid
     def self.extension(ext)
       return default_extension unless ext
@@ -51,11 +51,11 @@ module OY
       exts = OY::Markup.real_markups.map{|mu| mu.extension}
       %r'\.#{exts.join("|")}'
     end
-    
+
     def self.real_markups
       @markups ||= Markups.to_a.select{|ext| not ext.is_virtual? }
     end
-    
+
     def self.extensions
       @extensions ||= Markups.to_a.map{|mup| mup::extension }
     end
@@ -63,16 +63,16 @@ module OY
     def self.valid_extension?(ext)
       extensions.include?(normalize_extension(ext))
     end
-    
+
     # selects markup class by extension (w/o dot)
     def self.choose_for(extension)
       ret = Markups.to_a.select{|mu|
         mu::extension == extension
       }.first
     end
-    
+
     class Markups
-      
+
       @markups = []
 
       def self.[](obj)
@@ -96,10 +96,10 @@ module OY
     class Markup
 
       include OY
-      
+
       attr_reader :data
       attr_reader :wiki
-      
+
       class << self
         attr_accessor :extension
       end
@@ -107,11 +107,11 @@ module OY
       def self.is_virtual?
         false
       end
-      
+
       def self.inherited(obj)
         Markups << obj
       end
-      
+
       def initialize(data, wiki = nil)
         @wiki = wiki
         @data = data
@@ -126,9 +126,9 @@ module OY
 
     require "markup/redcloth"
     require "markup/org"
-    require "markup/markdown"    
+    require "markup/markdown"
   end
-  
+
 end
 
 

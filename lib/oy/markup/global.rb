@@ -100,12 +100,12 @@ module OY
 
       # returns the filename if +name+ exist in the repos or nil
       def media_file_exist?(name)
-        expaned_path = 
+        expaned_path =
           File.join(Media.media_path, name.gsub(/img\//, ''))
         File.exist?(expaned_path) and name
       end
       private :media_file_exist?
-      
+
       # Attempt to process the tag as an image tag.
       #
       # tag - The String tag contents (the stuff inside the double brackets).
@@ -197,7 +197,7 @@ module OY
       def defext
         @defext ||= OY::Markup.default_extension.to_sym
       end
-      
+
 
       # Makes a link for tag if there are no alternatives in the repos.
       #
@@ -216,7 +216,7 @@ module OY
         url = "/#{url}" unless url[0..0] == "/"
         title = url if title.empty?
 
-        
+
         if not alternatives.empty?
           alternatives.each_pair do |ext, file|
             if ext == defext    # find page with default extension
@@ -226,7 +226,7 @@ module OY
                   # add extension for base_url unless given
                   url !~ /\.#{ext}$/ ? "#{url}.#{ext}" : url
                 else url end
-              
+
               base_link << [base_url, file]
             else
               add_links << ["#{url}.#{ext}", file]
@@ -243,7 +243,7 @@ module OY
         if base_link.empty?
           base_link << add_links.shift
         end
-        
+
         title = title[1..-1] if title[0..0] == "/"
 
         base_link.map!{|url, _|  mk_link(url, (alternatives.empty? ? "o" : "x"), title) }
@@ -255,7 +255,7 @@ module OY
         end
         ret
       end
-      
+
       def to_html
         ret = ''
 
@@ -284,7 +284,7 @@ module OY
       #   r
       # end
     end
-    
+
   end
 end
 

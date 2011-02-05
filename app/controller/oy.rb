@@ -6,13 +6,13 @@
 
 class OYController < Ramaze::Controller
   engine :Haml
-  
-  layout(:layout) { !request.xhr? } 
+
+  layout(:layout) { !request.xhr? }
 
   helper :cache
 
   include OY
-  
+
   IgnoreList = %w'edit create history new compare oy img revert'
 
   private
@@ -47,7 +47,7 @@ class OYController < Ramaze::Controller
     path = path.dup
 
     cache_key = path
-    
+
     wiki, time = cache[cache_key]
     if wiki
       puts "!!! USE CACHE: #{PP.pp(wiki.cache_key, '').strip}: #{wiki.ident}"
@@ -62,7 +62,7 @@ class OYController < Ramaze::Controller
 
   # Shortcut to ramaze cache
   def cache
-    Ramaze::Cache.cache_helper_value    
+    Ramaze::Cache.cache_helper_value
   end
 
   # FIXME:
@@ -77,7 +77,7 @@ class OYController < Ramaze::Controller
           puts "Ramaze.options.#{apath}s << '_#{apath}'"
         end
       end
-      puts "_"*60      
+      puts "_"*60
     end
   end
 
@@ -97,12 +97,12 @@ class OYController < Ramaze::Controller
     fragments ||= []
 
     fragments.reject!{|f| f == "."}
-    
+
     if fragments.empty? or fragments.first == "oy"
       return arr ? fragments : ''
     elsif IgnoreList.include?(fragments.first)
       return "" if fragments.first == "revert"
-      return "" if fragments.first == "compare"      
+      return "" if fragments.first == "compare"
       fragments.shift
     end
     if arr then fragments else
@@ -115,7 +115,7 @@ class OYController < Ramaze::Controller
   def page_prefix
     create_prefix(true)[0..-2].map{|prfx| "#{prfx.capitalize} &gt; "}.join
   end
-  
+
   def time_to_s(t)
     t.strftime("%d-%b-%y &mdash; %H:%M")
   end

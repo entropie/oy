@@ -33,7 +33,7 @@ module OY
         puts $!
         ''
       end
-      
+
       def to_html
         @doc = ::Nokogiri::HTML::DocumentFragment.parse(data)
         parse_result
@@ -50,7 +50,7 @@ module OY
       end
 
     end
-    
+
   end
 end
 

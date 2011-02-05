@@ -17,7 +17,7 @@ module OY
       @repo.git.exist?
     end
 
-    # Public: Converts a given Git reference to a SHA, using the cache if 
+    # Public: Converts a given Git reference to a SHA, using the cache if
     # available.
     #
     # ref - a String Git reference (ex: "master")
@@ -31,7 +31,7 @@ module OY
       end
     end
 
-    # Public: Gets a recursive list of Git blobs for the whole tree at the 
+    # Public: Gets a recursive list of Git blobs for the whole tree at the
     # given commit.
     #
     # ref - A String Git reference or Git SHA to a commit.
@@ -146,7 +146,7 @@ module OY
     #
     # Returns an Array of BlobEntry instances.
     def tree!(sha)
-      tree  = @repo.git.native(:ls_tree, 
+      tree  = @repo.git.native(:ls_tree,
         {:r => true, :l => true, :z => true}, sha)
       tree.split("\0").inject([]) do |items, line|
         items << parse_tree_line(line)

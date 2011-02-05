@@ -9,7 +9,7 @@ module OY
 
     if Gem.available?("rdiscount")
       require "rdiscount"
-      
+
       class Markdown < Markup
 
         self.extension = "markdown"
@@ -17,13 +17,13 @@ module OY
         def to_html
           RDiscount.new(data).to_html
         end
-        
+
       end
     else
       warn "Markup: markdown not available as template (`gem install rdiscount`)"
     end
-    
-    
+
+
   end
 end
 

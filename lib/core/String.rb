@@ -16,7 +16,7 @@ class String
   def capitalize
     Unicode.capitalize(self)
   end
-  
+
 end
 
 

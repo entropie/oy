@@ -28,12 +28,12 @@ end
 #         puts
 #         puts "-"*60
 #         puts "\n#{`git status`}"
-#         puts "-"*60        
+#         puts "-"*60
 #         `git status`.split("\n").size.should == 2
 #       end
 #     end
 #   end
-  
+
 # end
 
 

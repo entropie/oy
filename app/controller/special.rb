@@ -9,15 +9,15 @@ class SpecialController < OYController
   include OY
 
   helper :cache
-  
+
   def index
   end
 
   def list_fonts
     @fonts = CSSController.font_list
   end
-  
-  
+
+
   # gets the full file listing for the entire repos
   #
   # FIXME:

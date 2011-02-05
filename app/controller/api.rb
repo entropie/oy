@@ -12,7 +12,7 @@ class ApiController < OYController
 
   include OY
 
-  
+
   def GET(*fragments)
     response[ 'Content-Type' ] = 'application/json'
     page = repos.find_by_fragments(*fragments)
@@ -25,12 +25,12 @@ class ApiController < OYController
     data, author, msg = request[:data], request[:author], request[:message]
 
     ext = Markup.extension(request[:markup])
-    
+
     author = repos.actor_from_string(author)
     fragments.last << ".#{ext}"
 
     initial = false
-    
+
     begin
       page = repos.find_by_fragments(*fragments)
     rescue NotFound
@@ -51,7 +51,7 @@ class ApiController < OYController
   def respond_ok(o = {})
     o.merge(:ok => true).to_json
   end
-  
+
   def respond_fail(o = {})
     o.merge(:ok => false).to_json
   end

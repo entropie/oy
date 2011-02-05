@@ -8,7 +8,7 @@ class WikiController < OYController
 
   helper :cache
 
-  # Redirection for media files 
+  # Redirection for media files
   def img(*fragments)
     redirect MediaController.r(:img, *fragments)
   end
@@ -28,11 +28,11 @@ class WikiController < OYController
   # Unless a +sha+ is given via request, every page will be cached.
   def index(*fragments)
     add_repos_paths # FIXME: do this at startup
-    
+
     key, *arguments = fragments
 
     @sha = request[:sha]
-    
+
     if public_methods.include?(key)
       call(key.to_sym, *arguments)
     else
@@ -55,7 +55,7 @@ class WikiController < OYController
     @wiki = repos.find_by_fragments(*fragments)
     @wikis = @wiki.history
   end
-  
+
   def edit(*fragments)
     @wiki = repos.find_by_fragments(*fragments)
     flash[:error] = "Page is locked."
@@ -67,7 +67,7 @@ class WikiController < OYController
 
   def preview
     raise NotAllowed unless request.post?
-    
+
     path = request[:path] or raise "no path given"
     extension = request[:extension] || "textile"
 
@@ -77,7 +77,7 @@ class WikiController < OYController
       w.extension = extension
     }
   end
-  
+
   def update
     path = request[:path] or raise "no path given"
     redirect WikiController.r(path) unless request.post?
@@ -93,7 +93,7 @@ class WikiController < OYController
 
   def new
     raise NotAllowed unless request.post?
-    
+
     path = request[:path] or raise "no path given"
     path = Wiki.normalize_path(path)
 
@@ -109,7 +109,7 @@ class WikiController < OYController
   rescue AlreadyExist
     redirect WikiController.r(request[:path])
   end
-  
+
   def create(*fragments)
     path = if fragments.empty? then request[:path] else "/#{fragments.join("/")}" end
     redirect WikiController.r if path.to_s.empty?
@@ -123,7 +123,7 @@ class WikiController < OYController
     end
 
     @extension = path[/\.(\w+)$/, 1] || OY::Markup.default_extension
-    
+
     @action = :new
     @path = Wiki.normalize_path(path.include?(".") ? path.split(".").first : path)
     @identifier = File.basename(@path)

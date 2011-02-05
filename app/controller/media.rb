@@ -8,7 +8,7 @@ class MediaController < OYController
 
   engine :None
   include OY
-  
+
   set_layout_except 'layout' => [:img]
 
   def img(*fragments)
@@ -18,7 +18,7 @@ class MediaController < OYController
       file_path = File.join(OY::Media.media_path, *fragments)
 
       raise NotFound, "not found" unless File.exist?(file_path)
-      
+
       content_type ||= Rack::Mime.mime_type(::File.extname(file_path))
       response['Content-Length'] = ::File.size(file_path).to_s
       response["Content-Type"] = "image/jpeg"
@@ -33,14 +33,14 @@ class MediaController < OYController
   rescue NotFound
     ''
   end
-  
+
   def upload
     if request.post?
       name = request[:name]
       tempfile, filename, @type = request[:file].
-        values_at(:tempfile, :filename, :type) 
+        values_at(:tempfile, :filename, :type)
 
-      @extname, @basename = File.extname(filename), File.basename(filename) 
+      @extname, @basename = File.extname(filename), File.basename(filename)
       @file_size = tempfile.size
 
       OY::Media::upload_file(name, @extname, tempfile, filename, @type)

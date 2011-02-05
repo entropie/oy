@@ -5,7 +5,7 @@
 
 module OY
 
-  # Wiki represents a single wiki page. 
+  # Wiki represents a single wiki page.
   class Wiki
 
     attr_reader :blob, :commit, :path, :repos
@@ -19,7 +19,7 @@ module OY
     def self.mk_cache_key_from_fragments(*fragments)
       fragments.join("/")
     end
-    
+
     def cache_key
       path
     end
@@ -55,7 +55,7 @@ module OY
     def initialize(blob, commit, path)
       @blob, @commit, @path = blob, commit, path
     end
-    
+
     # returns the prefix for the page which is basically the dirname of #path
     def vprefix
       r = File.dirname(path)
@@ -98,7 +98,7 @@ module OY
       case what
       when :perma
         "/#{escaped_ident}?sha=#{sha}"
-      when :edit 
+      when :edit
         # FIXME:
         "/edit/#{escaped_ident}"
       when :version
@@ -141,7 +141,7 @@ module OY
       end
       updated_wiki
     end
-    
+
     # get complete history for +path+ Returns array of Wiki instances
     def history(rsha = nil, klass = Wiki)
       access = GitAccess.new
@@ -199,7 +199,7 @@ module OY
     def normalize_commit(commit)
       commit
     end
-    
+
     def self.page_name(path)
       if segs = path.split("/")
         segs.first.downcase
@@ -215,11 +215,11 @@ module OY
     def page_filename(path = nil)
       path || self.path
     end
-    
+
     # edits a page
     def update # :yields: option_struct
       raise FileLocked, "file is locked" if locked?
-      
+
       opts = OpenStruct.new
       yield opts if block_given?
 
@@ -243,7 +243,7 @@ module OY
     def exist?
       @blob && @commit && true
     end
-    
+
     # creates an empty Wiki page
     def self.create_bare(path)
       ret = OY.repos.find_by_fragments(path)
@@ -252,7 +252,7 @@ module OY
     else
       raise AlreadyExist, "already in tree '#{path}'"
     end
-    
+
     def sha
       @commit.sha
     end
@@ -264,13 +264,13 @@ module OY
     def id
       @commit.id
     end
-    
+
     def extension
       @blob.basename.split(".").last
     rescue
       File.basename(path).split(".").last
     end
-    
+
     def data
       @with_markup ||= with_markup
     end
@@ -311,7 +311,7 @@ module OY
       end
     end
     private :update_working_dir
-    
+
     def commit_index(options = {}) # :yields: git_index
       normalize_commit(options)
       parents = [options.parent || repos.git.commit('master')]
@@ -329,7 +329,7 @@ module OY
       index.commit(options.message, parents, actor)
     end
     private :commit_index
-    
+
     # title of the page
     def title
       @blob.basename.split(".").first.capitalize
@@ -345,7 +345,7 @@ module OY
       File.size(File.join(repos.path, path))
     end
   end
-  
+
 end
 
 

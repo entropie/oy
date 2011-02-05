@@ -11,17 +11,17 @@ module OY
 
       def initialize()
       end
-      
+
       self.extension = "compare"
 
       def self.is_virtual?
         true
       end
-      
+
       def to_html(data)
         lines(data)
       end
-      
+
       def lines(data)
         lines = []
         data.split("\n")[2..-1].each_with_index do |line, line_index|
@@ -87,7 +87,7 @@ module OY
         ret
       end
 
-      
+
     end
   end
 end

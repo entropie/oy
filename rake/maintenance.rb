@@ -43,7 +43,7 @@ namespace :maintenance do
 
   desc "remove those annoying spaces at the end of lines"
   task 'fix-end-spaces' do
-    Dir['{lib,spec}/**/*.rb'].each do |file|
+    Dir['{lib,spec,app}/**/*.rb'].each do |file|
       lines = File.readlines(file)
       new = lines.dup
       lines.each_with_index do |line, i|

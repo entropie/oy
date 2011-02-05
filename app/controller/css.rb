@@ -10,11 +10,11 @@ class CSSController < Ramaze::Controller # def ctrl
 
   trait :sass_options => {
     :style => :expanded,
-  } 
+  }
 
   helper :cache
   #cache_action(:method => :oy)
-  
+
   def oy
   end
 
@@ -23,7 +23,7 @@ class CSSController < Ramaze::Controller # def ctrl
   end
 
   self.default_font  = :lato
-  
+
   def self.font_list
     {
       :lato          => "Lato:100,100italic,300,300italic,400,400italic,700,700italic,900,900italic",
@@ -44,7 +44,7 @@ class CSSController < Ramaze::Controller # def ctrl
     str =  "@import url(//fonts.googleapis.com/css?family=#{font})\n"
     str << "body\n  :font-family \"#{url_decode(font.split(":").first)}\", serif !important"
   end
-  
+
 end
 
 
