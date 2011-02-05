@@ -158,7 +158,7 @@ namespace :m do
   desc "show how many patches we made so far"
   task :patchsize do
     patches = `git rev-list HEAD | wc -l`.to_i
-    puts "currently we have #{patches} patches"
+    Kernel.puts "currently we have #{patches} patches"
     init = Time.parse("Sun Jan 2 23:59:02 2011 +0100")
     days = (Time.now - init) / (3600 * 24)
     Kernel.puts "%d days since init, avg %4.2f patches per day" % [days, patches/days]
@@ -173,28 +173,28 @@ namespace :m do
       total += patches
       [patches, name]
     end.sort.reverse_each do |patches, name|
-      puts "%s %4d [%6.2f%% ]" % [name, patches, patches/total * 100]
+      Kernel.puts "%s %4d [%6.2f%% ]" % [name, patches, patches/total * 100]
     end
   end
 
-  desc "upload packages to rubyforge"
-  task 'release' => ['distribute'] do
-    sh 'rubyforge login'
-    sh "rubyforge add_release ramaze ramaze #{VERS} pkg/ramaze-#{VERS}.gem"
+  # desc "upload packages to rubyforge"
+  # task 'release' => ['distribute'] do
+  #   sh 'rubyforge login'
+  #   sh "rubyforge add_release ramaze ramaze #{VERS} pkg/ramaze-#{VERS}.gem"
 
-    require 'open-uri'
-    require 'hpricot'
+  #   require 'open-uri'
+  #   require 'hpricot'
 
-    url = "http://rubyforge.org/frs/?group_id=3034"
-    doc = Hpricot(open(url))
-    a = (doc/:a).find{|a| a[:href] =~ /release_id/}
+  #   url = "http://rubyforge.org/frs/?group_id=3034"
+  #   doc = Hpricot(open(url))
+  #   a = (doc/:a).find{|a| a[:href] =~ /release_id/}
 
-    version = a.inner_html
-    release_id = Hash[*a[:href].split('?').last.split('=').flatten]['release_id']
+  #   version = a.inner_html
+  #   release_id = Hash[*a[:href].split('?').last.split('=').flatten]['release_id']
 
-    sh "rubyforge add_file ramaze ramaze #{release_id} pkg/ramaze-#{VERS}.tar.gz"
-    sh "rubyforge add_file ramaze ramaze #{release_id} pkg/ramaze-#{VERS}.tar.bz2"
-  end
+  #   sh "rubyforge add_file ramaze ramaze #{release_id} pkg/ramaze-#{VERS}.tar.gz"
+  #   sh "rubyforge add_file ramaze ramaze #{release_id} pkg/ramaze-#{VERS}.tar.bz2"
+  # end
 
   task 'undocumented-module' do
     require 'strscan'
