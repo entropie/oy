@@ -1,0 +1,22 @@
+h1. OY! Todo
+
+Generated at <i>Sun Feb 06 00:38:31 +0100 2011</i> from <em>TODO.howm</em>
+
+
+*(done) rspec should not break rake build
+*(default) media dir seems to not created
+*(done) make template/layout/public optionally part of the repos
+*(default) graphviz foo?
+*(default) https://github.com/ndl/wiki_external_filter
+*(done) investigate into unicode files.
+*(default) Make it possible to download wiki contents
+*(default) https://github.com/al3x/git-wiki/blob/master/git-wiki.rb#L74
+*(default) multiple branches?
+*(default) make it possible to use other templates (e.g. not haml)?
+*(default) pagination for media files
+*(default) 013027  <lianj> vielleicht ne liste mit gaengigen paste sites und denen ein globales icon geben
+*(done) WikiController#index cache before testing for request[:sha]
+*(default) authentication:
+**(default) use a different branch for login data?
+*(default) media dir seems to not created
+
