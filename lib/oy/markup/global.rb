@@ -213,9 +213,10 @@ module OY
 
         base_link, add_links = [], []
 
-        url = "/#{url}" unless url[0..0] == "/"
-        title = url if title.empty?
+        url = "/#{url}" if not url[0..0] == "/" and not url =~ /^https?:/
 
+        p url
+        title = url if title.empty?
 
         if not alternatives.empty?
           alternatives.each_pair do |ext, file|
