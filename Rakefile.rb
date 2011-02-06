@@ -20,9 +20,63 @@ require "lib/oy"
 require "rake/maintenance.rb"
 include OY
 
+OY.path = "/Users/mit/Source/oytest"
+
+task :todo_to_page do
+  def mk_class(line)
+    csscls = 
+      case line[/\{(.{1})\}/, 1]
+      when "*": :todo_done
+      when "-": :todo_canceled
+      else
+        :todo_default
+      end
+    %Q[(#{csscls})]
+  end
+
+  contents = File.readlines("TODO.howm")
+  title = "h1. %s\n\n" % contents.shift.delete("=").strip
+  str = "#{title}Generated at <i>#{Time.now}</i> from <em>TODO.howm</em>\n\n\n"
+  contents.reject!{|line| line.strip.empty? or line =~ /^<<</}
+
+
+  last = 0
+  contents.each do |line|
+    prefixs = line.scan(/^\s+/).first.size rescue 0
+    listr = "*#{mk_class(line)} %s"
+
+    line = line.gsub(/(\{.{1}\}\s+)/, '').strip
+
+    if prefixs == 2 and last == 0
+      str << "*#{listr}\n" % line
+    elsif last == 2 and prefixs == 0
+      str << "\n" % line
+    elsif last == 0 and prefixs > 0
+      str << (" "*(prefixs-2)) << line << "\n"
+    else
+      str << (listr % line) << "\n"
+    end
+    last = prefixs
+  end
+  str << "\n"
+
+
+  path = "about/todo.textile"
+  begin
+    bwiki = Wiki.create_bare(path)
+  rescue AlreadyExist
+    bwiki = repos.find_by_fragments(*path.split("/"))
+  end
+  wiki = bwiki.create do |pg|
+    pg.message = "From RakeTask"
+    pg.data    = str.strip
+    pg.actor   = OY::Actor
+  end
+end
+
+
 task :docs do
 
-  OY.path = "/Users/mit/Source/oytest"
   Dir.glob("docs/*").each do |docfile|
     file, ext = docfile.split(".").first
     frags = ["about", *docfile.split("/")[1..-1]]
@@ -129,7 +183,7 @@ if Gem.available?("yard")
   require "yard"
   YARD::Rake::YardocTask.new(:write_doc) do |t|
     t.files   = ['lib/**/*.rb', 'app/**/*.rb', 'spec/**/*.rb']
-    t.options = ['--title', 'Oy! Documentation', '-o', 'doc/']
+    t.options = ['--title', 'Oy! Documentation', '-o', 'doc/', '--protected', '--private']
   end
 else
   task :write_doc do
