@@ -6,10 +6,10 @@
 { } media dir seems to not created
 {*} make template/layout/public optionally part of the repos
 { } graphviz foo?
-    [[https://github.com/ndl/wiki_external_filter]]
+    [[https://github.com/ndl/wiki_external_filter external filter]]
 {*} investigate into unicode files.
 { } Make it possible to download wiki contents
-    [[https://github.com/al3x/git-wiki/blob/master/git-wiki.rb#L74]]
+    [[https://github.com/al3x/git-wiki/blob/master/git-wiki.rb#L74 git-wiki code]]
 { } multiple branches?
 { } make it possible to use other templates (e.g. not haml)?
 { } pagination for media files
