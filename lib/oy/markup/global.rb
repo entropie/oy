@@ -213,9 +213,14 @@ module OY
 
         base_link, add_links = [], []
 
-        url = "/#{url}" if not url[0..0] == "/" and not url =~ /^https?:/
+        extern_url = url =~ /^https?:/
 
+        url = "/#{url}" if not url[0..0] == "/" and not extern_url
         title = url if title.empty?
+
+        if extern_url
+          return %Q{<a href="#{url}">#{title}</a>}
+        end
 
         if not alternatives.empty?
           alternatives.each_pair do |ext, file|
