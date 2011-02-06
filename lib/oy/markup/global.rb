@@ -215,7 +215,6 @@ module OY
 
         url = "/#{url}" if not url[0..0] == "/" and not url =~ /^https?:/
 
-        p url
         title = url if title.empty?
 
         if not alternatives.empty?
