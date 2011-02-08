@@ -24,7 +24,7 @@ OY.path = "/Users/mit/Source/oytest"
 
 task :todo_to_page do
   def mk_class(line)
-    csscls = 
+    csscls =
       case line[/\{(.{1})\}/, 1]
       when "*": :todo_done
       when "-": :todo_canceled
@@ -58,7 +58,7 @@ task :todo_to_page do
     end
     last = prefixs
   end
-  str << "\n"
+  str << "n\n"
 
 
   path = "about/todo.textile"
