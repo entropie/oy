@@ -26,8 +26,8 @@ task :todo_to_page do
   def mk_class(line)
     csscls =
       case line[/\{(.{1})\}/, 1]
-      when "*": :todo_done
-      when "-": :todo_canceled
+      when "*" then :todo_done
+      when "-" then :todo_canceled
       else
         :todo_default
       end
