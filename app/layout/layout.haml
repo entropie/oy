@@ -26,7 +26,8 @@
       hljs.tabReplace = '    ';
       hljs.initHighlightingOnLoad();
     - unless OY.local?
-      gvChartInit();
+      :javascript
+        gvChartInit();
       = oy_render_file "_google_analytics.haml"
   %body
     #oy-banner
