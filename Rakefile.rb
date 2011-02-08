@@ -58,7 +58,7 @@ task :todo_to_page do
     end
     last = prefixs
   end
-  str << "n\n"
+  str << "\n\n"
 
 
   path = "about/todo.textile"
