@@ -8,6 +8,8 @@
       .spinner
         %img{:src => "/img/hspinner.gif"}
       #oy-preview-box
+        :preserve
+          "foo"
       #oy-editform-more
         - if @action == :new
           .oy-markup

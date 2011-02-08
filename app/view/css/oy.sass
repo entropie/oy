@@ -407,6 +407,12 @@ fieldset
       .oy-msg
         :color #364045
   #oy-body
+    pre
+      code
+        :padding-bottom 20px
+        :padding-left 20px
+        :padding-right 20px
+        :border 2px solid silver
     em
       :color = grey
       :font-weight bold
@@ -647,8 +653,6 @@ fieldset
         :opacity 0.1
         &:hover
           :opacity 0.7
-
-#oy-page
   .compare
     .line-nr
       :background-color #f7f7f7
@@ -670,8 +674,8 @@ fieldset
       :margin-top 5px
       &:nth-child(even)
         :background-color = !clr_light_bg + 20
-    pre
-      :padding 0 0 0 1em
+      
+      
 
 a.oy-link
   &:hover
