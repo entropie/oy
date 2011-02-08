@@ -72,16 +72,20 @@
             var chartWidth  = $(this).attr("data-width");
             var chartVTitle = $(this).attr("data-v-title");
             var chartHTitle = $(this).attr("data-h-title");
+            try{ 
+                // dont load graphs w/o gvChart lib
+                // needed because i dont want a request if the wiki runs local
+                $(this).gvChart({
+                    chartType: chartType,
+                    gvSettings: {
+                        vAxis: {title: chartVTitle},
+                        hAxis: {title: chartHTitle},
+                        width: chartWidth,
+                        height: chartHeight
+                    }
+                });
+            } catch(err) {}
 
-            $(this).gvChart({
-                chartType: chartType,
-                gvSettings: {
-                    vAxis: {title: chartVTitle},
-                    hAxis: {title: chartHTitle},
-                    width: chartWidth,
-                    height: chartHeight
-                }
-            });
         });
     };
 
@@ -93,6 +97,8 @@ $(document).ready(function () {
     $("#oy-fontsel").setupFontsel();
 
     if($("table.chart").length) $("#oy-body").setupGraphs();
+
+
     if($("#oy-toc").length) $("#oy-toc").setupToc();
 
     if($(".oy-preview #preview").length){
