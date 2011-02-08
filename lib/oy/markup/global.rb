@@ -73,13 +73,30 @@ module OY
       #
       # From Gollum: lib/gollum/markup.rb
       def process_tag(tag)
-        if html = process_image_tag(tag)
+        if html = process_gist_tag(tag)
+          html
+        elsif html = process_image_tag(tag)
           html
           # elsif html = process_file_link_tag(tag)
           #   html
         else
           process_page_link_tag(tag)
         end
+      end
+
+      GIST_URL = 'https://gist.github.com/%s.js'
+      class << self
+        attr_accessor :gist_url
+        def gist_url
+          @gist_url || GIST_URL
+        end
+      end
+
+      def process_gist_tag(tag)
+        return false unless tag =~ /^gist\s+([0-9]+)/u
+        gistid = $1.to_i
+        gistjs = %Q(<script src="%s"></script>) % [ self.class.gist_url % gistid]
+        gistjs
       end
 
       # Parse any options present on the image tag and extract them into a
