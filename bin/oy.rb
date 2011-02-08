@@ -30,7 +30,7 @@ opts = OptionParser.new do |opts|
     default_options[:port] = port.to_i
   end
 
-  opts.on("-h", "--hostname [HOST]", "Application hostname (default localhost)") do |hn|
+  opts.on("-?", "--hostname [HOST]", "Application hostname (default localhost)") do |hn|
     default_options[:hostname] = hn
   end
 
