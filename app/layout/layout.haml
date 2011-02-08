@@ -12,8 +12,10 @@
     %link{:rel => "stylesheet", :type => "text/css", :href => "/css/awesome.css" }=''    
     %link{:rel => "stylesheet", :type => "text/css", :href => "/css/squaregrid.css" }=''
     %link{:rel => "stylesheet", :type => "text/css", :href => "/css/oy.css" }=''
+    %link{:rel => "stylesheet", :type => "text/css", :href => "/css/github-hl.css" }=''    
     %script{:type => "text/javascript", :src => "/js/jquery.js"}=""
     %script{:type => "text/javascript", :src => "/js/jquery-ui.js"}=""
+    %script{:type => "text/javascript", :src => "/js/highlight.pack.js"}=""
     = unless OY.local?
       %link{:id => :dynfont, :rel => "stylesheet", :type => "text/css", :href => "/css/font.css" }=''
       %script{:type => "text/javascript", :src => "//www.google.com/jsapi"}=""
@@ -21,8 +23,10 @@
       %script{:type => "text/javascript", :src => "/js/jquery.gvChart-1.0.1.min.js"}=""      
     %script{:type => "text/javascript", :src => "/js/oy.js"}=""
     :javascript
-      gvChartInit();
+      hljs.tabReplace = '    ';
+      hljs.initHighlightingOnLoad();
     - unless OY.local?
+      gvChartInit();
       = oy_render_file "_google_analytics.haml"
   %body
     #oy-banner
