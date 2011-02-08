@@ -8,7 +8,7 @@ Oy! is a *Wiki* based on *git*. Purely written in *Ruby* with few dependencies. 
 
 This is inspired by *gollum*, the *github* wiki. *Ramaze* is the framework.
 
-The entire content is stored plaintext in the git repos, there are multiple ways to add/edit content. The Webfrontend, <code>$EDITOR</code> or the Oy! Ruby-API.
+The entire content is stored plaintext in the git repos, there are multiple ways to add/edit content. The Webfrontend, <code class="bash">$EDITOR</code> or the Oy! Ruby-API.
 
 Pathnames for wikipages are as well available in the git repos. So the page you get while requesting <code>/test/index</code> is equivalent with <code>/path/to/your/repos/test/index.textile</code>. Media files, for now only images, are stored in <code>media/</code> with full history.
 
