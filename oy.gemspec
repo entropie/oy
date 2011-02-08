@@ -4,8 +4,8 @@ Gem::Specification.new do |s|
   s.rubygems_version = '1.3.5'
 
   s.name              = 'oy'
-  s.version           = '0.3.7'
-  s.date              = '2011-02-05'
+  s.version           = '0.3.9'
+  s.date              = '2011-02-08'
   s.rubyforge_project = 'oy'
 
   s.summary     = "Git-powered wiki."
@@ -52,6 +52,7 @@ Gem::Specification.new do |s|
     app/public/css/awesome.css
     app/public/css/b-base.css
     app/public/css/b-reset.css
+    app/public/css/github-hl.css
     app/public/css/squaregrid.css
     app/public/favicon.ico
     app/public/img/alert-overlay.png
@@ -64,6 +65,7 @@ Gem::Specification.new do |s|
     app/public/img/rarr.jpeg
     app/public/img/twitlink.jpeg
     app/public/img/wplink.jpeg
+    app/public/js/highlight.pack.js
     app/public/js/jquery-ui.js
     app/public/js/jquery.gvChart-1.0.1.min.js
     app/public/js/jquery.js
