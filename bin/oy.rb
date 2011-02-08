@@ -14,7 +14,7 @@ $:.unshift File.join(File.dirname(__FILE__), "../app")
 
 require "oy"
 
-help = "Oy!: The Simple Git-based Wiki\n\n"
+help = "Oy!: I want to snu-snu Git -- Oy is a Wiki build on top of Git and grit.\n\n"
 
 default_options = {
   :port => 8200,
@@ -29,21 +29,21 @@ opts = OptionParser.new do |opts|
   opts.on("-p", "--port [PORT]", "Application port (default 8200)") do |port|
     default_options[:port] = port.to_i
   end
-  
+
   opts.on("-h", "--hostname [HOST]", "Application hostname (default localhost)") do |hn|
     default_options[:hostname] = hn
   end
-  
+
   opts.on("-r", "--repos [REPOS]", "Start oy with with [REPOS] (default is `pwd`)") do |repos|
     repos_path = File.expand_path(repos)
     raise OY::NotFound unless File.exist?(repos_path)
     default_options[:repos] = repos_path
   end
-  
+
   opts.on("-P", "--push [TO]", "Push Piped Data to [URL]") do |to|
     raise InvalidInput, "No Destination URL given" unless to
     inputData = STDIN.read
-    raise InvalidInput, "No Data Given (use a pipe)" if inputData.to_s.strip.empty?    
+    raise InvalidInput, "No Data Given (use a pipe)" if inputData.to_s.strip.empty?
 
     uri = URI.parse(to)
     host = uri.host
@@ -58,7 +58,12 @@ opts = OptionParser.new do |opts|
     p r
     exit 0
   end
-  
+
+  opts.on("-h", "--help") do
+    puts opts.banner
+    exit
+  end
+
 end
 
 
@@ -79,7 +84,14 @@ end
 
 # FIXME: this stuff needs to live in oy/oy.rb
 begin
+
+
+  # if default_options[:repos] == OY::Source
+  #   p Dir.pwd
+  # end
+
   OY.path = default_options[:repos]
+
 
   require "start"
 
@@ -87,12 +99,12 @@ begin
   $VERBOSE = nil # turn off sass deprecation warnings
 
   setup_logger!
-  
+
 
   #   [:layout, :public, :view].each do |opt|
   #     if OY::Repos.exist?("_#{opt}")
   #       puts "Ramaze.options[:#{opt}s] << _#{opt}"
-  #       ropts.get("#{opt}s".to_sym)[:value].unshift "_#{opt}" 
+  #       ropts.get("#{opt}s".to_sym)[:value].unshift "_#{opt}"
   #     end
   #   end
 
@@ -104,7 +116,7 @@ begin
   Dir.chdir(File.join(OY::Source, "app"))
 
   #Innate::View.options.read_cache = true
-  
+
   Ramaze.start(:adapter => :webrick, :host => default_options[:hostname], :port => default_options[:port])
 end
 
