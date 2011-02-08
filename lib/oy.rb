@@ -10,7 +10,6 @@ require "nokogiri"
 require "json"
 require "RedCloth"
 require "unicode"
-require "open-uri"
 
 require "pp"
 
