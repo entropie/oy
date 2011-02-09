@@ -410,6 +410,10 @@ fieldset
   #oy-body
     pre
       code
+        :height 600px
+        :max-height 100px
+        :overflow hidden
+        :display block
         :background-color = !clr_code_bg
         :padding-bottom 20px
         :padding-left 20px
@@ -420,7 +424,16 @@ fieldset
         :border-radius 10px
         :-moz-box-shadow inset 1px 1px 3px #999
         :-webkit-box-shadow inset 1px 1px 3px #999
+    .oy-gist .gist-highlight
+      :overflow hidden
+      :max-height 500px
     .gist
+      :border-radius 10px
+      :-moz-box-shadow inset 1px 1px 3px #999
+      :-webkit-box-shadow inset 1px 1px 3px #999
+      :padding-top 20px
+      :padding-right 5px      
+      :background-color #f8f8ff
       .gist-meta
         :margin-top 10px !important
         :margin 10px
@@ -437,9 +450,6 @@ fieldset
         :padding-bottom 20px
         :padding 10px !important
         :border 1px solid silver
-        :border-radius 10px
-        :-moz-box-shadow inset 1px 1px 3px #999
-        :-webkit-box-shadow inset 1px 1px 3px #999
     em
       :color = grey
       :font-weight bold

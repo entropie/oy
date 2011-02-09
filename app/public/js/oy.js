@@ -65,6 +65,12 @@
         });
     };
 
+    $.fn.setupGistScrollbar = function() {
+      var target = $(".gist-highlight", this);
+      target.addClass("simple");
+      target.scrollbar();
+    };
+
     $.fn.setupGraphs = function() {
         $("table.chart").each(function(){
             var chartType   = $(this).attr("data-charttype");
@@ -72,7 +78,7 @@
             var chartWidth  = $(this).attr("data-width");
             var chartVTitle = $(this).attr("data-v-title");
             var chartHTitle = $(this).attr("data-h-title");
-            try{ 
+            try{
                 // dont load graphs w/o gvChart lib
                 // needed because i dont want a request if the wiki runs local
                 $(this).gvChart({
@@ -105,6 +111,9 @@ $(document).ready(function () {
         $("#preview").setupPreviewLink();
     }
 
+    if($(".oy-gist").length){
+        $(".oy-gist").setupGistScrollbar();
+    }
 
 });
 
