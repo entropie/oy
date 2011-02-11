@@ -281,33 +281,12 @@ module OY
 
       def to_html
         ret = ''
-
         extract_tags!
         ret = process_tags(data)
-
-        # if wiki and wiki.extension == "textile"
-        #   puts "ParseTime for #{self.class}: #{wiki.identifier}: #{parse_time}sec (new engine)"
-        #   ret << %Q(\n\n<div id="oy-page-parse-time">ParseTime for #{self.class.to_s.split("::").last}: <em>#{"%.6f" % parse_time}</em>sec</div>)
-        # end
         ret
       end
 
-      # def parse_result(result)
-      #   r = result.gsub(/\[{2}([\/0-9A-Za-z0-9#{I18N_HIGHER_CASE_LETTERS}#{I18N_LOWER_CASE_LETTERS}]+)([A-Za-z0-9#{I18N_LOWER_CASE_LETTERS}#{I18N_HIGHER_CASE_LETTERS}\s]+)?\]{2}/u){|match|
-      #     url = $1.downcase
-      #     cls = begin
-      #             r=repos.find_by_fragments(url)
-      #             raise NotFound if r.kind_of?(WikiDir)
-      #             "x"
-      #           rescue NotFound
-      #             "o"
-      #           end
-      #     "<a href='/#{url}' class='oy-link #{cls}'>#{($2 || $1).strip}</a>"
-      #   }
-      #   r
-      # end
     end
-
   end
 end
 
