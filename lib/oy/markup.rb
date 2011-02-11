@@ -79,7 +79,7 @@ module OY
         if obj.kind_of?(Symbol)
           @markups.select{|m| m.to_s.split("::").last.downcase.to_sym == obj}.first
         else
-          @markups[obj]
+          @markups.select{|m| m == obj}.first
         end
 
       end
