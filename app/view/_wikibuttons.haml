@@ -2,7 +2,7 @@
   - if @sha
     %li.backlink
       %a.awesome{:title => "To most recent Version", :href => @wiki.link(:link)} Recent
-  - if @cached
+  - if @cached or OY.local?
     %li.cached
       %a.awesome{:title => "Reread from repos", :href => @wiki.link(:reread)} Reread
   - if @wiki.has_parent?
