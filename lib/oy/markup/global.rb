@@ -93,8 +93,12 @@ module OY
       end
 
       def process_gist_tag(tag)
-        return false unless tag =~ /^gist\s+([0-9]+)/u
-        gistid = $1.to_i
+        gistid = nil
+        if tag =~ /^gist\s+([0-9]+)/ || tag =~ /https:\/\/gist\.github\.com\/([0-9]+)/
+          gistid = $1.to_i
+        else
+          return false
+        end
         cssid = "oy-gist#{gistid}"
         gistjs = %Q(<div class="oy-gist" id="#{cssid}"><script onload="$('#{cssid}').setupGistScrollbar()" src="%s"></script></div>) % [ self.class.gist_url % gistid ]
         gistjs
