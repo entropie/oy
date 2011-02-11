@@ -18,6 +18,7 @@ module OY
         i = 0
         @doc.children.each do |child|
           if child.name =~ /^h[123456]$/
+            i+=1
             child["id"] = "topic#{i+=1}"
             li = ::Nokogiri::XML::Node.new("li", toc)
             a  = ::Nokogiri::XML::Node.new("a", toc)
@@ -28,7 +29,7 @@ module OY
             toc.at_css("ul").add_child(li)
           end
         end
-        @doc.children.before toc
+        @doc.children.before toc if i > 0
       rescue
         puts $!
         ''
