@@ -19,3 +19,4 @@
 {*} WikiController#index cache before testing for request[:sha]
 { } Make Oy working with ruby 1.9!
 { } compare visual maybe via JS and the raw diff?
+{ } noscript for gist

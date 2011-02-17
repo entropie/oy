@@ -9,6 +9,24 @@ module OY
 
     include WikiLock
 
+    def self.indexpage_re
+      /index#{OY::Markup.extension_regexp}/
+    end
+
+    def has_index?
+      not pages.select{|page| page.path =~ WikiDir.indexpage_re}.empty?
+    end
+
+    def index_page
+      if has_index?
+        pages.select{|page| page.path =~ WikiDir.indexpage_re}.first
+      else
+        ws = OY::WikiSpecial.new(:index, path)
+        ws.dir = self
+        ws
+      end
+    end
+
     def lockdir_path
       check = Repos.expand_path(path)
       File.join(path, ".locked")
@@ -39,19 +57,22 @@ module OY
     end
 
     def pages(only_pages = true)
-      rpath = Repos.expand_path(path)
-      files = Dir.entries(rpath)
-      ret = files.map{|f|
+      unless @pages
+        rpath = Repos.expand_path(path)
+        files = Dir.entries(rpath)
+      end
+      @pages ||= files.map{|f|
         next if f =~ /^\.+/
         frags = f.split("/")
         begin
-          repos.find_by_fragments(*frags)
+          nfrags = File.join(path, *frags).split("/")
+          repos.find_by_fragments(*nfrags)
         rescue NotFound
-          repos.find_directory(*frags) unless only_pages
+          repos.find_directory(*File.join(path, *frags)) unless only_pages
         end
       }.compact
 
-      ret
+      @pages
     end
 
     def exist?

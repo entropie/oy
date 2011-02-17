@@ -13,9 +13,6 @@ rescue LoadError
   require "oy"
 end
 
-
-require "model/git"
-
 controller = %w"oy special media css wiki api".map{ |lib|
   File.join("controller", lib)
 }

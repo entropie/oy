@@ -17,7 +17,9 @@ module OY
     include WikiLock
 
     def self.mk_cache_key_from_fragments(*fragments)
-      fragments.join("/")
+      r = fragments.join("/")
+      r = "/" if r.empty?
+      r
     end
 
     def cache_key

@@ -65,7 +65,12 @@ module OY
   end
   module_function :repos
 
-  require "model/git"
+  require "wiki/wikilock"
+  require "wiki"
+  require "wiki/wikidir"
+  require "wiki/media"
+  require "wiki/physical"
+  require "wiki/special"
 
   require "blob_entry.rb"
   require "git_access.rb"

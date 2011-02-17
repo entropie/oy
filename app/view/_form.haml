@@ -8,8 +8,6 @@
       .spinner
         %img{:src => "/img/hspinner.gif"}
       #oy-preview-box
-        :preserve
-          "foo"
       #oy-editform-more
         - if @action == :new
           .oy-markup
@@ -26,7 +24,7 @@
           %input.awesome{:type => :submit, :name => :preview, :id => :preview, :value => "Preview"}
     .oy-edit-sub.container
       %p.desc Commit Message (optional)
-      .oy-messagebox.sg-30
+      .oy-messagebox.sg-29
         %input{:type => :text, :value => "", :name => :message}
       .oy-submit.sg-3
         %input.awesome.red.large{:type => :submit, :name => :submit, :value => "#{action.to_s.capitalize}"}

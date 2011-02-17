@@ -77,8 +77,6 @@ module OY
           html
         elsif html = process_image_tag(tag)
           html
-          # elsif html = process_file_link_tag(tag)
-          #   html
         else
           process_page_link_tag(tag)
         end

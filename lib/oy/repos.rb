@@ -55,7 +55,17 @@ module OY
       @git = Grit::Repo.new(path)
     end
 
-    def find_by_path(path)
+    def directory?(path)
+      File.directory?(Repos.expand_path(path))
+    end
+
+    def directory(path)
+      arg = path.split("/").reject{|a| a.empty?}
+      arg = ["/"] if arg.empty?
+      find_directory(*arg)
+    end
+
+    def find_by_path(path, kls = Media)
       file = nil
 
       commit = git.log("master", path).first
@@ -76,7 +86,7 @@ module OY
       end
 
       # FIXME:
-      klass = if path =~ /\.textile$/ then Wiki else Media end
+      klass = if path =~ /\.textile$/ then Wiki else kls end
       klass.new(file, commit, path)
     end
 
@@ -109,6 +119,7 @@ module OY
     end
 
     def sanitize_fragments(*fragments)
+      fragments.reject!{|a| a.empty?}
       fragments[0] = "index" unless fragments[0]
 
       fragments.map!{|frag| URI.unescape(frag)}
