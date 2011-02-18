@@ -392,6 +392,15 @@ fieldset
   :position relative
   .oy-preview-buttons
     :text-align right
+  .oy-redirections
+    :font-size 0.8em
+    :margin-top -20px
+    :color = !clr_silver
+    :text-align right
+    a
+      :color = !clr_silver
+    &:before
+      :content "Redirected: "
   .oy-ref
     :color = !clr_silver
     :font-size 0.7em
@@ -485,7 +494,7 @@ fieldset
     :position relative
     #oy-toc
       :position absolute
-      :top -60px
+      :top -40px
       :right -10px
       h2
         :color = !clr_silver
