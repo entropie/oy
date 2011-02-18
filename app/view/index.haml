@@ -4,11 +4,14 @@
   #oy-topic
     %h1= @wiki.html_title
   #oy-body
+    - unless @wiki.redirected_from.empty?
+      .oy-redirections= @wiki.redirections
     :preserve
       #{@wiki.data}
-    #oy-about
-      //- msg = @wiki.commit.message
-      //.oy-msg= "<em>Commit Description</em>: #{msg.empty? ? '&lt;empty&gt;' : msg}"
+    - if @wiki.commit.message
+      #oy-about
+        - msg = @wiki.commit.message
+        .oy-msg= "<em>Commit Description</em>: #{(!msg or msg.empty?) ? '&lt;empty&gt;' : msg}"
   #oy-sub
     %ul.left
       %li.ledit
