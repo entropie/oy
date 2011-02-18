@@ -1,0 +1,13 @@
+#oy-page
+  #oy-topic Table Of Contents
+  #oy-index-pages
+    %ul
+      - @pages.each do |page|
+        %li
+          %span.title= page.link
+          %span.count= "(#{page.pages.size})"
+          - subpages = @subpages[page.path]
+          - if subpages.size > 0
+            %ul.sub
+              - subpages.each do |sp|
+                %li= sp.html_link
