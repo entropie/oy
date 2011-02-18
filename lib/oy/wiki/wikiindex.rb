@@ -3,26 +3,52 @@
 # Author:  Michael 'entropie' Trommer <mictro@gmail.com>
 #
 
+require "find"
+
 module OY
   module WikiIndex
+
+    ExcludeList = [".git", "_public", "_view", "media"]
+
+    # returns ANY directories in the repos except internal ones
+    # Array consists of WikiDir instances.
+    def self.directories(force = false)
+      if not @index_pages or force
+        path = "/Users/mit/Source/oytest/"
+        OY.path = path
+        dirs = ["/"]
+        Find.find(path) do |file|
+          nfile = file.gsub(/#{path}/, '')
+          next if nfile.empty?
+          Find.prune if ExcludeList.include?(nfile.split("/").first)
+          dirs << nfile if File.directory?(file)
+        end
+        @index_pages = dirs.map{|dir|
+          ndir = dir.split("/")
+          ndir = ["/"] if ndir.empty?
+          OY.repos.find_directory(*ndir)
+        }
+      end
+      @index_pages
+    end
 
     def pages(only_pages = true)
       unless @pages
         rpath = Repos.expand_path(path)
         rpath = File.dirname(rpath) unless File.directory?(rpath)
         files = Dir.entries(rpath)
-      end
-      @pages ||= files.map{|f|
-        next if f =~ /^\.+/
-        frags = f.split("/")
-        begin
-          nfrags = File.join(path, *frags).split("/")
-          repos.find_by_fragments(*nfrags)
-        rescue NotFound
-          repos.find_directory(*File.join(path, *frags)) unless only_pages
-        end
-      }.compact
 
+        @pages = files.map{|f|
+          next if f =~ /^\.+/
+          frags = f.split("/")
+          begin
+            nfrags = File.join(path, *frags).split("/")
+            repos.find_by_fragments(*nfrags)
+          rescue NotFound
+            repos.find_directory(*File.join(path, *frags)) unless only_pages
+          end
+        }.compact
+      end
       @pages
     end
 

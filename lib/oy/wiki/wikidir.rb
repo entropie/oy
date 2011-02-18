@@ -27,7 +27,9 @@ module OY
     end
 
     def identifier
-      path
+      ret = path
+      ret = "/" if ret.empty?
+      ret
     end
 
     # FIXME:
@@ -46,6 +48,11 @@ module OY
 
     def cache_key
       @path
+    end
+
+    def link
+      @path = "" if identifier == "/"
+      %Q'<a href="/#{@path}" class="oy-link #{has_index? ? 'x' : 'o'}">#{identifier.capitalize}</a>'
     end
 
   end

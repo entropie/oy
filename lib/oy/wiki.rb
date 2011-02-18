@@ -133,6 +133,10 @@ module OY
       end
     end
 
+    def html_link
+      %Q'<a href="#{link}" class="oy-link x">#{title}</a>'
+    end
+    
     # get the diff for +v1+ +v2+
     def diff(v1, v2)
       repos.git.diff(v1, v2, path)

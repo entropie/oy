@@ -11,6 +11,9 @@ class SpecialController < OYController
   helper :cache
 
   def index
+    @pages = WikiIndex.directories
+    @subpages = {}
+    @pages.each{|dir| @subpages[dir.path] = dir.pages.sort_by{|p| p.title}}
   end
 
   def list_fonts

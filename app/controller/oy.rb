@@ -19,8 +19,8 @@ class OYController < Ramaze::Controller
 
   def store_page(key, page, t)
     info_str = "!!! STORE CACHE: %s: #{page.ident}"
-    unless key =~ WikiIndex.indexpage_re
-      other_ident = "#{page.ident}.#{page.extension}"
+    other_ident = "#{page.ident}.#{page.extension}"
+    if other_ident != key and key !~ WikiIndex.indexpage_re
       cache.store(other_ident, [page, t])
       puts info_str % other_ident
     end
