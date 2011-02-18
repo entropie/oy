@@ -14,7 +14,7 @@ module OY
     # Array consists of WikiDir instances.
     def self.directories(force = false)
       if not @index_pages or force
-        path = OY.path
+        path = Repos.expand_path
         dirs = ["/"]
         Find.find(path) do |file|
           nfile = file.gsub(/#{path}/, '')
