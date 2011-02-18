@@ -44,6 +44,10 @@ module OY
       @path = dir
     end
 
+    def cache_key
+      @path
+    end
+
   end
 
 end
