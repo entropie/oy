@@ -7,26 +7,6 @@ module OY
 
   class WikiDir < Wiki
 
-    include WikiLock
-
-    def self.indexpage_re
-      /index#{OY::Markup.extension_regexp}/
-    end
-
-    def has_index?
-      not pages.select{|page| page.path =~ WikiDir.indexpage_re}.empty?
-    end
-
-    def index_page
-      if has_index?
-        pages.select{|page| page.path =~ WikiDir.indexpage_re}.first
-      else
-        ws = OY::WikiSpecial.new(:index, path)
-        ws.dir = self
-        ws
-      end
-    end
-
     def lockdir_path
       check = Repos.expand_path(path)
       File.join(path, ".locked")
@@ -54,25 +34,6 @@ module OY
     def [](obj)
       page_path = path + "/#{obj.to_s}"
       repos.find_by_fragments(*page_path.split("/"))
-    end
-
-    def pages(only_pages = true)
-      unless @pages
-        rpath = Repos.expand_path(path)
-        files = Dir.entries(rpath)
-      end
-      @pages ||= files.map{|f|
-        next if f =~ /^\.+/
-        frags = f.split("/")
-        begin
-          nfrags = File.join(path, *frags).split("/")
-          repos.find_by_fragments(*nfrags)
-        rescue NotFound
-          repos.find_directory(*File.join(path, *frags)) unless only_pages
-        end
-      }.compact
-
-      @pages
     end
 
     def exist?

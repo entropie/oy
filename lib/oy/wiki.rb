@@ -14,12 +14,25 @@ module OY
 
     attr_accessor :parent, :html_title
 
+    attr_reader   :redirected_from
+
     include WikiLock
+    include WikiIndex
 
     def self.mk_cache_key_from_fragments(*fragments)
       r = fragments.join("/")
       r = "/" if r.empty?
       r
+    end
+
+    def redirected_from
+      (@redirected_from ||= [])
+    end
+
+    def redirections
+      redirected_from.inject(""){|memo, redi|
+        memo << "<a href='%s'>%s</a>" % [ Wiki.normalize_path(redi.path), redi.path]
+      } << " &rarr; <a href='%s'>%s</a>" % [ Wiki.normalize_path(path), path]
     end
 
     def cache_key

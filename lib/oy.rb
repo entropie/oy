@@ -66,6 +66,7 @@ module OY
   module_function :repos
 
   require "wiki/wikilock"
+  require "wiki/wikiindex"
   require "wiki"
   require "wiki/wikidir"
   require "wiki/media"
