@@ -23,26 +23,27 @@ class OYController < Ramaze::Controller
 
     cache_key = Wiki.mk_cache_key_from_fragments(*fragments)
     wiki, time = cache[cache_key]
+    # use cache if possible
     if wiki
       puts "!!! USE CACHE: #{PP.pp(wiki.cache_key, '').strip}: #{wiki.ident}"
       [wiki, time, true]
     else
+      page = nil
       is_dir = maybe_dir = repos.directory(fragments.join("/"))
-      if maybe_dir and not maybe_dir.has_index?
-        page = maybe_dir
+      # if directory is requested look for index page
+      if maybe_dir
+        page = maybe_dir.index_page
+        page.redirected_from << maybe_dir
       else
         fragments = ["index"] if fragments.empty?
         # be sure to have an extension for caching
         unless fragments.last =~ OY::Markup.extension_regexp
           fragments.last << ".#{OY::Markup.default_extension}"
         end
-      end
 
-      if is_dir and page and not page.has_index?
-          page = page.index_page
-      else
         page = repos.find_by_fragments(*fragments)
       end
+
       puts "!!! CREATE CACHE: #{PP.pp(cache_key, '').strip}: #{page.ident}"
       page.parse_body
       cache.store(cache_key, [page, t = Time.now])
