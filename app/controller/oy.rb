@@ -17,38 +17,46 @@ class OYController < Ramaze::Controller
 
   private
 
-  # This is a wrapper function for Repos#find_by_fragments which caches
-  def find_by_fragments(*frags)
-    fragments = frags.dup
+  def store_page(key, page, t)
+    info_str = "!!! STORE CACHE: %s: #{page.ident}"
+    unless key =~ WikiIndex.indexpage_re
+      other_ident = "#{page.ident}.#{page.extension}"
+      cache.store(other_ident, [page, t])
+      puts info_str % other_ident
+    end
+    puts info_str % key
+    cache.store(key, [page, t])
+  end
 
-    cache_key = Wiki.mk_cache_key_from_fragments(*fragments)
-    wiki, time = cache[cache_key]
-    # use cache if possible
+  def find_or_store_page(fragments)
+    ret = []
+    wiki, time = nil, nil
+
+    fragments.pop if fragments.last == "index"
+    key = Wiki.mk_cache_key_from_fragments(*fragments)
+
+    wiki, time = cache[key]
     if wiki
-      puts "!!! USE CACHE: #{PP.pp(wiki.cache_key, '').strip}: #{wiki.ident}"
-      [wiki, time, true]
+      puts "!!! USE CACHE: #{PP.pp(key, '').strip}: #{wiki.ident}" if wiki
+      return [wiki, time]
     else
-      page = nil
       is_dir = maybe_dir = repos.directory(fragments.join("/"))
       # if directory is requested look for index page
       if maybe_dir
         page = maybe_dir.index_page
         page.redirected_from << maybe_dir
       else
-        fragments = ["index"] if fragments.empty?
-        # be sure to have an extension for caching
-        unless fragments.last =~ OY::Markup.extension_regexp
-          fragments.last << ".#{OY::Markup.default_extension}"
-        end
-
         page = repos.find_by_fragments(*fragments)
       end
-
-      puts "!!! CREATE CACHE: #{PP.pp(cache_key, '').strip}: #{page.ident}"
-      page.parse_body
-      cache.store(cache_key, [page, t = Time.now])
-      [page, t, false]
+      store_page(key, page, Time.now)
     end
+  end
+
+  # This is a wrapper function for Repos#find_by_fragments which caches
+  def find_by_fragments(*frags)
+    fragments = frags.dup
+    wiki, time = find_or_store_page(frags)
+    [wiki, time, true]
   end
 
   # This is a wrapper function for Repos#find_by_path which caches
