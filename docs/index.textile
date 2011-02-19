@@ -31,7 +31,7 @@ h2. Features
 h3. Markups
 
 * "Textile/RedCloth":http://www.textism.com/tools/textile/ <code>gem install RedCloth</code>, the default markup system.
-* "Markdown":http://daringfireball.net/projects/markdown/http://daringfireball.net/projects/markdown/ <code>gem install rdiscount</code>
+* "Markdown":http://daringfireball.net/projects/markdown/ <code>gem install rdiscount</code>
 * "Org":http://orgmode.org/ <code>gem install org-ruby</code>
 
 h2. Installation
