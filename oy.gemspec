@@ -4,8 +4,8 @@ Gem::Specification.new do |s|
   s.rubygems_version = '1.3.5'
 
   s.name              = 'oy'
-  s.version           = '0.3.9'
-  s.date              = '2011-02-08'
+  s.version           = '0.4.1'
+  s.date              = '2011-02-19'
   s.rubyforge_project = 'oy'
 
   s.summary     = "Git-powered wiki."
@@ -48,11 +48,11 @@ Gem::Specification.new do |s|
     app/controller/special.rb
     app/controller/wiki.rb
     app/layout/layout.haml
-    app/model/git.rb
     app/public/css/awesome.css
     app/public/css/b-base.css
     app/public/css/b-reset.css
     app/public/css/github-hl.css
+    app/public/css/scrollbar.css
     app/public/css/squaregrid.css
     app/public/favicon.ico
     app/public/img/alert-overlay.png
@@ -66,6 +66,7 @@ Gem::Specification.new do |s|
     app/public/img/twitlink.jpeg
     app/public/img/wplink.jpeg
     app/public/js/highlight.pack.js
+    app/public/js/jquery-scroll.js
     app/public/js/jquery-ui.js
     app/public/js/jquery.gvChart-1.0.1.min.js
     app/public/js/jquery.js
@@ -91,6 +92,7 @@ Gem::Specification.new do |s|
     app/view/oy/special/_image.haml
     app/view/oy/special/_images.haml
     app/view/oy/special/all.haml
+    app/view/oy/special/index.haml
     app/view/oy/special/list_fonts.haml
     app/view/oy/special/media.haml
     app/view/oy/special/upload.haml
@@ -115,7 +117,9 @@ Gem::Specification.new do |s|
     lib/oy/wiki.rb
     lib/oy/wiki/media.rb
     lib/oy/wiki/physical.rb
+    lib/oy/wiki/special.rb
     lib/oy/wiki/wikidir.rb
+    lib/oy/wiki/wikiindex.rb
     lib/oy/wiki/wikilock.rb
     oy.gemspec
     rake/maintenance.rb
@@ -128,6 +132,7 @@ Gem::Specification.new do |s|
     spec/06_spec_media.rb
     spec/06_spec_wiki_ops.rb
     spec/07_spec_virtual.rb
+    spec/07_spec_wiki_index.rb
     spec/07_spec_wiki_lock.rb
     spec/10_spec_markup.rb
     spec/20_spec_api.rb
