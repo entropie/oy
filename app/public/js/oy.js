@@ -115,6 +115,21 @@ $(document).ready(function () {
         $(".oy-gist").setupGistScrollbar();
     }
 
+    if($("#oy-pageslide-link").length)
+    $("#oy-pageslide-link").pageSlide({
+      width: '350px',
+      direction: 'left',
+      onOpen: function(){
+        //$("#oy-wrap").toggleClass("small");
+        $("#oy-pageslide-link").fadeOut();
+        $("#oy-wrap").animate({"margin-left": "360px"});
+        $("#oy-page").animate({"margin-right": "60px"});
+      }, onClose: function(){
+        $("#oy-pageslide-link").fadeIn();
+        $("#oy-wrap").animate({"margin-left": "10%"});
+        $("#oy-page").animate({"margin-right": "0px"});
+    }});
+
 });
 
 

@@ -10,6 +10,14 @@ class SpecialController < OYController
 
   helper :cache
 
+  def pageslide(ident)
+
+    @wiki, @time = find_by_fragments(*ident.split("/"))
+    @history = @wiki.history[0..9]
+
+    @toc = ::Nokogiri::HTML::DocumentFragment.parse(@wiki.data).at_css("#oy-toc").to_html rescue ""
+  end
+
   def index
     @pages = WikiIndex.directories
     @subpages = {}

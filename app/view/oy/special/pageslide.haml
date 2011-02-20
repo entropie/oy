@@ -1,0 +1,19 @@
+#oy-pageslide
+  %h1= @wiki.html_title
+  .time= "#{time_to_s(@wiki.date)}"
+  %p
+    %span.version= "Version by #{@wiki.author}"
+  %h2 Tools
+  = oy_render_file "_wikibuttons.haml", :wiki => @wiki, :sha => @wiki.sha
+  %p
+  %p= @toc
+  %h2 Recent Edits
+  %ul.history
+    - @history.each do |histwiki|
+      %li
+        %div.oy-msg.rfloat
+          = histwiki.message
+        %div
+          %span.oy-ref
+            %a{:href => histwiki.link(:perma)}= histwiki.ref
+          %span.oy-date= time_to_s(histwiki.date)

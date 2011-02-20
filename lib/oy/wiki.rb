@@ -31,8 +31,8 @@ module OY
 
     def redirections
       redirected_from.inject(""){|memo, redi|
-        memo << "<a href='%s'>%s</a>" % [ Wiki.normalize_path(redi.path), redi.path]
-      } << " &rarr; <a href='%s'>%s</a>" % [ Wiki.normalize_path(path), path]
+        memo << "<a href='/%s'>%s</a>" % [ Wiki.normalize_path(redi.path), redi.path]
+      } << " &rarr; <a href='/%s'>%s</a>" % [ Wiki.normalize_path(path), path]
     end
 
     def cache_key

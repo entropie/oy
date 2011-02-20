@@ -81,6 +81,7 @@
   :position absolute
   :left 18px
   :top 20px
+  :z-index 2000
   img
     :width 64px
     :height 90px
@@ -404,7 +405,109 @@ fieldset
         :display inline
         :padding-left 10px
         :padding-right 10px        
+
+#pageslide-slide-wrap
+  :color = !clr_link_on_dark
+  :background-color = !clr_head_bg
+  :padding-top 25px
+
+
+#oy-pageslide-link
+  :color red
+  :position fixed
+  :right 0px
+  :top 140px
+  :background-color = !clr_head_bg
+  :padding-right 20px
+  :width 10px
+  :height 20px 
+#oy-pageslide
+  a
+    :color = !clr_white
+  #oy-toc
+    ul
+      :margin-left 35px
+      :list-style-type none
+      li
+        :color = !clr_white
+        :padding 0px
+        :margin 0px
       
+        &.h1
+        &.h2
+          :margin-left 15px
+        &.h3
+          :margin-left 25px
+        &.h4
+          :margin-left 40px
+        &.h5
+          :margin-left 50px
+        &.h6
+          :margin-left 60px
+        &:hover
+          :color = !clr_rlight_blue
+  .version
+    :font-size 0.8em
+  h1,h2,h3,h4,h5,h6
+    :padding-left 10px
+    :clear both
+    :color = !clr_smoof_orange
+  h1
+    :font-size 1.3em
+    :letter-spacing -1px
+  h2
+    :margin-top 20px
+    :margin-bottom 20px
+    :font-size 1.2em
+  .time
+    :position absolute
+    :top 10px
+    :right -5px
+    :text-align right
+    :padding-right 10px
+    :color = !clr_silver
+    :font-size 0.8em
+  p
+    :padding 10px
+    :clear both
+  ul
+    &.right
+      :list-style-type none
+      :clear both
+      li
+        :padding-bottom 10px
+        :float left
+        :padding-right 10px
+        .awesome
+          :width 130px
+          :text-align center
+    &.history
+      .oy-msg
+        :padding-top 7px
+      :margin 0px
+      li
+        :width 320px
+        :padding 0px
+        :padding-left 20px
+        :padding-right 10px
+        :clear both
+        :display block
+        :padding-bottom 2px
+        :margin 0px
+        :border-bottom 1px solid
+        :border-color = !clr_head_bg + 10
+        a
+          :color = !clr_link_on_dark
+        &:hover
+          :background-color = !clr_white
+          .oy-msg
+            :color = !clr_blue_link
+          .oy-date
+            :color = !clr_head_bg
+          a
+            :color = !clr_black
+    
+
 #oy-page
   :margin-top 25px
   :position relative
@@ -420,9 +523,6 @@ fieldset
       :color = !clr_silver
     &:before
       :content "Redirected: "
-  .oy-ref
-    :color = !clr_silver
-    :font-size 0.7em
   #oy-topic
     :text-shadow 1px 1px grey
     :font-size 2em
@@ -766,12 +866,18 @@ a.oy-link
     :border-bottom-width 1px
     &:hover
       :border-color = !clr_wikilink
-    
+
+
+.oy-ref
+  :color = !clr_silver
+  :font-size 0.8em
+  :font-family monospace
 
 .oy-sha
   :color silver
   :font-size 0.7em
   :display none
+  :font-family monospace  
 .oy-msg
   :color grey
   :font-size 0.8em
@@ -780,6 +886,11 @@ a.oy-link
   :color grey
   :font-size 0.8em
 
+.rfloat
+  :float right
+.lfloat
+  :float left
+  
 #oy-all
   ul
     :margin 0px
