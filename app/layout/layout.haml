@@ -23,7 +23,6 @@
       %script{:type => "text/javascript", :src => "//www.google.com/jsapi"}=""
       %script{:type => "text/javascript", :src => "/js/modernizr-1.6.min.js"}=""
       %script{:type => "text/javascript", :src => "/js/jquery.gvChart-1.0.1.min.js"}=""      
-    %script{:type => "text/javascript", :src => "/js/oy.js"}=""
     :javascript
       hljs.tabReplace = '    ';
       hljs.initHighlightingOnLoad();
@@ -32,6 +31,7 @@
         gvChartInit();
       = oy_render_file "_google_analytics.haml"
     %script{:type => "text/javascript", :src => "/js/jquery-pageslide.js"}=""
+    %script{:type => "text/javascript", :src => "/js/oy.js"}=""
   %body
     #oy-banner
       %a{:href => "/"}
