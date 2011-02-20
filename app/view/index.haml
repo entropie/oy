@@ -1,4 +1,4 @@
-#oy-pageslide-link{:href => SpecialController.r(:pageslide, @wiki.ident)}
+#oy-pageslide-link{:href => SpecialController.r(:pageslide, *@wiki.path.split("/"))}
 #oy-page
   #oy-top
     = oy_render_file "_wikibuttons.haml", :wiki => @wiki, :sha => @sha
