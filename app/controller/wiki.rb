@@ -38,7 +38,6 @@ class WikiController < OYController
     else
       # FIXME: maybe cache historical pages too
       @wiki, @time, @cached = find_by_fragments(*fragments)
-
       if @sha and @wiki.sha != @sha
         parent = @wiki
         @wiki = @wiki.history(@sha)
@@ -82,12 +81,12 @@ class WikiController < OYController
     path = request[:path] or raise "no path given"
     redirect WikiController.r(path) unless request.post?
 
-    wiki = repos.find_by_fragments(*path.split("/"))
+    wiki, time = find_by_fragments(*path.split("/"))
+    delete_page(wiki.cache_key)
     wiki.update do |pg|
       pg.message = request[:message] || ""
       pg.data    = request[:data]
     end
-    cache.delete(wiki.cache_key)
     redirect wiki.link
   end
 

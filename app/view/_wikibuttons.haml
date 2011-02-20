@@ -16,9 +16,8 @@
     %li.compare
       %a.awesome{:title => "Revert to this version", :href => @wiki.link(:revert)} Revert
   - unless @wiki.locked?
-    - unless @sha
-      %li.edit
-        %a.awesome{:title => "Edit Page", :href => @wiki.link(:edit)} Edit
+    %li.edit
+      %a.awesome{:title => "Edit Page", :href => @wiki.link(:edit)} Edit
   - else
     %li.locked
       %span.awesome.red Readonly

@@ -17,6 +17,17 @@ class OYController < Ramaze::Controller
 
   private
 
+  def delete_page(key)
+    info_str = "!!! DELETE CACHE: %s"
+    puts info_str % key
+    cache.delete(key)
+    if key.include?(".")
+      nkey = key.split(".").first
+      puts info_str % nkey
+      cache.delete(nkey)
+    end
+  end
+
   def store_page(key, page, t)
     info_str = "!!! STORE CACHE: %s: #{page.ident}"
     other_ident = "#{page.ident}.#{page.extension}"
@@ -56,6 +67,7 @@ class OYController < Ramaze::Controller
   def find_by_fragments(*frags)
     fragments = frags.dup
     wiki, time = find_or_store_page(frags)
+    wiki.parse_body
     [wiki, time, true]
   end
 

@@ -3,10 +3,10 @@
   .time= "#{time_to_s(@wiki.date)}"
   %p
     %span.version= "Version by #{@wiki.author}"
+  %p= @toc
   %h2 Tools
   = oy_render_file "_wikibuttons.haml", :wiki => @wiki, :sha => @wiki.sha
   %p
-  %p= @toc
   %h2 Recent Edits
   %ul.history
     - @history.each do |histwiki|
