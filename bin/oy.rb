@@ -20,7 +20,7 @@ default_options = {
   :hostname => "localhost",
   :repos    => File.expand_path("."),
   :adapter  => :webrick,
-  :elog     => File.join(OY::Source, "log", "error_log.log")
+  :elog     => File.join(File.expand_path("~"), "/.oylog/", "error_log.log")
 }
 
 opts = OptionParser.new do |opts|
