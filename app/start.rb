@@ -13,7 +13,7 @@ rescue LoadError
   require "oy"
 end
 
-Dir["#{OY::Source}/lib/middleware/*.rb"].each do |mw|
+Dir["#{OY::Source}/lib/oy/middleware/*.rb"].each do |mw|
   require mw
 end
 
