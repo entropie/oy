@@ -8,6 +8,10 @@ class WikiController < OYController
 
   helper :cache
 
+  def error_500
+    "#{$!}asddsadas"
+  end
+
   # Redirection for media files
   def img(*fragments)
     redirect MediaController.r(:img, *fragments)
@@ -27,8 +31,7 @@ class WikiController < OYController
   #
   # Unless a +sha+ is given via request, every page will be cached.
   def index(*fragments)
-    add_repos_paths # FIXME: do this at startup
-
+    #add_repos_paths # FIXME: do this at startup
     key, *arguments = fragments
 
     @sha = request[:sha]

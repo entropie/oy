@@ -13,6 +13,10 @@ rescue LoadError
   require "oy"
 end
 
+Dir["#{OY::Source}/lib/middleware/*.rb"].each do |mw|
+  require mw
+end
+
 controller = %w"oy special media css wiki api".map{ |lib|
   File.join("controller", lib)
 }

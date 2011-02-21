@@ -120,6 +120,15 @@ module OY::App
         :roots => [APP_DIR]
       )
 
+      Ramaze.options.roots.unshift(OY.path)
+      [:layout, :public, :view].each do |opt|
+        if OY::Repos.exist?("_#{opt}")
+          rpath = OY::Repos.expand_path("_"+opt.to_s)
+          Ramaze::Log.info "Ramaze.options[:#{opt}s] << #{rpath}"
+          Ramaze.options.get("#{opt}s".to_sym)[:value].unshift "_#{opt}"
+        end
+      end
+
       case trait[:mode]
       when :devel
         Ramaze.middleware!(:dev) do |m|
@@ -132,7 +141,7 @@ module OY::App
           m.use Rack::ETag
           m.use Rack::Head
           m.use Ramaze::Reloader
-          m.use Oy!::Minify if Config.server['enable_minify']
+          m.use OY::Minify if Config.server['enable_minify']
           m.run Ramaze::AppMap
         end
       when :production
@@ -143,7 +152,7 @@ module OY::App
           m.use Rack::ConditionalGet
           m.use Rack::ETag
           m.use Rack::Head
-          m.use Oy!::Minify if Config.server['enable_minify']
+          m.use OY::Minify if Config.server['enable_minify']
           m.run Ramaze::AppMap
         end
 

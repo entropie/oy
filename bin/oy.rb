@@ -93,6 +93,7 @@ begin
     cfg.server["port"]      = default_options[:port]
     cfg.server["error_log"] = default_options[:elog]
     cfg.server["daemon"]    = default_options[:daemon]
+    #cfg.server["enable_minify"] = true
   end
 
   if [nil, "start"].include?(Config.server["daemon"]) and File.expand_path(OY.path) == File.expand_path(Dir.pwd)
@@ -101,17 +102,11 @@ begin
   end
 
   module OY::App
-    trait[:mode] = OY.local? ? :devel : :production
+    #trait[:mode] = OY.local? ? :devel : :production
+    trait[:mode] = :production
     what = Config.server["daemon"] || :run
     send(what)
   end
-
-  #   [:layout, :public, :view].each do |opt|
-  #     if OY::Repos.exist?("_#{opt}")
-  #       puts "Ramaze.options[:#{opt}s] << _#{opt}"
-  #       ropts.get("#{opt}s".to_sym)[:value].unshift "_#{opt}"
-  #     end
-  #   end
 
   # Ramaze::Cache.options do |cache|
   #   cache.names = [:pages]
