@@ -5,3 +5,4 @@ pkg
 rsync.txt
 app/public/spec.html
 log
+oy.pid
