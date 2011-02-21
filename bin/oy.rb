@@ -6,7 +6,6 @@
 
 require "rubygems"
 require "optparse"
-require "grit"
 require "pp"
 
 $:.unshift File.join(File.dirname(__FILE__), "../lib")
@@ -17,14 +16,21 @@ require "oy"
 help = "Oy!: I want to snu-snu Git -- Oy is a Wiki build on top of Git and grit.\n\n"
 
 default_options = {
-  :port => 8200,
+  :port     => 8200,
   :hostname => "localhost",
-  :repos    => File.expand_path(".")
+  :repos    => File.expand_path("."),
+  :adapter  => :webrick,
+  :elog     => File.join(OY::Source, "log", "error_log.log")
 }
 
 opts = OptionParser.new do |opts|
 
   opts.banner = help
+
+  opts.on("-d", "--daemon [start|stop|restart]", "Daemonizes Oy. Default argument is 'start'") do |arg|
+    arg ||= "start"
+    default_options[:daemon] = arg
+  end
 
   opts.on("-p", "--port [PORT]", "Application port (default 8200)") do |port|
     default_options[:port] = port.to_i
@@ -58,12 +64,6 @@ opts = OptionParser.new do |opts|
     p r
     exit 0
   end
-
-  opts.on("-?", "--help") do
-    puts opts.banner
-    exit
-  end
-
 end
 
 
@@ -75,31 +75,36 @@ rescue OptionParser::InvalidOption
   exit 1
 end
 
-
-def setup_logger!
-  Ramaze::Log.loggers.clear
-end
-
+require "start"
+require "oy/app"
 
 
 # FIXME: this stuff needs to live in oy/oy.rb
 begin
-
-
-  # if default_options[:repos] == OY::Source
-  #   p Dir.pwd
-  # end
-
   OY.path = default_options[:repos]
-
-
-  require "start"
 
   # FIXME:
   $VERBOSE = nil # turn off sass deprecation warnings
 
-  setup_logger!
+  Config.setup do |cfg|
+    cfg.repos               = default_options[:repos]
+    cfg.adapter             = default_options[:adapter]
+    cfg.server["address"]   = default_options[:hostname]
+    cfg.server["port"]      = default_options[:port]
+    cfg.server["error_log"] = default_options[:elog]
+    cfg.server["daemon"]    = default_options[:daemon]
+  end
 
+  if [nil, "start"].include?(Config.server["daemon"]) and File.expand_path(OY.path) == File.expand_path(Dir.pwd)
+    puts "Your repos path isset to '#{Dir.pwd}', please specify a Repos (-r /path/to/repos) or press RET to use `pwd`."
+    STDIN.readline
+  end
+
+  module OY::App
+    trait[:mode] = OY.local? ? :devel : :production
+    what = Config.server["daemon"] || :run
+    send(what)
+  end
 
   #   [:layout, :public, :view].each do |opt|
   #     if OY::Repos.exist?("_#{opt}")
@@ -113,11 +118,7 @@ begin
   #   cache.default = Ramaze::Cache::MemCache
   # end
 
-  Dir.chdir(File.join(OY::Source, "app"))
-
   #Innate::View.options.read_cache = true
-
-  Ramaze.start(:adapter => :webrick, :host => default_options[:hostname], :port => default_options[:port])
 end
 
 

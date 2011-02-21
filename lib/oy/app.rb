@@ -47,7 +47,7 @@ module OY::App
   trait[:mode]       ||= :production
   trait[:port]       ||= nil
   trait[:repos]      ||= nil
-  trait[:pidfile]    ||= File.join(HOME_DIR, "oy.pid")
+  trait[:pidfile]    ||= File.join("/tmp/", "oy.pid")
 
   module Helper; end
 
@@ -171,7 +171,7 @@ module OY::App
     def start
       if File.file?(trait[:pidfile])
         pid = File.read(trait[:pidfile], 20).strip
-        abort("thoth already running? (pid=#{pid})")
+        abort("Oy! already running? (pid=#{pid})")
       end
 
       puts "Starting Oy!."
