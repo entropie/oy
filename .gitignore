@@ -4,3 +4,4 @@ pkg
 .yardoc
 rsync.txt
 app/public/spec.html
+log
