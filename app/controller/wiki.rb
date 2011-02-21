@@ -65,6 +65,8 @@ class WikiController < OYController
     @extension = @wiki.extension
     @title = @wiki.path
     @action = :update
+  rescue NotFound
+    redirect WikiController.r(:create, *fragments)
   end
 
   def preview

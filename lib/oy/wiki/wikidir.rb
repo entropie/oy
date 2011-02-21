@@ -50,7 +50,7 @@ module OY
       @path
     end
 
-    def link
+    def html_link
       @path = "" if identifier == "/"
       %Q'<a href="/#{@path}" class="oy-link #{has_index? ? 'x' : 'o'}">#{identifier.capitalize}</a>'
     end

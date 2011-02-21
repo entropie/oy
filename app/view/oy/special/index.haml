@@ -4,7 +4,7 @@
     %ul
       - @pages.each do |page|
         %li
-          %span.title= page.link
+          %span.title= page.html_link
           - if page.pages
             %span.count= "(#{page.pages.size})"
           - subpages = @subpages[page.path]
