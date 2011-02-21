@@ -4,8 +4,8 @@ Gem::Specification.new do |s|
   s.rubygems_version = '1.3.5'
 
   s.name              = 'oy'
-  s.version           = '0.4.1'
-  s.date              = '2011-02-19'
+  s.version           = '0.4.3'
+  s.date              = '2011-02-21'
   s.rubyforge_project = 'oy'
 
   s.summary     = "Git-powered wiki."
@@ -66,6 +66,7 @@ Gem::Specification.new do |s|
     app/public/img/twitlink.jpeg
     app/public/img/wplink.jpeg
     app/public/js/highlight.pack.js
+    app/public/js/jquery-pageslide.js
     app/public/js/jquery-scroll.js
     app/public/js/jquery-ui.js
     app/public/js/jquery.gvChart-1.0.1.min.js
@@ -87,6 +88,7 @@ Gem::Specification.new do |s|
     app/view/create.haml
     app/view/css/oy.sass
     app/view/edit.haml
+    app/view/error_500.haml
     app/view/history.haml
     app/view/index.haml
     app/view/oy/special/_image.haml
@@ -95,6 +97,7 @@ Gem::Specification.new do |s|
     app/view/oy/special/index.haml
     app/view/oy/special/list_fonts.haml
     app/view/oy/special/media.haml
+    app/view/oy/special/pageslide.haml
     app/view/oy/special/upload.haml
     app/view/preview.haml
     app/view/revert.haml
@@ -103,6 +106,7 @@ Gem::Specification.new do |s|
     lib/core/String.rb
     lib/oy.rb
     lib/oy/api.rb
+    lib/oy/app.rb
     lib/oy/blob_entry.rb
     lib/oy/exceptions.rb
     lib/oy/git_access.rb
@@ -113,6 +117,7 @@ Gem::Specification.new do |s|
     lib/oy/markup/nokogiri.rb
     lib/oy/markup/org.rb
     lib/oy/markup/redcloth.rb
+    lib/oy/middleware/minify.rb
     lib/oy/repos.rb
     lib/oy/wiki.rb
     lib/oy/wiki/media.rb
