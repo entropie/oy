@@ -19,6 +19,7 @@ module Rack
     def call(env)
       if spambot_submission?(Rack::Request.new(env).params)
         path = env["rack.request.form_hash"]["path"]
+        pp env
         puts "***SPAM*** send to nowhere ('%s' : '%s') ***SPAM***" % [env["REMOTE_ADDR"], path]
         send_to_dead_end
       else
