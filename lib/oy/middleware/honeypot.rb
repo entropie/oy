@@ -13,12 +13,10 @@ module Rack
       @class_name   = options[:class_name]  || "pemail"
       @label        = options[:label]       || "Don't fill in this field"
       @input_name   = options[:input_name]  || "email"
-      @input_value  = options[:input_value] || ""
+      @input_value  = options[:input_value] || "lala"
     end
 
     def call(env)
-      pp env
-
       if spambot_submission?(Rack::Request.new(env).params)
         path = env["rack.request.form_hash"]["path"]
         puts "***SPAM*** send to nowhere ('%s' : '%s') ***SPAM***" % [env["REMOTE_ADDR"], path]
