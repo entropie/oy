@@ -26,6 +26,9 @@ module OY
   class AmbiguousChoice < Exception
   end
 
+  # Spam!
+  class DieFucker < Exception
+  end
 end
 
 =begin

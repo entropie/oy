@@ -12,8 +12,8 @@ module Rack
       @app = app
       @class_name   = options[:class_name]  || "pemail"
       @label        = options[:label]       || "Don't fill in this field"
-      @input_name   = options[:input_name]  || "email"
-      @input_value  = options[:input_value] || "lala"
+      @input_name   = options[:input_name]  || "pemail"
+      @input_value  = options[:input_value] || honeypot_value
     end
 
     def call(env)

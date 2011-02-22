@@ -97,8 +97,7 @@ class WikiController < OYController
 
   def new
     raise NotAllowed unless request.post?
-
-    pp request.params
+    raise DieFucker  if not request[:pemail] or request[:pemail] != honeypot_value
 
     path = request[:path] or raise "no path given"
     path = Wiki.normalize_path(path)

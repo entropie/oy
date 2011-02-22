@@ -29,6 +29,10 @@ module OY
     require core_ext
   end
 
+  def honeypot_value
+    "foobarbaz"
+  end
+  
   def self.local?
     @hostname ||= `hostname`
     if @hostname =~ /^xeno/ then true else false end
