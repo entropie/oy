@@ -14,10 +14,10 @@
     %link{:rel => "stylesheet", :type => "text/css", :href => "/css/github-hl.css" }=''
     %link{:rel => "stylesheet", :type => "text/css", :href => "/css/scrollbar.css" }=''    
     %link{:rel => "stylesheet", :type => "text/css", :href => "/css/oy.css" }=''
-    %script{:type => "text/javascript", :src => "/js/jquery.js?_=#{Time.now.to_f}"}=""
-    %script{:type => "text/javascript", :src => "/js/jquery-ui.js?_=#{Time.now.to_f}"}=""
-    %script{:type => "text/javascript", :src => "/js/jquery-scroll.js?_=#{Time.now.to_f}"}=""    
-    %script{:type => "text/javascript", :src => "/js/highlight.pack.js?_=#{Time.now.to_f}"}=""
+    %script{:type => "text/javascript", :src => "/js/jquery.js"}=""
+    %script{:type => "text/javascript", :src => "/js/jquery-ui.js"}=""
+    %script{:type => "text/javascript", :src => "/js/jquery-scroll.js"}=""    
+    %script{:type => "text/javascript", :src => "/js/highlight.pack.js"}=""
     - unless OY.local?
       %link{:id => :dynfont, :rel => "stylesheet", :type => "text/css", :href => "/css/font.css" }=''
       %script{:type => "text/javascript", :src => "//www.google.com/jsapi"}=""
@@ -30,8 +30,8 @@
         :javascript
           gvChartInit();
       = oy_render_file "_google_analytics.haml"
-    %script{:type => "text/javascript", :src => "/js/jquery-pageslide.js?_=#{Time.now.to_f}"}=""
-    %script{:type => "text/javascript", :src => "/js/oy.js?_=#{Time.now.to_f}"}=""
+    %script{:type => "text/javascript", :src => "/js/jquery-pageslide.js"}=""
+    %script{:type => "text/javascript", :src => "/js/oy.js"}=""
   %body
     #oy-banner
       %a{:href => "/"}
