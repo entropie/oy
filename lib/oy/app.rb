@@ -174,8 +174,8 @@ module OY::App
             File.chmod(0750, log_dir)
           end
 
-          Ramaze::Log.loggers = [Logger.new(Config.server['error_log'])]
-          Ramaze::Log.level = Logger::Severity::ERROR
+          # Ramaze::Log.loggers = [Logger.new(Config.server['error_log'])]
+          # Ramaze::Log.level = Logger::Severity::ERROR
         end
       end
     end
