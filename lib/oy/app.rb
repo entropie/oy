@@ -3,6 +3,8 @@
 # Author:  Michael 'entropie' Trommer <mictro@gmail.com>
 #
 
+require "middleware/honeypot"
+
 module Config
   class << self
 
@@ -141,6 +143,7 @@ module OY::App
           m.use Rack::ETag
           m.use Rack::Head
           m.use Ramaze::Reloader
+          m.use Rack::Honeypot
           m.use OY::Minify if Config.server['enable_minify']
           m.run Ramaze::AppMap
         end
@@ -152,6 +155,7 @@ module OY::App
           m.use Rack::ConditionalGet
           m.use Rack::ETag
           m.use Rack::Head
+          m.use Rack::Honeypot
           m.use OY::Minify if Config.server['enable_minify']
           m.run Ramaze::AppMap
         end

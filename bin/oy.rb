@@ -78,7 +78,6 @@ end
 require "start"
 require "oy/app"
 
-
 # FIXME: this stuff needs to live in oy/oy.rb
 begin
   OY.path = default_options[:repos]
@@ -102,8 +101,8 @@ begin
   end
 
   module OY::App
-    #trait[:mode] = OY.local? ? :devel : :production
-    trait[:mode] = :production
+    trait[:mode] = OY.local? ? :devel : :production
+    #trait[:mode] = :production
     what = Config.server["daemon"] || :run
     send(what)
   end
