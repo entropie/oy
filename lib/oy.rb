@@ -34,9 +34,10 @@ module OY
     if @hostname =~ /^xeno/ then true else false end
   end
 
+
   def puts(*args)
     args.each do |a|
-      Kernel.puts "  |> #{a}"
+      Ramaze::Log.info a
     end
   end
   module_function :puts
