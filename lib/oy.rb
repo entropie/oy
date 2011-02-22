@@ -37,7 +37,11 @@ module OY
 
   def puts(*args)
     args.each do |a|
-      Ramaze::Log.info a
+      begin
+        Ramaze::Log.info a
+      rescue
+        Kernel.puts a
+      end
     end
   end
   module_function :puts
