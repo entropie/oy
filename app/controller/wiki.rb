@@ -98,6 +98,8 @@ class WikiController < OYController
   def new
     raise NotAllowed unless request.post?
 
+    pp request.params
+
     path = request[:path] or raise "no path given"
     path = Wiki.normalize_path(path)
 
