@@ -3,8 +3,6 @@
 # Author:  Michael 'entropie' Trommer <mictro@gmail.com>
 #
 
-
-
 class ApiController < OYController
 
   map "/api"
@@ -44,6 +42,21 @@ class ApiController < OYController
       pg.message = msg
     end
     respond_ok(:size => page.size, :url => page.link, :initial => initial)
+  end
+
+  def SYNC(*fragments)
+    wiki, time = find_by_fragments(*fragments)
+
+    author = "%s <%s>" % [wiki.commit.author.name, wiki.commit.author.email]
+    message = "Synced from other Oy!: %s" % wiki.message
+
+    api = OY.api("http://wiki.kommunism.us")
+    r = api.post(wiki.ident) do |opts|
+      opts[:author]  = author
+      opts[:data]    = wiki.raw_data
+      opts[:message] = message
+    end
+    redirect wiki.link
   end
 
   private

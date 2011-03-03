@@ -98,6 +98,10 @@ module OY
       ident = @path.split(".").first
     end
 
+    def fragments
+      URI.escape(ident).split("/")
+    end
+    
     # Link to an action. What can be +nil+ for a standard page link
     # or one of the following symbols:
     #
@@ -111,6 +115,8 @@ module OY
       escaped_ident = URI.escape(ident) + ".#{extension}"
 
       case what
+      when :sync
+        "/api/SYNC/#{escaped_ident}"
       when :perma
         "/#{escaped_ident}?sha=#{sha}"
       when :edit

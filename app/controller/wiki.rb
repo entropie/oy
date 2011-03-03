@@ -9,7 +9,7 @@ class WikiController < OYController
   helper :cache
 
   def error_500
-    "#{$!}asddsadas"
+    "#{$!}"
   end
 
   # Redirection for media files
@@ -97,6 +97,8 @@ class WikiController < OYController
 
   def new
     raise NotAllowed unless request.post?
+
+    # spam protection
     raise DieFucker  if not request[:pemail] or request[:pemail] != honeypot_value
 
     path = request[:path] or raise "no path given"

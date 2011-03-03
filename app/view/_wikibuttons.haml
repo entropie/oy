@@ -1,4 +1,7 @@
 %ul.right
+  - if OY.local?
+    %li.sync
+      %a.awesome{:title => "Sync to Remote", :href => @wiki.link(:sync)} Sync
   - if @sha
     %li.backlink
       %a.awesome{:title => "To most recent Version", :href => @wiki.link(:link)} Recent
