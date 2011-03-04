@@ -45,12 +45,13 @@ class ApiController < OYController
   end
 
   def SYNC(*fragments)
-    wiki, time = find_by_fragments(*fragments)
+    wiki, time = repos.find_by_fragments(*fragments)
 
     author = "%s <%s>" % [wiki.commit.author.name, wiki.commit.author.email]
     message = "Synced from other Oy!: %s" % wiki.message
 
     api = OY.api("http://wiki.kommunism.us")
+
     r = api.post(wiki.ident) do |opts|
       opts[:author]  = author
       opts[:data]    = wiki.raw_data
