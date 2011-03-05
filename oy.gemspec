@@ -5,7 +5,7 @@ Gem::Specification.new do |s|
 
   s.name              = 'oy'
   s.version           = '0.4.3'
-  s.date              = '2011-02-21'
+  s.date              = '2011-03-05'
   s.rubyforge_project = 'oy'
 
   s.summary     = "Git-powered wiki."
@@ -117,6 +117,7 @@ Gem::Specification.new do |s|
     lib/oy/markup/nokogiri.rb
     lib/oy/markup/org.rb
     lib/oy/markup/redcloth.rb
+    lib/oy/middleware/honeypot.rb
     lib/oy/middleware/minify.rb
     lib/oy/repos.rb
     lib/oy/wiki.rb
