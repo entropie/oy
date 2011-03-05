@@ -53,9 +53,10 @@ class ApiController < OYController
     api = OY.api("http://wiki.kommunism.us")
 
     r = api.post(wiki.ident) do |opts|
-      opts[:author]  = author
-      opts[:data]    = wiki.raw_data
-      opts[:message] = message
+      opts[:markup]    = wiki.extension
+      opts[:author]    = author
+      opts[:data]      = wiki.raw_data
+      opts[:message]   = message
     end
     redirect wiki.link
   end
