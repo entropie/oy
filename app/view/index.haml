@@ -5,7 +5,7 @@
   #oy-topic
     %h1= @wiki.html_title
   #oy-body
-    - unless @wiki.redirected_from.empty?
+    - if not @wiki.redirected_from.empty? and @fragments != @wiki.fragments
       .oy-redirections= @wiki.redirections
     :preserve
       #{@wiki.data}
