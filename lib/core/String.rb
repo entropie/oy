@@ -4,6 +4,8 @@
 #
 
 class String
+  # https://github.com/github/gollum/blob/master/lib/gollum/ruby1.8.rb
+  alias :lines :to_a if defined?(RUBY_VERSION) && RUBY_VERSION < '1.9'
 
   def upcase
     Unicode.upcase(self)

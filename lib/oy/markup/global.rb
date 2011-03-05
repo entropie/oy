@@ -4,11 +4,17 @@
 #
 
 module OY
+
   module Markup
 
     class Global < Markup
 
       self.extension = "*"
+
+      def initialize(data, wiki = nil)
+        super
+        @codemap = {}
+      end
 
       def self.is_virtual?
         true
@@ -281,10 +287,97 @@ module OY
         ret
       end
 
+      #########################################################################
+      #
+      # Code
+      #
+      #########################################################################
+
+      # Extract all code blocks into the codemap and replace with placeholders.
+      #
+      # data - The raw String data.
+      #
+      # Returns the placeholder'd String data.
+      #
+      # From Gollum: lib/gollum/markup.rb
+      def extract_code!
+        data = @data
+        data.gsub!(/^``` ?([^\r\n]+)?\r?\n(.+?)\r?\n```\r?$/m) do
+          id     = Digest::SHA1.hexdigest($2)
+          cached = check_cache(:code, id)
+          @codemap[id] = cached   ?
+          { :output => cached } :
+            { :lang => $1, :code => $2 }
+          id
+        end
+        data
+      end
+
+      # Process all code from the codemap and replace the placeholders with the
+      # final HTML.
+      #
+      # data - The String data (with placeholders).
+      #
+      # FIXME: Maybe add albino too?
+      #
+      # Returns the marked up String data.
+      #
+      # From Gollum: lib/gollum/markup.rb
+      def process_code(data)
+        @codemap.each do |id, spec|
+          formatted = spec[:output] ||
+            begin
+              code = spec[:code]
+              lang = spec[:lang]
+
+              if code.lines.all? { |line| line =~ /\A\r?\n\Z/ || line =~ /^(  |\t)/ }
+                code.gsub!(/^(  |\t)/m, '')
+              end
+              # formatted =
+              #   begin
+              #     lang && OY::Albino.colorize(code, lang)
+              #   rescue ::Albino::ShellArgumentError, ::Albino::Process::TimeoutExceeded,
+              #     ::Albino::Process::MaximumOutputExceeded
+              #     p 23
+              #   end
+              formatted ||= "<pre><code class='#{lang}'>#{CGI.escapeHTML(code)}</code></pre>"
+              update_cache(:code, id, formatted)
+              formatted
+            end
+          data.gsub!(id, formatted)
+        end
+        data
+      end
+
+      # Hook for getting the formatted value of extracted tag data.
+      #
+      # type - Symbol value identifying what type of data is being extracted.
+      # id   - String SHA1 hash of original extracted tag data.
+      #
+      # Returns the String cached formatted data, or nil.
+      #
+      # From Gollum: lib/gollum/markup.rb
+      def check_cache(type, id)
+      end
+
+      # Hook for caching the formatted value of extracted tag data.
+      #
+      # type - Symbol value identifying what type of data is being extracted.
+      # id   - String SHA1 hash of original extracted tag data.
+      # data - The String formatted value to be cached.
+      #
+      # Returns nothing.
+      #
+      # From Gollum: lib/gollum/markup.rb
+      def update_cache(type, id, data)
+      end
+
       def to_html
         ret = ''
         extract_tags!
+        extract_code!
         ret = process_tags(data)
+        ret = process_code(data)
         ret
       end
 
