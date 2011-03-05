@@ -9,7 +9,6 @@ class WikiController < OYController
   helper :cache
 
   def error_500
-    "#{$!}"
   end
 
   # Redirection for media files
@@ -31,24 +30,21 @@ class WikiController < OYController
   #
   # Unless a +sha+ is given via request, every page will be cached.
   def index(*fragments)
-    #add_repos_paths # FIXME: do this at startup
-    key, *arguments = fragments
 
     @sha = request[:sha]
 
-    if public_methods.include?(key)
-      call(key.to_sym, *arguments)
-    else
-      # FIXME: maybe cache historical pages too
-      @wiki, @time, @cached = find_by_fragments(*fragments)
-      if @sha and @wiki.sha != @sha
-        parent = @wiki
-        @wiki = @wiki.history(@sha)
-        @wiki.parent = parent
-      end
-      @title = @wiki.html_title
+    # FIXME: maybe cache historical pages too
+    @wiki, @time, @cached = find_by_fragments(*fragments)
+    if @sha and @wiki.sha != @sha
+      parent = @wiki
+      @wiki = @wiki.history(@sha)
+      @wiki.parent = parent
     end
-    @fragments = fragments
+    @title = @wiki.html_title
+
+    # for redirection
+    @fragments = fragments.empty? ? ["index"] : fragments
+    @fragments.last.gsub!(/#{Markup.extension_regexp}/, '')
   rescue NotFound
     redirect WikiController.r(:create, *fragments)
   end
