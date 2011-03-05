@@ -33,7 +33,6 @@ module OY
           if $1 == "'" && $3 != "'"
             "[[#{$2}]]#{$3}"
           elsif $2.include?('][')
-            p 1
             if $2[0..4] == 'file:'
               pre = $1
               post = $3
