@@ -33,8 +33,6 @@ module OY
         mem << "%s=%s;" % [arr.first, CGI.escape(arr.last)]
       }
     end
-
-
   end
 
 end
