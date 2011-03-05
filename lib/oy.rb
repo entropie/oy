@@ -19,7 +19,7 @@ module OY
 
   Actor   = Grit::Actor.new("Anonymous", "anonym@o.us") unless const_defined?(:Actor)
 
-  Version = [0, 4, 3] unless const_defined?(:Version)
+  Version = [0, 4, 5] unless const_defined?(:Version)
 
   $: << File.join(Source, "lib/oy") unless $:.include?(File.join(Source, "lib/oy"))
   $: << File.join(Source, "app")    unless $:.include?(File.join(Source, "app"))
@@ -32,7 +32,7 @@ module OY
   def honeypot_value
     "foobarbaz"
   end
-  
+
   def self.local?
     @hostname ||= `hostname`
     if @hostname =~ /^xeno/ then true else false end
