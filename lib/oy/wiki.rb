@@ -101,7 +101,7 @@ module OY
     def fragments
       URI.escape(ident).split("/")
     end
-    
+
     # Link to an action. What can be +nil+ for a standard page link
     # or one of the following symbols:
     #
@@ -142,7 +142,7 @@ module OY
     def html_link
       %Q'<a href="#{link}" class="oy-link x">#{title}</a>'
     end
-    
+
     # get the diff for +v1+ +v2+
     def diff(v1, v2)
       repos.git.diff(v1, v2, path)
