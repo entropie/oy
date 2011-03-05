@@ -793,26 +793,30 @@ fieldset
       :position absolute
       :top 0px
       &.left
-        :left 0px
+        :margin-top 5px
+        :font-size 0.8em
+        :left -15px
         li
           :display inline
           :margin-right 10px
           :margin-left 0px
+        &:hover
+          a
+            :border-bottom 1px solid silver
+            :border-color = !clr_silver
       &.right
         :right 0px
       li
         :margin-left 10px
         :font-size 1em
         :display inline
+        :color = !clr_silver        
         a
-          :color #fff
+          :color = !clr_silver
         &.author
           &:before
             :content " by "
         &.ledit
-          :color silver
-          a
-            :color = !clr_blue_link
   #oy-top    
     :position absolute
     :right 0px
