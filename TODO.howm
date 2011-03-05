@@ -22,3 +22,4 @@
 { } noscript for gist
 { } [[http://code.google.com/p/svg-edit/]]
 { } Slideshow
+{ } Use albino for syntax hightlighting? [[https://github.com/github/gollum/blob/master/lib/gollum/markup.rb gollum/lib/markup.rb]], [[https://github.com/github/gollum/blob/master/lib/gollum/albino.rb gollum/lib/albino.rb]]
