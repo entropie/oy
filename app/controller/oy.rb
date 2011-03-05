@@ -51,7 +51,7 @@ class OYController < Ramaze::Controller
       puts "!!! USE CACHE: #{PP.pp(key, '').strip}: #{wiki.ident}" if wiki
       return [wiki, time]
     else
-      is_dir = maybe_dir = repos.directory(fragments.join("/"))
+      maybe_dir = repos.directory(fragments.join("/"))
       # if directory is requested look for index page
       if maybe_dir
         page = maybe_dir.index_page
