@@ -50,7 +50,7 @@ task :todo_to_page do
     if prefixs == 2 and last == 0
       str << "*#{listr}\n" % line
     elsif last == 2 and prefixs == 0
-      str << "\n" % line
+      #str << "\n" % line
     elsif last == 0 and prefixs > 0
       str << (" "*(prefixs-2)) << line << "\n"
     else
