@@ -1,5 +1,7 @@
 #oy-editform
   %form{:action => WikiController.r(@action), :method => :post}
+    - if Rack.const_defined?(:Honeypot)
+      = Rack::Honeypot.honeypot
     %input{:type => :hidden, :name => :path, :value => @path, :class => "oy-path"}
     - if @extension
       %input{:type => :hidden, :name => :extension, :value => @extension}

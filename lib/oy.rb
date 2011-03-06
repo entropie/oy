@@ -32,6 +32,7 @@ module OY
   def honeypot_value
     "foobarbaz"
   end
+  module_function :honeypot_value
 
   def self.local?
     @hostname ||= `hostname`

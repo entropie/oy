@@ -8,12 +8,19 @@ module Rack
 
     include OY
 
+    unless const_defined?(:CLASS_NAME)
+      CLASS_NAME  = "pemail"
+      LABEL       = "Don't fill in this field"
+      INPUT_NAME  = "pemail"
+      INPUT_VALUE = OY.honeypot_value
+    end
+
     def initialize(app, options={})
       @app = app
-      @class_name   = options[:class_name]  || "pemail"
-      @label        = options[:label]       || "Don't fill in this field"
-      @input_name   = options[:input_name]  || "pemail"
-      @input_value  = options[:input_value] || honeypot_value
+      @class_name   = CLASS_NAME
+      @label        = LABEL
+      @input_name   = INPUT_NAME
+      @input_value  = INPUT_VALUE
     end
 
     def call(env)
@@ -49,6 +56,11 @@ module Rack
       new_headers
     end
 
+    def self.honeypot
+      %Q"<div class='#{CLASS_NAME}'><label for='#{INPUT_NAME}'>#{LABEL}</label>" +
+        %Q"<input type='text' name='#{INPUT_NAME}' value='#{INPUT_VALUE}'/></div>"
+    end
+
     def insert_honeypot(body)
       css = <<-BLOCK
         <style type='text/css' media='all'>
@@ -57,14 +69,7 @@ module Rack
           }
         </style>
       BLOCK
-      div = <<-BLOCK
-        <div class='#{@class_name}'>
-          <label for='#{@input_name}'>#{@label}</label>
-          <input type='text' name='#{@input_name}' value='#{@input_value}'/>
-        </div>
-      BLOCK
-      body.gsub!(/<\/head>/, css.unindent + "\n</head>")
-      body.gsub!(/<form(.*)>/, '<form\1>' + "\n" + div.unindent)
+      body.sub!(/<\/head>/, css.unindent + "\n</head>")
       body
     end
 
