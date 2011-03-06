@@ -24,3 +24,4 @@
 { } Slideshow
 { } Use albino for syntax hightlighting? [[https://github.com/github/gollum/blob/master/lib/gollum/markup.rb gollum/lib/markup.rb]], [[https://github.com/github/gollum/blob/master/lib/gollum/albino.rb gollum/lib/albino.rb]]
 { } Tame honeypot middleware to not add stuff to code blocks within wikipages
+{ } [[http://www.ivanilichev.com/blog/posts/2-syntax-highlighting-ultraviolet-vs-coderay RedClothExt]]
