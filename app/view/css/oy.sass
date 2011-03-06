@@ -720,7 +720,6 @@ fieldset
       :padding 10px
     ul
       :padding-left 15px
-      :margin-bottom 20px
       :color = !clr_rlight_black
     li
       :margin-bottom 1px
@@ -934,3 +933,21 @@ a.oy-link
     :-moz-border-radius 5px
     :text-align center
   
+#tlog-page
+  a
+    &:before
+      :content none
+  ul
+    :list-style-type none
+    :margin-left 0px
+    :padding-left 0px
+    :margin-bottom 20px
+    li
+      :margin 0px
+      :padding 0px
+  blockquote
+    :margin-bottom 20px !important
+    :background-color transparent !important
+    :border none !important
+    p:last-child:after, &:before
+      :color = !clr_silver !important
