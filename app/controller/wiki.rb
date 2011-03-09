@@ -20,7 +20,7 @@ class WikiController < OYController
   def clear_cache(*fragments)
     fragments = 'index' if fragments.empty?
     cache_key = Wiki.mk_cache_key_from_fragments(*fragments)
-    cache.delete(cache_key)
+    delete_page(cache_key)
     redirect_referer
   end
 
