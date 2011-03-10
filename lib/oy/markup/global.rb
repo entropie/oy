@@ -7,9 +7,17 @@ module OY
 
   module Markup
 
+    class Processors < Array
+    end
+
+
     class Global < Markup
 
       self.extension = "*"
+
+      def self.processors
+        @processors ||= Processors.new
+      end
 
       def initialize(data, wiki = nil)
         super
@@ -78,13 +86,15 @@ module OY
       #
       # From Gollum: lib/gollum/markup.rb
       def process_tag(tag)
-        if html = process_gist_tag(tag)
-          html
-        elsif html = process_image_tag(tag)
-          html
-        else
-          process_page_link_tag(tag)
+        ret = ''
+        self.class.processors.each do |processor|
+          res = send(processor, tag)
+          if res
+            ret = res
+            break
+          end
         end
+        ret
       end
 
       GIST_URL = 'https://gist.github.com/%s.js'
@@ -95,6 +105,7 @@ module OY
         end
       end
 
+      processors << :process_gist_tag
       def process_gist_tag(tag)
         gistid = nil
         if tag =~ /^gist\s+([0-9]+)/ || tag =~ /https:\/\/gist\.github\.com\/([0-9]+)/
@@ -131,6 +142,7 @@ module OY
       end
       private :media_file_exist?
 
+      processors << :process_image_tag
       # Attempt to process the tag as an image tag.
       #
       # tag - The String tag contents (the stuff inside the double brackets).
@@ -224,6 +236,7 @@ module OY
       end
 
 
+      processors << :process_page_link_tag
       # Makes a link for tag if there are no alternatives in the repos.
       #
       # If there are alternatives makes the link for the default markup, and
