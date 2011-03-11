@@ -9,8 +9,7 @@ module OY
 
     class Global < Markup
 
-      class Processors < Array
-      end
+      require "markup/processors"
 
       self.extension = "*"
 
@@ -86,8 +85,13 @@ module OY
       # From Gollum: lib/gollum/markup.rb
       def process_tag(tag)
         ret = ''
-        self.class.processors.each do |processor|
-          res = send(processor, tag)
+        self.class.processors.with_extern.each do |processor|
+          if processor.kind_of?(Symbol)
+            res = send(processor, tag)
+          else
+            res = processor.process_tag(tag)
+          end
+
           if res
             ret = res
             break
@@ -257,6 +261,8 @@ module OY
 
         if extern_url
           return %Q{<a href="#{url}">#{title}</a>}
+        elsif tag =~ /^mailto:/
+          return %Q{<a href="#{tag}">#{tag.split(":")[1..-1]}</a>}
         end
 
         if not alternatives.empty?
