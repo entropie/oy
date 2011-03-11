@@ -27,6 +27,7 @@ h2. Features
 * Support for graphs from tables, on top of Google graph api and "gvChart":http://www.ivellios.toron.pl/technikalia/2010/06/22/gvchart-plugin-jquery-with-google-charts/ gem
 * Syntax highlighting for for source code via [[http://softwaremaniacs.org/soft/highlight/en/ Hightlight.js]]
 * Support for [[https://gist.github.com/ Gists]] '[[gist 1337]]
+* Youtube support. Its possible to embed videos '[[yt asdf1234 embed]] or just show an image with a link to the video '[[yt asdf1234]]
 
 h3. Markups
 
