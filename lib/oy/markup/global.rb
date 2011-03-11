@@ -7,11 +7,10 @@ module OY
 
   module Markup
 
-    class Processors < Array
-    end
-
-
     class Global < Markup
+
+      class Processors < Array
+      end
 
       self.extension = "*"
 
