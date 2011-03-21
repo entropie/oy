@@ -19,7 +19,7 @@
     %script{:type => "text/javascript", :src => "/js/jquery-scroll.js"}=""    
     %script{:type => "text/javascript", :src => "/js/highlight.pack.js"}=""
     - unless OY.local?
-      %link{:id => :dynfont, :rel => "stylesheet", :type => "text/css", :href => "/css/font.css" }=''
+      // %link{:id => :dynfont, :rel => "stylesheet", :type => "text/css", :href => "/css/font.css" }=''
       %script{:type => "text/javascript", :src => "//www.google.com/jsapi"}=""
       %script{:type => "text/javascript", :src => "/js/modernizr-1.6.min.js"}=""
       %script{:type => "text/javascript", :src => "/js/jquery.gvChart-1.0.1.min.js"}=""      
@@ -41,8 +41,8 @@
       #head
         = oy_render_file "_head.haml"
       #head-brd
-      #oy-fontsel{"data-title" => "Click to toggle font-selection"}
-        AaBbCc
+      // #oy-fontsel{"data-title" => "Click to toggle font-selection"}
+      //   AaBbCc
 
       #oy-wrap
         = @content
