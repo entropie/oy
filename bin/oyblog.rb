@@ -102,7 +102,7 @@ include OY
 default_options = {
   :blog_uri     => "http://localhost:8200",
   :blog_source  => File.expand_path("~/.blog"),
-  :namespace => "tlog",
+  :namespace    => "tlog",
   :actions      => [],
   :commit_msg   => "Synced draft file.",
   :page_title   => nil
