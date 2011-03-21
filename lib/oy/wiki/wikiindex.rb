@@ -8,7 +8,7 @@ require "find"
 module OY
   module WikiIndex
 
-    ExcludeList = [".git", "_public", "_view", "media"]
+    ExcludeList = [".git", "_public", "_view", "media", "test"]
 
     # returns ANY directories in the repos except internal ones
     # Array consists of WikiDir instances.
