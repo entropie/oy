@@ -48,7 +48,7 @@ class OY::Markup::Global::Processors
     end
 
     def read_article
-      doc = ::Nokogiri::HTML.parse(open(url))
+      doc = ::Nokogiri::HTML.parse(open(url), nil, "UTF-8")
       title = doc.at_css("#firstHeading")
       body  = doc.at_css("#bodyContent")
 
