@@ -293,7 +293,7 @@ module OY
         end
 
         title = title[1..-1] if title[0..0] == "/"
-
+        p alternatives
         base_link.map!{|url, _|  mk_link(url, (alternatives.empty? ? "o" : "x"), title) }
         add_links.map!{|url, _|  mk_link(url, 'alt', nil) }
 
