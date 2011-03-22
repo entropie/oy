@@ -21,7 +21,7 @@ class OY::Markup::Global::Processors
       to_html
     end
 
-    def url(full = false)
+    def url
       @url ||= "http://#{@lang}.wikipedia.org/wiki/#{@desc}"
     end
 
