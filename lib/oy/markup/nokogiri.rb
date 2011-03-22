@@ -7,6 +7,9 @@ module OY
   module Markup
 
     class Nokogiri < Markup
+
+      TOC = ::Nokogiri::HTML::DocumentFragment.parse "<div id='oy-toc'><h2>Table Of Contents</h2><ul></ul></div>"
+
       self.extension = "xml"
 
       def self.is_virtual?
@@ -14,7 +17,7 @@ module OY
       end
 
       def make_toc
-        toc = ::Nokogiri::HTML::DocumentFragment.parse "<div id='oy-toc'><h2>Table Of Contents</h2><ul></ul></div>"
+        toc = TOC.dup
         i = 0
         @doc.children.each do |child|
           if child.name =~ /^h[123456]$/

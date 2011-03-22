@@ -30,6 +30,7 @@ module OY
       end
 
       require "markup/processors/youtube"
+      require "markup/processors/wikipedia"
     end
   end
 end
