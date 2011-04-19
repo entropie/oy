@@ -17,6 +17,17 @@ class OYController < Ramaze::Controller
 
   private
 
+  def dirlink
+    path = Ramaze::Request.current.env["PATH_INFO"]
+    return "" if path == "/"
+    parts = path.split("/")
+    parts.reject!{|part| part.empty? or part =~ /^index/ or part =~ /^index#{WikiIndex.indexpage_re}/}
+    parts = parts[0..-2].unshift("").map{|part|
+      %Q'<li><a href="/#{part}">#{(part.empty? ? "Home" : part).capitalize}</a></li>'
+    }
+    "<ul>%s</ul>" % parts.join
+  end
+
   def delete_page(key)
     info_str = "!!! DELETE CACHE: %s"
     puts info_str % key

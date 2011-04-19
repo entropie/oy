@@ -2,6 +2,8 @@
 #oy-page
   #oy-top
     = oy_render_file "_wikibuttons.haml", :wiki => @wiki, :sha => @sha
+  #oy-dirlink
+    = dirlink
   #oy-topic
     %h1= @wiki.html_title
   #oy-body

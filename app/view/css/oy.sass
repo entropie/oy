@@ -531,6 +531,29 @@ fieldset
     :letter-spacing 7px
     :margin-bottom 20px
     :padding-bottom 10px
+  #oy-dirlink
+    :color red
+    :position absolute
+    :top 48px
+    :left 0px
+    :font-size 0.8em
+    :color = !clr_silver
+    ul
+      :margin 0px
+      li
+        :display inline
+        :padding-right 20px
+        &:before
+          :content "> "
+        &:hover
+          a
+            :color = !clr_blue_link
+        &:last-child
+          a
+            :font-weight bold
+    a
+      :color = !clr_silver
+    
   #oy-about
     :float right
     :font-size 0.9em
