@@ -303,12 +303,6 @@ module OY
         ret
       end
 
-      #########################################################################
-      #
-      # Code
-      #
-      #########################################################################
-
       # Extract all code blocks into the codemap and replace with placeholders.
       #
       # data - The raw String data.

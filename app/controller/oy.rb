@@ -20,6 +20,11 @@ class OYController < Ramaze::Controller
   def delete_page(key)
     info_str = "!!! DELETE CACHE: %s"
     puts info_str % key
+
+    other_ident = File.dirname(key)
+    other_ident = "/" if other_ident == "."
+    cache.delete(other_ident)
+    puts info_str % other_ident
     cache.delete(key)
     if key.include?(".")
       nkey = key.split(".").first

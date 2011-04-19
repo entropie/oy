@@ -28,7 +28,7 @@ module OY
     end
 
     def self.expand_path(*npath)
-      raise IllegalAccess, "illegal path" if npath.to_s.include?("..")
+      #raise IllegalAccess, "illegal path" if npath.to_s.include?("..")
       File.join(OY.path, npath)
     end
 

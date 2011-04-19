@@ -20,6 +20,7 @@ class WikiController < OYController
   def clear_cache(*fragments)
     fragments = 'index' if fragments.empty?
     cache_key = Wiki.mk_cache_key_from_fragments(*fragments)
+    #p fragments.last =~ /^index#{Markup.extension_regexp}/
     delete_page(cache_key)
     redirect_referer
   end
@@ -30,9 +31,7 @@ class WikiController < OYController
   #
   # Unless a +sha+ is given via request, every page will be cached.
   def index(*fragments)
-
     @sha = request[:sha]
-
     # FIXME: maybe cache historical pages too
     @wiki, @time, @cached = find_by_fragments(*fragments)
     if @sha and @wiki.sha != @sha
@@ -57,8 +56,10 @@ class WikiController < OYController
 
   def edit(*fragments)
     @wiki = repos.find_by_fragments(*fragments)
-    flash[:error] = "Page is locked."
-    redirect @wiki.link if @wiki.locked?
+    if @wiki.locked?
+      flash[:error] = "Page is locked."
+      redirect @wiki.link
+    end
     @extension = @wiki.extension
     @title = @wiki.path
     @action = :update
