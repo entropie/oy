@@ -4,8 +4,8 @@ Gem::Specification.new do |s|
   s.rubygems_version = '1.3.5'
 
   s.name              = 'oy'
-  s.version           = '0.4.5'
-  s.date              = '2011-03-05'
+  s.version           = '0.4.7'
+  s.date              = '2011-04-19'
   s.rubyforge_project = 'oy'
 
   s.summary     = "Git-powered wiki."
@@ -102,6 +102,7 @@ Gem::Specification.new do |s|
     app/view/preview.haml
     app/view/revert.haml
     bin/oy.rb
+    bin/oyblog.rb
     docs/index.textile
     lib/core/String.rb
     lib/oy.rb
@@ -116,6 +117,9 @@ Gem::Specification.new do |s|
     lib/oy/markup/markdown.rb
     lib/oy/markup/nokogiri.rb
     lib/oy/markup/org.rb
+    lib/oy/markup/processors.rb
+    lib/oy/markup/processors/wikipedia.rb
+    lib/oy/markup/processors/youtube.rb
     lib/oy/markup/redcloth.rb
     lib/oy/middleware/honeypot.rb
     lib/oy/middleware/minify.rb
