@@ -1,986 +1,979 @@
-!clr_ulight_bg = #FFFDF5
-!clr_light_bg = #DAE0E3
+$clr_ulight_bg: #fffdf5
+$clr_light_bg: #dae0e3
 
-!clr_black = #111
-  
-!clr_white = #ffffff
+$clr_black: #111111
 
-!clr_blink = #305454
-!clr_rlight_black = #403D3E
-!clr_rlight_blue = #0487D9
+$clr_white: white
 
-!clr_head_bg = #6E1400
-!clr_link_on_dark = #F2F2F2
-!clr_blue_link = #1C1C3D  
+$clr_blink: #305454
+$clr_rlight_black: #403d3e
+$clr_rlight_blue: #0487d9
 
-!clr_smoof_orange = #ffab27
-!clr_light_silver = #eeeeee    
-!clr_fresh_blue = #4096EE
-!clr_silver = silver
+$clr_head_bg: #6e1400
+$clr_link_on_dark: #f2f2f2
+$clr_blue_link: #1c1c3d
 
-!clr_topic_border = #E01B4C  
+$clr_smoof_orange: #ffab27
+$clr_light_silver: #eeeeee
+$clr_fresh_blue: #4096ee
+$clr_silver: silver
 
-!clr_wikilink = navy
-!clr_wikilink_nexist = grey
-!clr_lin = grey
-!clr_code_bg = #f8f8ff  
+$clr_topic_border: #e01b4c
+
+$clr_wikilink: navy
+$clr_wikilink_nexist: grey
+$clr_lin: grey
+$clr_code_bg: #f8f8ff
 
 .spinner
-  :text-align center
-  :display none
-  :position absolute
-  :left 48%
-  :top 0px
-  
-#oy-pg-message
-  :position absolute
-  :top 56px
-  :right 10%
-  :font-size 0.6em
-  :color = !clr_head_bg
-  
-#oy-fontsel
-  :position absolute
-  :right 10%
-  :top 40px
-  :color = !clr_silver
-  :font-size 0.6em
-  &:hover
-    :background-color = !clr_head_bg - 20
-    &:before
-      :margin-right 10px
-      :font-size 1em
-      :color = !clr_white
-      :content attr(data-title)
-#oy-font-list
-  :position absolute
-  :top 55px
-  :right 10%
-  :background-color = !clr_head_bg
-  :margin-right -10px
-  :font-size 0.8em
-  :border 2px solid silver
-  :border-color = !clr_head_bg - 20
-  :display none
-  :-webkit-box-shadow 5px 5px 10px #aaaaaa
-  :-moz-box-shadow 5px 5px 10px #aaaaaa
-  :box-shadow 5px 5px 10px #aaaaaa
-  ul
-    :margin 0px
-    :list-style-type none
-    li
-      :padding-right 10px
-      :padding-left 10px      
-      :text-align right
-      :color = !clr_silver
-      &:hover
-        :background-color = !clr_head_bg + 20
+  text-align: center
+  display: none
+  position: absolute
+  left: 48%
+  top: 0px
 
-  
+#oy-pg-message
+  position: absolute
+  top: 56px
+  right: 10%
+  font-size: 0.6em
+  color: $clr_head_bg
+
+#oy-fontsel
+  position: absolute
+  right: 10%
+  top: 40px
+  color: $clr_silver
+  font-size: 0.6em
+  &:hover
+    background-color: $clr_head_bg - 20
+    &:before
+      margin-right: 10px
+      font-size: 1em
+      color: $clr_white
+      content: attr(data-title)
+
+#oy-font-list
+  position: absolute
+  top: 55px
+  right: 10%
+  background-color: $clr_head_bg
+  margin-right: -10px
+  font-size: 0.8em
+  border: 2px solid silver
+  border-color: $clr_head_bg - 20
+  display: none
+  -webkit-box-shadow: 5px 5px 10px #aaaaaa
+  -moz-box-shadow: 5px 5px 10px #aaaaaa
+  box-shadow: 5px 5px 10px #aaaaaa
+  ul
+    margin: 0px
+    list-style-type: none
+    li
+      padding-right: 10px
+      padding-left: 10px
+      text-align: right
+      color: $clr_silver
+      &:hover
+        background-color: $clr_head_bg + 20
+
 #oy-banner
-  :position absolute
-  :left 18px
-  :top 20px
-  :z-index 2000
+  position: absolute
+  left: 18px
+  top: 20px
+  z-index: 2000
   img
-    :width 64px
-    :height 90px
+    width: 64px
+    height: 90px
 
 html
-  :height 100%
+  height: 100%
 
 body
-  :color #222
-  :height 100%
-  :font-family tahoma, 'Times New Roman', Georgia, serif
-  
+  color: #222222
+  height: 100%
+  font-family: tahoma, "Times New Roman", Georgia, serif
+
 a
-  :color #00f
-  :text-decoration none
+  color: blue
+  text-decoration: none
 
 a[href^="http:"], a[href^="https:"], a[href^="//"]
-  :white-space nowrap
+  white-space: nowrap
   &:before
-    :content url(/img/exlink.png)
-    :opacity 0.3
-    :padding-right 5px
-    :padding-left 4px
+    content: url(/img/exlink.png)
+    opacity: 0.3
+    padding-right: 5px
+    padding-left: 4px
   &:hover
     &:before
-      :opacity 1
+      opacity: 1
 
 a[href*="wikipedia.org"]
   &:before
-    :content url(/img/wplink.jpeg)
+    content: url(/img/wplink.jpeg)
+
 a[href*="twitter.com"]
   &:before
-    :content url(/img/twitlink.jpeg)
+    content: url(/img/twitlink.jpeg)
+
 a[href*="github.com"]
   &:before
-    :content url(/img/githublink.png)
+    content: url(/img/githublink.png)
 
-      
 #wrap
-  :min-height 100%
-  :height auto !important
-  :height 100%
-  :margin 0 auto -80px
+  min-height: 100%
+  height: auto !important
+  height: 100%
+  margin: 0 auto -80px
 
 #oy-wrap
-  :margin-left 10%
-  :margin-right 10%
-  :min-width 900px
+  margin-left: 10%
+  margin-right: 10%
+  min-width: 900px
 
 #foot-brd
-  :height 30px
-  :background-image url(/img/hshad-d.gif)
+  height: 30px
+  background-image: url(/img/hshad-d.gif)
+
 #footer
-  :height 80px
+  height: 80px
   .content
-    :background-color #120509
-    :height 50px
-    :position relative
+    background-color: #120509
+    height: 50px
+    position: relative
     p
-      :padding-left 10%
-      :padding-right 10%
-      :padding-top 20px
-      :color = !clr_blue_link
+      padding-left: 10%
+      padding-right: 10%
+      padding-top: 20px
+      color: $clr_blue_link
 
 #oy-ab
-  :position absolute
-  :right 5%
-  :bottom 15px
-  :color = !clr_rlight_black
+  position: absolute
+  right: 5%
+  bottom: 15px
+  color: $clr_rlight_black
   ul
-    :list-style-type none
+    list-style-type: none
     li
-      :display inline
-      :margin-left 20px
+      display: inline
+      margin-left: 20px
       a
-        :color = !clr_rlight_black
+        color: $clr_rlight_black
         &:hover
-          :color = !clr_link_on_dark
+          color: $clr_link_on_dark
 
 .push
-  :height 50px
-  :clear both
-  :padding-bottom 30px
+  height: 50px
+  clear: both
+  padding-bottom: 30px
 
 #head-brd
-  :height 30px
-  :margin-bottom -20px
-  :background-image url(/img/hshad.gif)
+  height: 30px
+  margin-bottom: -20px
+  background-image: url(/img/hshad.gif)
+
 #head
-  :margin-left 0
-  :background-color = !clr_head_bg
-  :margin-right 0
-  :padding 30px
-  :padding-top 10px
-  :padding-left 0px
-  :box-shadow 10px 10px 20px #aaaaaa
+  margin-left: 0
+  background-color: $clr_head_bg
+  margin-right: 0
+  padding: 30px
+  padding-top: 10px
+  padding-left: 0px
+  box-shadow: 10px 10px 20px #aaaaaa
   ul
-    :margin-left 7%
-    :margin-bottom 15px
-    :list-style-type none
+    margin-left: 7%
+    margin-bottom: 15px
+    list-style-type: none
     li
-      :float left
-      :margin-left 30px
-      :color silver
-      :font-size 1.5em
+      float: left
+      margin-left: 30px
+      color: silver
+      font-size: 1.5em
       a
-        :color = !clr_link_on_dark
+        color: $clr_link_on_dark
         &:hover
           span
-            :color = !clr_fresh_blue
+            color: $clr_fresh_blue
         span
-          :color silver
-          
+          color: silver
     input
-      :font-size 0.8em
-      :padding 5px
-      :color #fff
-      :border 1px solid silver
-      :border-color = !clr_head_bg - 20
-      :border-radius 5px
-      :background-color = !clr_head_bg + 20
+      font-size: 0.8em
+      padding: 5px
+      color: white
+      border: 1px solid silver
+      border-color: $clr_head_bg - 20
+      border-radius: 5px
+      background-color: $clr_head_bg + 20
 
-    
 fieldset
-  :border 2px solid silver
-  :padding 20px
+  border: 2px solid silver
+  padding: 20px
   legend
-    :padding-right 10px
-    :padding-left 10px
+    padding-right: 10px
+    padding-left: 10px
 
 #oy-editform
-  :position relative
+  position: relative
   .spinner
-    :top 50px
+    top: 50px
   fieldset
-    :border-radius 10px
-    :-moz-border-radius 10px        
+    border-radius: 10px
+    -moz-border-radius: 10px
   legend
-    :font-size 1.5em
-    :text-shadow 1px 1px grey      
-    :color = !clr_rlight_blue
-    :letter-spacing 3px
-    :padding 10px
-    :margin-left -5px
-    :font-weight normal
+    font-size: 1.5em
+    text-shadow: 1px 1px grey
+    color: $clr_rlight_blue
+    letter-spacing: 3px
+    padding: 10px
+    margin-left: -5px
+    font-weight: normal
   .body
-    :width 98%
-    :height 400px
-    :padding 10px
-    :border 1px solid silver
+    width: 98%
+    height: 400px
+    padding: 10px
+    border: 1px solid silver
   .oy-textbox
-    :padding 10px
-    :margin-bottom 10px
+    padding: 10px
+    margin-bottom: 10px
   .oy-textarea
-    :font-family monospace
+    font-family: monospace
   .oy-markup
-    :float right
-    :margin-top 10px
+    float: right
+    margin-top: 10px
     ul
-      :color = !clr_rlight_black
+      color: $clr_rlight_black
       &:before
-        :content "Alternate Markups: "
+        content: "Alternate Markups: "
       li
-        :display inline
-        :padding-left 5px
+        display: inline
+        padding-left: 5px
   .oy-submit
-    :text-align right
-    :float right
+    text-align: right
+    float: right
   .oy-preview
-    :text-align right    
+    text-align: right
   #oy-preview-box
-    :display none
+    display: none
   #oy-preview
-    :position relative
+    position: relative
     .oy-preview-buttons
-      :position absolute
-      :top -30px
-      :right 0px
-      :z-index 2000
+      position: absolute
+      top: -30px
+      right: 0px
+      z-index: 2000
   .oy-edit-sub
-    :margin-top 10px
+    margin-top: 10px
     .desc
-      :padding 5px
-      :margin-left 10px
+      padding: 5px
+      margin-left: 10px
   .oy-messagebox
     input
-      :width 100%
-      :border 1px solid silver
-      :padding 10px
+      width: 100%
+      border: 1px solid silver
+      padding: 10px
 
-  
 #oy-topnav
-  :text-align right
+  text-align: right
   a
-    :color #fff
+    color: white
 
 #oy-history
   h1
-    :font-size 2em
-    :margin-bottom 10px
+    font-size: 2em
+    margin-bottom: 10px
   ul
-    :list-style-type none
+    list-style-type: none
     li
-      :padding 10px
+      padding: 10px
       &:hover
-        :background-color = !clr_ulight_bg
+        background-color: $clr_ulight_bg
       &.active
-        :background-color = !clr_light_bg
+        background-color: $clr_light_bg
   .oy-msg
-    :font-size 1.5em
+    font-size: 1.5em
   .oy-sha
-    :float right
-    :font-size 14px
-    :display block
-    :font-family monospace
+    float: right
+    font-size: 14px
+    display: block
+    font-family: monospace
   .oy-author
-    :font-size 14px    
-    :padding-right 10px
-    :float right
-    :color = !clr_rlight_black
+    font-size: 14px
+    padding-right: 10px
+    float: right
+    color: $clr_rlight_black
+
 #oy-media-ls
-  :max-width 900px
+  max-width: 900px
   .oy-locked
-    :background-color = !clr_rlight_black
-    :padding 10px
-    :border-radius 5px
-    :-moz-border-radius 5px
-    :color = !clr_light_silver
-    :margin-bottom 20px
-    :text-align center
-    
+    background-color: $clr_rlight_black
+    padding: 10px
+    border-radius: 5px
+    -moz-border-radius: 5px
+    color: $clr_light_silver
+    margin-bottom: 20px
+    text-align: center
   .oy-replace
-    :margin-top 10px
-    :margin-bottom 20px
+    margin-top: 10px
+    margin-bottom: 20px
     fieldset
-      :border-radius 5px
-      :-moz-border-radius 5px
-      :text-align center
+      border-radius: 5px
+      -moz-border-radius: 5px
+      text-align: center
   .oy-backlink
-    :text-align right
-    :float right
+    text-align: right
+    float: right
     a
-      :color = !clr_rlight_blue
+      color: $clr_rlight_blue
   img
-    :max-width 900px
+    max-width: 900px
   hr
-    :border 1px solid silver
+    border: 1px solid silver
   ul
-    :list-style-type none
+    list-style-type: none
     li
       &.float
-        :float left
-        :width 150px
-        :height 150px
+        float: left
+        width: 150px
+        height: 150px
       img
-        :max-width 150px
-        :max-height 150px
+        max-width: 150px
+        max-height: 150px
   .oy-msg
-    :text-align right
+    text-align: right
   h1
-    :color = !clr_rlight_blue
-    :font-size 2em
-    :margin-bottom 10px
+    color: $clr_rlight_blue
+    font-size: 2em
+    margin-bottom: 10px
   h2
-    :color = !clr_rlight_blue
-    :font-size 1.5em
-    :margin-bottom 10px
+    color: $clr_rlight_blue
+    font-size: 1.5em
+    margin-bottom: 10px
 
 .float-left
-  :float left
+  float: left
+
 .float-right
-  :float right
+  float: right
 
 #oy-page-parse-time
-  :position absolute
-  :bottom -130px
-  :left 0
-  :z-index 1000
-  
+  position: absolute
+  bottom: -130px
+  left: 0
+  z-index: 1000
+
 #fork
-  :display none
+  display: none
+
 #oy-revert
   h1
-    :text-shadow 1px 1px grey
-    :font-size 2em
-    :color = !clr_rlight_blue
-    :border-bottom 1px solid silver
-    :letter-spacing 7px
-    :margin-bottom 20px
-    :padding-bottom 10px
+    text-shadow: 1px 1px grey
+    font-size: 2em
+    color: $clr_rlight_blue
+    border-bottom: 1px solid silver
+    letter-spacing: 7px
+    margin-bottom: 20px
+    padding-bottom: 10px
   .info
-    :margin-left -7%
-    :margin-right -7%
-    :padding 20px
-    :background-color = !clr_smoof_orange
-    :border-radius 10px
-    :text-align center
-    :border 3px solid red
-    :border-color = !clr_smoof_orange - 20
-    :-moz-box-shadow 0 1px 3px #999
-    :-webkit-box-shadow 0 1px 3px #999
+    margin-left: -7%
+    margin-right: -7%
+    padding: 20px
+    background-color: $clr_smoof_orange
+    border-radius: 10px
+    text-align: center
+    border: 3px solid red
+    border-color: $clr_smoof_orange - 20
+    -moz-box-shadow: 0 1px 3px #999999
+    -webkit-box-shadow: 0 1px 3px #999999
   .do-it
-    :margin-top 20px
+    margin-top: 20px
     form
-      :text-align right
+      text-align: right
 
 #oy-index-pages
   span.title
-    :font-size 1.2em
+    font-size: 1.2em
   > ul
-    :list-style-type none
+    list-style-type: none
     > li
-      :margin-bottom 15px
+      margin-bottom: 15px
       .count
-        :color = !clr_silver
-        :font-size 0.8em
+        color: $clr_silver
+        font-size: 0.8em
     ul.sub
-      :background-color = !clr_light_silver
-      :padding 10px
+      background-color: $clr_light_silver
+      padding: 10px
       li
-        :display inline
-        :padding-left 10px
-        :padding-right 10px        
+        display: inline
+        padding-left: 10px
+        padding-right: 10px
 
 #pageslide-slide-wrap
-  :color = !clr_link_on_dark
-  :background-color = !clr_head_bg
-  :padding-top 25px
-
+  color: $clr_link_on_dark
+  background-color: $clr_head_bg
+  padding-top: 25px
 
 #oy-pageslide-link
-  :color red
-  :position fixed
-  :right 0px
-  :top 140px
-  :background-color = !clr_head_bg
-  :padding-right 20px
-  :width 10px
-  :height 20px 
+  color: red
+  position: fixed
+  right: 0px
+  top: 140px
+  background-color: $clr_head_bg
+  padding-right: 20px
+  width: 10px
+  height: 20px
+
 #oy-pageslide
   a
-    :color = !clr_white
+    color: $clr_white
   #oy-toc
     ul
-      :margin-left 35px
-      :list-style-type none
+      margin-left: 35px
+      list-style-type: none
       li
-        :color = !clr_white
-        :padding 0px
-        :margin 0px
-      
+        color: $clr_white
+        padding: 0px
+        margin: 0px
         &.h1
         &.h2
-          :margin-left 15px
+          margin-left: 15px
         &.h3
-          :margin-left 25px
+          margin-left: 25px
         &.h4
-          :margin-left 40px
+          margin-left: 40px
         &.h5
-          :margin-left 50px
+          margin-left: 50px
         &.h6
-          :margin-left 60px
+          margin-left: 60px
         &:hover
-          :color = !clr_rlight_blue
+          color: $clr_rlight_blue
   .version
-    :font-size 0.8em
+    font-size: 0.8em
   h1,h2,h3,h4,h5,h6
-    :padding-left 10px
-    :clear both
-    :color = !clr_smoof_orange
+    padding-left: 10px
+    clear: both
+    color: $clr_smoof_orange
   h1
-    :font-size 1.3em
-    :letter-spacing -1px
+    font-size: 1.3em
+    letter-spacing: -1px
   h2
-    :margin-top 20px
-    :margin-bottom 20px
-    :font-size 1.2em
+    margin-top: 20px
+    margin-bottom: 20px
+    font-size: 1.2em
   .time
-    :position absolute
-    :top 10px
-    :right -5px
-    :text-align right
-    :padding-right 10px
-    :color = !clr_silver
-    :font-size 0.8em
+    position: absolute
+    top: 10px
+    right: -5px
+    text-align: right
+    padding-right: 10px
+    color: $clr_silver
+    font-size: 0.8em
   p
-    :padding 10px
-    :clear both
+    padding: 10px
+    clear: both
   ul
     &.right
-      :list-style-type none
-      :clear both
+      list-style-type: none
+      clear: both
       li
-        :padding-bottom 10px
-        :float left
-        :padding-right 10px
+        padding-bottom: 10px
+        float: left
+        padding-right: 10px
         .awesome
-          :width 130px
-          :text-align center
+          width: 130px
+          text-align: center
     &.history
       .oy-msg
-        :padding-top 7px
-      :margin 0px
+        padding-top: 7px
+      margin: 0px
       li
-        :width 320px
-        :padding 0px
-        :padding-left 20px
-        :padding-right 10px
-        :clear both
-        :display block
-        :padding-bottom 2px
-        :margin 0px
-        :border-bottom 1px solid
-        :border-color = !clr_head_bg + 10
+        width: 320px
+        padding: 0px
+        padding-left: 20px
+        padding-right: 10px
+        clear: both
+        display: block
+        padding-bottom: 2px
+        margin: 0px
+        border-bottom: 1px solid
+        border-color: $clr_head_bg + 10
         a
-          :color = !clr_link_on_dark
+          color: $clr_link_on_dark
         &:hover
-          :background-color = !clr_white
+          background-color: $clr_white
           .oy-msg
-            :color = !clr_blue_link
+            color: $clr_blue_link
           .oy-date
-            :color = !clr_head_bg
+            color: $clr_head_bg
           a
-            :color = !clr_black
-    
+            color: $clr_black
 
 #oy-page
-  :margin-top 25px
-  :position relative
+  margin-top: 25px
+  position: relative
   .oy-preview-buttons
-    :text-align right
+    text-align: right
   .oy-redirections
-    :position absolute
-    :top -20px
-    :right 0px
-    :font-size 0.8em
-    :color = !clr_silver
+    position: absolute
+    top: -20px
+    right: 0px
+    font-size: 0.8em
+    color: $clr_silver
     a
-      :color = !clr_silver
+      color: $clr_silver
     &:before
-      :content "Redirected: "
+      content: "Redirected: "
   #oy-topic
-    :text-shadow 1px 1px grey
-    :font-size 2em
-    :color = !clr_rlight_blue
-    :border-bottom 1px solid silver
-    :letter-spacing 7px
-    :margin-bottom 20px
-    :padding-bottom 10px
+    text-shadow: 1px 1px grey
+    font-size: 2em
+    color: $clr_rlight_blue
+    border-bottom: 1px solid silver
+    letter-spacing: 7px
+    margin-bottom: 20px
+    padding-bottom: 10px
   #oy-dirlink
-    :color red
-    :position absolute
-    :top 48px
-    :left 0px
-    :font-size 0.8em
-    :color = !clr_silver
+    color: red
+    position: absolute
+    top: 48px
+    left: 0px
+    font-size: 0.8em
+    color: $clr_silver
     ul
-      :margin 0px
+      margin: 0px
       li
-        :display inline
-        :padding-right 20px
+        display: inline
+        padding-right: 20px
         &:before
-          :content "> "
+          content: "> "
         &:hover
           a
-            :color = !clr_blue_link
+            color: $clr_blue_link
         &:last-child
           a
-            :font-weight bold
+            font-weight: bold
     a
-      :color = !clr_silver
-    
+      color: $clr_silver
   #oy-about
-    :float right
-    :font-size 0.9em
-    :padding 5px
+    float: right
+    font-size: 0.9em
+    padding: 5px
     &:hover
       .oy-msg
-        :color #364045
+        color: #364045
   #oy-body
     pre
       code
-        :background-color = !clr_code_bg
-        :padding-bottom 20px
-        :padding-left 20px
-        :padding-right 20px
-        :border 1px solid silver
-        :border-clr = !clr_code_bg -20
-        :margin-left 10px
-        :margin-right 13px
-        :border-radius 10px
-        :-moz-box-shadow inset 1px 1px 3px #999
-        :-webkit-box-shadow inset 1px 1px 3px #999
+        background-color: $clr_code_bg
+        padding-bottom: 20px
+        padding-left: 20px
+        padding-right: 20px
+        border: 1px solid silver
+        border-clr: $clr_code_bg -20
+        margin-left: 10px
+        margin-right: 13px
+        border-radius: 10px
+        -moz-box-shadow: inset 1px 1px 3px #999999
+        -webkit-box-shadow: inset 1px 1px 3px #999999
     .oy-gist .gist-highlight
-      :overflow hidden
-      :max-height 500px
+      overflow: hidden
+      max-height: 500px
     .gist
-      :margin-left 10px
-      :margin-right 10px
-      :border-radius 10px
-      :border-color red !important
-      :-moz-box-shadow inset 1px 1px 3px #999
-      :-webkit-box-shadow inset 1px 1px 3px #999
-      :padding-top 20px
-      :padding-right 5px      
-      :background-color = !clr_code_bg
+      margin-left: 10px
+      margin-right: 10px
+      border-radius: 10px
+      border-color: red !important
+      -moz-box-shadow: inset 1px 1px 3px #999999
+      -webkit-box-shadow: inset 1px 1px 3px #999999
+      padding-top: 20px
+      padding-right: 5px
+      background-color: $clr_code_bg
       .gist-meta
-        :margin-top 10px !important
-        :margin-bottom 10px !important
-        :background-color transparent !important
-        :padding 10px
-        :border-top 1px solid silver
-        :border-color = !clr_code_bg - 20
+        margin-top: 10px !important
+        margin-bottom: 10px !important
+        background-color: transparent !important
+        padding: 10px
+        border-top: 1px solid silver
+        border-color: $clr_code_bg - 20
         a
           &:before
-            :content ''
-            :padding 0px
+            content: ""
+            padding: 0px
       .gist-data, .gist-file
-        :border none !important
-        :margin-left 5px
-        :margin-right 5px
-        :font-size 12px !important
-      pre 
-        :padding-bottom 20px
-        :padding 10px !important
-        :border 1px solid silver
+        border: none !important
+        margin-left: 5px
+        margin-right: 5px
+        font-size: 12px !important
+      pre
+        padding-bottom: 20px
+        padding: 10px !important
+        border: 1px solid silver
     em
-      :color = grey
-      :font-weight bold
+      color: grey
+      font-weight: bold
     i
-      :border-bottom 1px solid
-      :border-bottom-color #ffd29b
-      :padding-left 3px
-      :padding-right 3px      
+      border-bottom: 1px solid
+      border-bottom-color: #ffd29b
+      padding-left: 3px
+      padding-right: 3px
     .alts
-      :color = !clr_silver
+      color: $clr_silver
       a
-        :color = !clr_silver
+        color: $clr_silver
         &:hover
-          :color = !clr_wikilink
-        
+          color: $clr_wikilink
     .gvChart
-      :margin-left 10px
-      :position inherit
-      :display inline
+      margin-left: 10px
+      position: inherit
+      display: inline
       iframe
-        :-moz-box-shadow 2px 2px 3px #999
-        :-webkit-box-shadow 2px 2px 3px #999
-        :border 1px solid silver
-        :margin-bottom 20px
-        :border-radius 10px
-    :position relative
+        -moz-box-shadow: 2px 2px 3px #999999
+        -webkit-box-shadow: 2px 2px 3px #999999
+        border: 1px solid silver
+        margin-bottom: 20px
+        border-radius: 10px
+    position: relative
     #oy-toc
-      :position absolute
-      :top -60px
-      :right -10px
+      position: absolute
+      top: -60px
+      right: -10px
       h2
-        :color = !clr_silver
-        :border none
-        :font-size 0.8em
-        :margin-bottom 0px
-        :text-align right
+        color: $clr_silver
+        border: none
+        font-size: 0.8em
+        margin-bottom: 0px
+        text-align: right
         &:before
-          :content url(/img/rarr.jpeg)
-          :margin-right 10px
-          :opacity 0.6
+          content: url(/img/rarr.jpeg)
+          margin-right: 10px
+          opacity: 0.6
         &:hover, &.active
-          :color = !clr_rlight_blue
+          color: $clr_rlight_blue
           &:before
-            :content url(/img/darr.jpeg)
-            :margin-right 10px
-            :opacity 0.6
-          
+            content: url(/img/darr.jpeg)
+            margin-right: 10px
+            opacity: 0.6
       ul
-        :opacity 0.8
-        :-moz-box-shadow 2px 2px 3px #999
-        :-webkit-box-shadow 2px 2px 3px #999
-        :display none
-        :z-index 2000
-        :background-color #DCDFE8
-        :margin 0px
-        :margin-bottom 20px
-        :margin-top 5px
-        :margin-right 8px
-        :padding 23px
-        :padding-top 10px
-        :padding-left 30px
-        :padding-right 10px
-        :border-bottom-right-radius 10px
-        :border-bottom-left-radius 10px          
-        :-webkit-border-bottom-right-radius 10px
-        :-webkit-border-bottom-left-radius 10px
-        :border 2px solid silver
-        :border-color = !clr_silver
-        :border-top none
+        opacity: 0.8
+        -moz-box-shadow: 2px 2px 3px #999999
+        -webkit-box-shadow: 2px 2px 3px #999999
+        display: none
+        z-index: 2000
+        background-color: #dcdfe8
+        margin: 0px
+        margin-bottom: 20px
+        margin-top: 5px
+        margin-right: 8px
+        padding: 23px
+        padding-top: 10px
+        padding-left: 30px
+        padding-right: 10px
+        border-bottom-right-radius: 10px
+        border-bottom-left-radius: 10px
+        -webkit-border-bottom-right-radius: 10px
+        -webkit-border-bottom-left-radius: 10px
+        border: 2px solid silver
+        border-color: $clr_silver
+        border-top: none
         li
-          :padding 0px
-          :padding-right 20px
-          :color = !clr_rlight_black
+          padding: 0px
+          padding-right: 20px
+          color: $clr_rlight_black
           &.h2
-            :margin-left 15px
+            margin-left: 15px
           &.h3
-            :margin-left 25px
+            margin-left: 25px
           &.h4
-            :margin-left 40px
+            margin-left: 40px
           &.h5
-            :margin-left 50px
+            margin-left: 50px
           &.h6
-            :margin-left 60px
+            margin-left: 60px
           &:hover
-            :color = !clr_rlight_blue
-      
+            color: $clr_rlight_blue
     strong
-      :background-color = !clr_light_silver
-      :padding 3px
+      background-color: $clr_light_silver
+      padding: 3px
     code
-      :background-color = !clr_light_silver
-      :color = !clr_black
-      :padding 3px
-      :font-family monospace
+      background-color: $clr_light_silver
+      color: $clr_black
+      padding: 3px
+      font-family: monospace
     h1,h2,h3,h4,h5,h6
       // :border-radius 30px
-      :text-shadow 1px 1px grey      
-      :color = !clr_rlight_blue
-      :letter-spacing 3px
-      :padding 10px
+      text-shadow: 1px 1px grey
+      color: $clr_rlight_blue
+      letter-spacing: 3px
+      padding: 10px
       // :margin-left -5px
       // :border-left 5px solid red
       // :border-left-color = !clr_silver
-      :font-weight normal
-      :margin-bottom 10px
+      font-weight: normal
+      margin-bottom: 10px
       // &:hover
       //   :border-left-color = !clr_topic_border
     h1
-      :font-size 2em
+      font-size: 2em
     h2
-      :font-size 1.6em
-      :border-left-width 5px      
-      :margin-left -5px      
+      font-size: 1.6em
+      border-left-width: 5px
+      margin-left: -5px
     h3
-      :border-left-width 4px
-      :margin-left -4px
-      :font-size 1.4em
+      border-left-width: 4px
+      margin-left: -4px
+      font-size: 1.4em
     h4
-      :border-left-width 3px
-      :margin-left -3px
-      :font-size 1.2em
+      border-left-width: 3px
+      margin-left: -3px
+      font-size: 1.2em
     h5
-      :border-left-width 2px
-      :margin-left -2px
-      :font-size 1.1em
+      border-left-width: 2px
+      margin-left: -2px
+      font-size: 1.1em
     h6
-      :border-left-width 1px
-      :margin-left 1px
-      :font-size 1em
+      border-left-width: 1px
+      margin-left: 1px
+      font-size: 1em
     p
-      :margin-bottom 10px
-      :padding-left 10px
-      :padding 10px
+      margin-bottom: 10px
+      padding-left: 10px
+      padding: 10px
     > ul, > ol
-      :padding-left 15px
-      :color = !clr_rlight_black
-      :margin-bottom 20px
+      padding-left: 15px
+      color: $clr_rlight_black
+      margin-bottom: 20px
     li
-      :margin-bottom 1px
-      :padding 5px
-      :padding-bottom 0px
-      :padding-top 0px
+      margin-bottom: 1px
+      padding: 5px
+      padding-bottom: 0px
+      padding-top: 0px
       &.todo_done
-        :color green
+        color: green
       &.todo_canceled
-        :color grey
+        color: grey
       &.todo_default
-        :color inherit
+        color: inherit
     img
-      :border none
-      :max-width 800px
-      :max-height 600px
-      :border-left 1px solid silver
-      :border-top 1px solid silver
-      :border-color = !clr_light_silver
-      :-moz-box-shadow 2px 2px 3px #999
-      :-webkit-box-shadow 2px 2px 3px #999
-      
+      border: none
+      max-width: 800px
+      max-height: 600px
+      border-left: 1px solid silver
+      border-top: 1px solid silver
+      border-color: $clr_light_silver
+      -moz-box-shadow: 2px 2px 3px #999999
+      -webkit-box-shadow: 2px 2px 3px #999999
     blockquote
-      :z-index -100
-      :display block
-      :padding 10px 40px
-      :background-color = !clr_light_bg
-      :border 1px solid silver
-      :border-color = !clr_light_bg - 20
-      :position relative
-      :border-radius 15px
-      :margin-bottom 10px
+      z-index: -100
+      display: block
+      padding: 10px 40px
+      background-color: $clr_light_bg
+      border: 1px solid silver
+      border-color: $clr_light_bg - 20
+      position: relative
+      border-radius: 15px
+      margin-bottom: 10px
       &:before
-        :color #69c
-        :display block
-        :font-size 700%
-        :width 50px
-        :font-family arial
-        :content "“"
-        :position absolute
-        :top -30px
-        :left 10px
+        color: #6699cc
+        display: block
+        font-size: 700%
+        width: 50px
+        font-family: arial
+        content: "“"
+        position: absolute
+        top: -30px
+        left: 10px
       p
-        :margin 0px
+        margin: 0px
         &:last-child:after
-          :color #69c          
-          :display block
-          :font-family arial
-          :content "”"
-          :background-color red
-          :position absolute
-          :right 10px
-          :bottom 75px
-          :height 0
-          :font-size 700%
-
+          color: #6699cc
+          display: block
+          font-family: arial
+          content: "”"
+          background-color: red
+          position: absolute
+          right: 10px
+          bottom: 75px
+          height: 0
+          font-size: 700%
     .quote-author
-      :margin-left 30px
+      margin-left: 30px
       &:before
-        :content " -- "
+        content: " -- "
   #oy-sub, #oy-top
-    :clear both
-    :position relative
-    :margin-bottom 30px
-    :margin-top 30px
-    :border-top 1px solid silver
+    clear: both
+    position: relative
+    margin-bottom: 30px
+    margin-top: 30px
+    border-top: 1px solid silver
     ul
-      :margin-top 10px
-      :list-style-type none
-      :position absolute
-      :top 0px
+      margin-top: 10px
+      list-style-type: none
+      position: absolute
+      top: 0px
       &.left
-        :margin-top 5px
-        :font-size 0.8em
-        :left -15px
+        margin-top: 5px
+        font-size: 0.8em
+        left: -15px
         li
-          :display inline
-          :margin-right 10px
-          :margin-left 0px
+          display: inline
+          margin-right: 10px
+          margin-left: 0px
         &:hover
           a
-            :border-bottom 1px solid silver
-            :border-color = !clr_silver
+            border-bottom: 1px solid silver
+            border-color: $clr_silver
       &.right
-        :right 0px
+        right: 0px
       li
-        :margin-left 10px
-        :font-size 1em
-        :display inline
-        :color = !clr_silver        
+        margin-left: 10px
+        font-size: 1em
+        display: inline
+        color: $clr_silver
         a
-          :color = !clr_silver
+          color: $clr_silver
         &.author
           &:before
-            :content " by "
+            content: " by "
         &.ledit
-  #oy-top    
-    :position absolute
-    :right 0px
-    :width 100%
-    :top -60px
-    :border none
+  #oy-top
+    position: absolute
+    right: 0px
+    width: 100%
+    top: -60px
+    border: none
     ul
-      :margin-top 0px
+      margin-top: 0px
       li
-        :opacity 0.1
+        opacity: 0.1
         &:hover
-          :opacity 0.7
+          opacity: 0.7
   .compare
     .line-nr
-      :background-color #f7f7f7
-      :padding-left 2px
+      background-color: #f7f7f7
+      padding-left: 2px
     .td
-      :font-family "Consolas", "Monaco", "Andale Mono", "Courier New", monospace
-      :font-size 1.2em
-      :line-hight 1.2em
-      :margin 0px
-      :padding 0px
+      font-family: "Consolas", "Monaco", "Andale Mono", "Courier New", monospace
+      font-size: 1.2em
+      line-hight: 1.2em
+      margin: 0px
+      padding: 0px
     .gc
-      :color blue
+      color: blue
     .gd
-      :color red
+      color: red
     .gi
-      :color green
+      color: green
     .line
-      :background-color = !clr_light_bg
-      :margin-top 5px
+      background-color: $clr_light_bg
+      margin-top: 5px
       &:nth-child(even)
-        :background-color = !clr_light_bg + 20
-      
-      
+        background-color: $clr_light_bg + 20
 
 a.oy-link
   &:hover
-    :border-bottom 2px solid
-    :border-bottom-color = !clr_head_bg
+    border-bottom: 2px solid
+    border-bottom-color: $clr_head_bg
   &.x
-    :color = !clr_wikilink
+    color: $clr_wikilink
     &:hover
-      :border-color = !clr_wikilink
+      border-color: $clr_wikilink
   &.o
-    :color = !clr_wikilink_nexist
+    color: $clr_wikilink_nexist
     &:hover
-      :border-color = !clr_wikilink_nexist
+      border-color: $clr_wikilink_nexist
   &.alt
-    :color = !clr_wikilink
-    :border-bottom-width 1px
+    color: $clr_wikilink
+    border-bottom-width: 1px
     &:hover
-      :border-color = !clr_wikilink
-
+      border-color: $clr_wikilink
 
 .oy-ref
-  :color = !clr_silver
-  :font-size 0.8em
-  :font-family monospace
+  color: $clr_silver
+  font-size: 0.8em
+  font-family: monospace
 
 .oy-sha
-  :color silver
-  :font-size 0.7em
-  :display none
-  :font-family monospace  
+  color: silver
+  font-size: 0.7em
+  display: none
+  font-family: monospace
+
 .oy-msg
-  :color grey
-  :font-size 0.8em
-  :margin-top -5px
+  color: grey
+  font-size: 0.8em
+  margin-top: -5px
+
 .oy-date
-  :color grey
-  :font-size 0.8em
+  color: grey
+  font-size: 0.8em
 
 .rfloat
-  :float right
+  float: right
+
 .lfloat
-  :float left
-  
+  float: left
+
 #oy-all
   ul
-    :margin 0px
-    :padding 0px
-    :width 50%
-    :float right
-    :list-style-type none
-    :margin-right -1px
-    :border-right 1px solid silver
+    margin: 0px
+    padding: 0px
+    width: 50%
+    float: right
+    list-style-type: none
+    margin-right: -1px
+    border-right: 1px solid silver
     &:nth-child(1)
-      :clear both
-      :border none
+      clear: both
+      border: none
       li
-        :padding-left 20px
+        padding-left: 20px
     li
-      :padding-left 0px
+      padding-left: 0px
       &:hover
-        :background-color = !clr_ulight_bg
+        background-color: $clr_ulight_bg
         *
-          :color #001 !important
+          color: #000011 !important
   .oy-prfx
-    :color silver
-    :float right
-    :padding-right 15px
+    color: silver
+    float: right
+    padding-right: 15px
 
 #oy-upload
   legend
-    :font-size 1.5em
-    :text-shadow 1px 1px grey      
-    :color = !clr_rlight_blue
-    :letter-spacing 3px
-    :padding 10px
-    :margin-left -5px
-    :font-weight normal
+    font-size: 1.5em
+    text-shadow: 1px 1px grey
+    color: $clr_rlight_blue
+    letter-spacing: 3px
+    padding: 10px
+    margin-left: -5px
+    font-weight: normal
   fieldset
-    :border-radius 5px
-    :-moz-border-radius 5px
-    :text-align center
+    border-radius: 5px
+    -moz-border-radius: 5px
+    text-align: center
 
 .jp-jpplayer
-  :text-align center !important
+  text-align: center !important
 
-  
 .center
-  :text-align center
-    
+  text-align: center
+
 #tlog-page
   .nut
-    :margin-bottom 10px !important
+    margin-bottom: 10px !important
   a
     &:before
-      :content none
+      content: none
   ul
-    :list-style-type none
-    :margin-left 0px
-    :padding-left 0px
-    :margin-bottom 20px
+    list-style-type: none
+    margin-left: 0px
+    padding-left: 0px
+    margin-bottom: 20px
     li
-      :margin 0px
-      :padding 0px
+      margin: 0px
+      padding: 0px
   blockquote
-    :margin-bottom 20px !important
-    :background-color transparent !important
-    :border none !important
+    margin-bottom: 20px !important
+    background-color: transparent !important
+    border: none !important
     p:last-child:after, &:before
-      :color = !clr_silver !important
+      color: $clr_silver !important
