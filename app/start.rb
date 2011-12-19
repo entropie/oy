@@ -5,13 +5,21 @@
 
 
 require "rubygems"
-require "ramaze"
 
 begin
   require "../lib/oy"
 rescue LoadError
   require "oy"
 end
+
+
+# ramaze & innate
+$: << File.join(OY::Source, "../innate/lib")
+$: << File.join(OY::Source, "../ramaze/lib")
+
+require "innate"
+require "ramaze"
+
 
 Dir["#{OY::Source}/lib/oy/middleware/*.rb"].each do |mw|
   require mw
